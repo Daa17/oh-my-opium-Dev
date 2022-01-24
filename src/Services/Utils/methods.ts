@@ -259,6 +259,7 @@ export const getPurchasedProducts = async (
 
   for (let i of Array(batchAmount)) {
     try {
+      console.log(i)
       // Waiting time between requests
       await new Promise(resolve => setTimeout(resolve, 1000))
       

@@ -30,7 +30,7 @@ export const ethPools = [
       address: '0x64dcb00e36a6238dad28e59c71c5214500539ef7',      
       type: OracleTypeEnum.OPTIMISTIC
     }, 
-} 
+},
 {
     title: 'USDT Protection',
     poolAddress: '0x5afFE41805a9E57fEd3657d0e64D96aeA0B77885',
