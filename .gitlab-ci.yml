@@ -1,7 +1,7 @@
 stages:
   - testing
 
-deploy_prod:
+deploy_testing:
   stage: testing
   tags:
     - testing
