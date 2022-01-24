@@ -1,0 +1,14 @@
+stages:
+  - testing
+
+deploy_prod:
+  stage: testing
+  tags:
+    - testing
+  script:
+    - yarn
+    - yarn build:ipfs
+    - rm -rf /var/www/ui/*
+    - cp -a build/. /var/www/ui/
+  only:
+    - master
