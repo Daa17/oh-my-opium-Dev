@@ -19,17 +19,7 @@ import {positions as turboMATIC} from './positions/polygon/turboMATIC'
 
 
 export const ethPools = [
-  {
-    title: 'Test: Turbo ETH',
-    poolAddress: '0x8770d2A343b49a57e479Df3FcE9DeBE49bb1f73d',
-    nominal: 1,
-    marginTitle: 'WETH',
-    isSuspended: false,
-    oracle: {
-      address: '0x0D876632F321fdcAbC540eEA5867c4799A627ed8',
-      type: OracleTypeEnum.WITH_TIMESTAMP
-    }
-  },
+  
 {
     title: '$OPIUM Option Call',    
     poolAddress: '0xc1650f389de9056636d968832eb63382e3970fa1',    
@@ -133,6 +123,18 @@ export const bscPools = [
 ]
 
 export const polygonPools = [
+
+  {
+    title: 'Test: Turbo ETH',
+    poolAddress: '0x8770d2A343b49a57e479Df3FcE9DeBE49bb1f73d',
+    nominal: 1,
+    marginTitle: 'WETH',
+    isSuspended: false,
+    oracle: {
+      address: '0x0D876632F321fdcAbC540eEA5867c4799A627ed8',
+      type: OracleTypeEnum.WITH_TIMESTAMP
+    }
+  },
   {
     title: 'RealT 2661-2663 Cortland Rent insurance',
     poolAddress: '0x20120864944fC47fed4821C1c4B1b6a7D400844b',
