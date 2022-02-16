@@ -124,6 +124,17 @@ export const bscPools = [
 export const polygonPools = [
   {
     title: 'Test: Turbo ETH',
+    poolAddress: '0xaf2d53cd17eE9B6475f2da63423c178Af43b65C0',
+    nominal: 1,
+    marginTitle: 'WETH',
+    isSuspended: false,
+    oracle: {
+      address: '0x0D876632F321fdcAbC540eEA5867c4799A627ed8',
+      type: OracleTypeEnum.WITH_TIMESTAMP
+    }
+  }, 
+  {
+    title: 'Test: Turbo ETH',
     poolAddress: '0x040c58c14e34B5C1fAB80E43B9bD79b1E95Ef49E',
     nominal: 1,
     marginTitle: 'WETH',
