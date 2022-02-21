@@ -28,7 +28,7 @@ const PoolsList: FC<{}> = () => {
     let positions:  PositionType[] | undefined = []
 
     await getPurchasedProductsTheGraph(pool, userAddress)
-      .then(res => {positions = res; console.log('getPurchasedProductsTheGraph res',res)})
+      .then(res => {positions = res; console.log('getPurchasedProductsTheGraph positions',res)})
       .catch(async e => {
         await getPurchasedProducts(pool, userAddress, (e) => alert.error(e.message)).then(res => positions = res)
         console.log('getPurchasedProductsTheGraph catch',e)

@@ -326,17 +326,24 @@ export const getPurchasedProductsTheGraph = async (
           }
         }
       `)
+      console.log('fetchTheGraph response' , response)
       const eventPositions: [{endTime: string, longPositionAddress: string}]  = response.longPositionTokens
+      console.log('eventPositions' , eventPositions)
+
       const balances: { balance: string, address: string, endTime: number }[] = await Promise.all(eventPositions.map(async (event) => {
         const wrapperContract = createTokenContractInstance(event.longPositionAddress)
         const balance = await wrapperContract?.methods.balanceOf(userAddress).call()
         return { balance, address: event.longPositionAddress, endTime: +event.endTime}
       }))
-  
+      console.log('balances' , balances)
+
       // Remove zero balance and convert from BigNumber
       const modifiedBalances: { balance: number, address: string, endTime: number}[] = balances.filter(el => +el.balance).map(el => ({ ...el, balance: +convertFromBN(el.balance, decimals)}))
-  
+      console.log('modifiedBalances' , modifiedBalances)
+
       positions.push(...modifiedBalances)
+      console.log('modifiedBalances positions' , positions)
+
     } catch (error) {
       console.log({error})
       throw error

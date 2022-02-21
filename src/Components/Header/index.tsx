@@ -43,9 +43,10 @@ const Header: FC<{}> = () => {
     const pools = appStore.poolsByNetwork.filter(pool => !pool.isSuspended)
     await Promise.all(pools.map( async (pool) => {
       await getPurchasedProductsTheGraph(pool, address)
-      .then(res => positions = res)
+      .then(res => {positions = res ; console.log('positions outside if ',positions)})
     })).then(() => {
       if (positions && positions.length) {
+        console.log('positions inside if ',positions)
         setPopupIsOpened(true)
         setPositions(positions)
         setPositionProductTitle('All products')
