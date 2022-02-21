@@ -44,18 +44,6 @@ export const ethPools = [
     }
   },
   {
-    title: '$OPIUM Option Call',
-    poolAddress: '0xc1650f389de9056636d968832eb63382e3970fa1',
-    nominal: 1,
-    isSuspended: false,
-    marginTitle: 'OPIUM',
-    positions: opiumOptionCall,
-    oracle: {
-      address: '0x64dcb00e36a6238dad28e59c71c5214500539ef7',
-      type: OracleTypeEnum.OPTIMISTIC
-    }
-  },
-  {
     title: '(OLD) USDT Protection 05 MAR',
     poolAddress: '0x527bc50b075a65b7e17ae8606a1adeb08bceb971',
     nominal: 1,

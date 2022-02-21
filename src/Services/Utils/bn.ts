@@ -23,11 +23,12 @@ export const convertFromBN = (value: string, decimals: number): string => {
 
   const valueInEther = web3Utils.fromWei(value.toString(), 'ether')
   let valueAdjusted
-
   if (baseDiff >= 0) {
     valueAdjusted = +valueInEther * Math.pow(10, baseDiff)
   } else {
     valueAdjusted = +valueInEther / Math.pow(10, baseDiff)
   }
+  console.log('valueInEther+valueAdjusted(convertFromBN)',valueAdjusted)
+
   return valueAdjusted.toString()
 }
