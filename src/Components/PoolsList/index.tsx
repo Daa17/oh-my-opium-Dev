@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { observer } from 'mobx-react'
 import { useAlert } from 'react-alert'
 import { ETheme, Popup } from '@opiumteam/react-opium-components'
@@ -43,37 +43,41 @@ const PoolsList: FC<{}> = () => {
     }
   }
 
-  const getAllPurchasedProducts = async () => {
-    let positions: PositionType[] | undefined = [];
-    const pools = appStore.poolsByNetwork.filter((pool) => !pool.isSuspended);
-    await Promise.all(
-      pools.map(async (pool) => {
-        await getPurchasedProductsTheGraph(pool, userAddress).then((res) => {
-          positions = res;
-          console.log("positions outside if ", positions);
-        });
-      })
-    )
-      .then(() => {
-        if (positions && positions.length) {
-          console.log("positions inside if ", positions);
-          // setPopupIsOpened(true);
-          setPositions(positions);
-          setPositionProductTitle("All products");
-        } else {
-          alert.error("There are no purchased products");
-        }
-      })
-      .catch((e) => {
-        alert.error(
-          "Something wen wrong, please try to show products in the pool"
-        );
-      });
-  };
+  
 
-  useEffect(() => {
-    userAddress && getAllPurchasedProducts();
-  }, [userAddress]);
+  // useEffect(() => {
+  //   const getAllPurchasedProducts = async () => {
+  //     let positions: PositionType[] | undefined = [];
+  //     const pools = appStore.poolsByNetwork.filter((pool) => !pool.isSuspended);
+  //     await Promise.all(
+  //       pools.map(async (pool) => {
+  //         await getPurchasedProductsTheGraph(pool, userAddress).then((res) => {
+  //           positions = res;
+  //           console.log("positions outside if ", positions);
+  //         });
+  //       })
+  //     )
+  //       .then(() => {
+  //         if (positions && positions.length) {
+  //           console.log("positions inside if ", positions);
+  //           // setPopupIsOpened(true);
+  //           setPositions(positions);
+  //           setPositionProductTitle("All products");
+  //         } else {
+  //           alert.error("There are no purchased products");
+  //         }
+  //       })
+  //       .catch((e) => {
+  //         alert.error(
+  //           "Something wen wrong, please try to show products in the pool"
+  //         );
+  //       });
+  //   };
+  //    getAllPurchasedProducts()
+  //   return ()=>{ 
+  //     getAllPurchasedProducts()
+  //   }
+  // }, [userAddress, alert]);
 
   const closePopup = () => {
     setPopupIsOpened(false)
