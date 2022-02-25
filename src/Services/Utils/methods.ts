@@ -338,7 +338,9 @@ export const getPurchasedProductsTheGraph = async (
       console.log('balances' , balances)
 
       // Remove zero balance and convert from BigNumber
-      const modifiedBalances: { balance: number, address: string, endTime: number}[] = balances.filter(el => +el.balance).map(el => ({ ...el, balance: +convertFromBN(el.balance, decimals)}))
+      const modifiedBalances: { balance: number, address: string, endTime: number}[] = balances
+      // .filter(el => +el.balance)
+      .map(el => ({ ...el, balance: +convertFromBN(el.balance, decimals)}))
       console.log('modifiedBalances' , modifiedBalances)
 
       positions.push(...modifiedBalances)
