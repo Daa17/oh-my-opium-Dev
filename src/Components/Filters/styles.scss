@@ -1,0 +1,94 @@
+.filters_wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 1.71rem 4.5rem 1.14rem;
+    nav {
+        padding: 0;
+        .nav-link {
+            font-size: 1.14rem !important;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 20px;
+            padding: 0.85rem 0;
+        }
+    }
+    .dropdowns_container {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        .sort_dropdown {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            span {
+                font-style: normal;
+                font-weight: 500;
+                font-size: 1.14rem;
+                line-height: 1.42rem;
+                color: #fff;
+            }
+            .dropdown {
+                .dropdown-menu {
+                    transform: translate(-15%, 37%) !important;
+                }
+            }
+        }
+    }
+    .dropdown-wrapper {
+        padding: 0.85rem 0;
+        .dropdown {
+            .dropdown-menu {
+                transform: translate(-40%, 37%) !important;
+            }
+        }
+    }
+    .mobile_dropdowns {
+        display: none;
+    }
+}
+.nav-tabs {
+    .nav-item {
+        &.active {
+            border-bottom: 3px solid #fff !important;
+        }
+        &:not(:last-child) {
+            margin-right: 2.57rem;
+        }
+    }
+}
+@media only screen and (max-width: 768px) {
+    .main_tabs {
+        nav  {
+            padding: 0 1.14rem;
+        }
+      
+    }
+    .filters_wrapper {
+        padding: 0 1.14rem;
+        .mobile_dropdowns {
+            display: inline-block;
+            margin-left: auto;
+            .dropdown {
+                .dropdown-menu {
+                    transform: translate(-90%, 20%) !important;
+                }
+                .dropdown-toggle {
+                    width: 1.71rem;
+                    height: 1.71rem;
+                    background: url("../../images/filter_icon.svg");
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position: center;
+                    &::after {
+                        display: none;
+                    }
+                }
+            }
+        }
+        .dropdowns_container {
+            display: none;
+        }
+
+    }
+}

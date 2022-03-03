@@ -1,0 +1,34 @@
+.main_tabs {
+   nav {
+    padding: 0 4.5rem;
+    background: #222234;
+    .nav-link {
+        font-size: 1.14rem !important;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px;
+        padding: 0.85rem 0;
+    }
+   }
+    #main-tabs-tab-wOpium {
+        margin-left: auto;
+    }
+}
+.nav-tabs {
+    .nav-item {
+        &.active {
+            border-bottom: 3px solid #fff !important;
+        }
+        &:not(:last-child) {
+            margin-right: 2.57rem;
+        }
+    }
+}
+@media only screen and (max-width: 768px) {
+    .main_tabs {
+        nav  {
+            padding: 0 1.14rem;
+        }
+      
+    }
+}

@@ -2,8 +2,12 @@ import { positions, Provider as AlertProvider } from 'react-alert'
 import { BrowserView, MobileView } from "react-device-detect"
 
 import './App.css';
+// import Filters from './Components/Filters';
 import Header from './Components/Header'
-import PoolsList from './Components/PoolsList'
+import MainTabs from './Components/MainTabs';
+import PoolsList from './Components/PoolsList';
+// import PositionsList from './Components/PositionsList';
+
 const options = {
   timeout: 5000,
   position: positions.TOP_LEFT,
@@ -11,7 +15,11 @@ const options = {
     zIndex: 100, 
   }
 }
-
+export type PositionType = {
+  balance: number,
+  address: string,
+  endTime: number
+}
 const AlertTemplate = ({options, message, close }:any) => (
   <div style={{ 
     margin: 20, 
@@ -39,7 +47,11 @@ function App() {
         </MobileView>
         <BrowserView>
           <Header />
+          <MainTabs />
           <PoolsList />
+          {/* <PositionsList
+              positions={positions}
+          /> */}
         </BrowserView>
       </div>
     </AlertProvider>

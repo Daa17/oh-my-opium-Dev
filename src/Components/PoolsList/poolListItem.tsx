@@ -15,6 +15,8 @@ import {
 import { PoolType } from '../../Services/Utils/types'
 import { getScanLink } from '../../Services/Utils/transaction'
 import Arrow from './arrow'
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 import './styles.scss'
 
@@ -176,12 +178,24 @@ const PoolsList: FC<Props> = (props: Props) => {
     setPositionsLoading(false)
   }
   
-
+  const marks = {
+    0: '15 Oct 2021',
+    25: '6 Nov 2021',
+    50: '20 Nov 2021',
+    75: '25 Nov 2021',
+    100:'12 Dec 2021',
+  };
+  function log() {
+    console.log("val"); //eslint-disable-line
+  }
+  
   const renderHeader = () => {
     return (
       <div className='pools-list-item-header-wrapper'>
         <div className='pools-list-item-header-info'>
-          <div className='pools-list-item-header-title'>{pool.title}</div>
+          <div className='pools-list-item-header-title'>
+            <span>{pool.title}</span>
+          </div>
           <div className='pools-list-item-header-address'><OpiumLink theme={ETheme.DARK} newTab={true} label={pool.poolAddress} href={getScanLink(pool.poolAddress, authStore.networkId)} /></div>
         </div>
         <div className={`arrow-button ${collapseIsOpened ? 'up' : ''}`}>
@@ -194,6 +208,10 @@ const PoolsList: FC<Props> = (props: Props) => {
   const renderBody = () => {
     return (
       <div className='pools-list-item-body-wrapper'>
+        <div className="pools-item-title">Phase name</div>
+        <div className="pools-list-subttitle">{phaseInfo.tradingPhase}</div>
+        <Slider min={0} marks={marks} step={null} onChange={log} defaultValue={40} />
+        <div className='pools-list-item-info'>
         <div className='pools-list-item-first-column'>
           {pool.isSuspended
             ? <div>Pool is suspended</div>  
@@ -211,8 +229,8 @@ const PoolsList: FC<Props> = (props: Props) => {
                 </div>
           }
         </div>
-
         <div className='pools-list-item-second-column'>
+          <div className="pools-item-title">Stake</div>
           <div className='pools-list-item-input'>Amount to stake ({pool.marginTitle}): <input type='number' onChange={e => setStakeValue(+e.target.value)} /></div>
           <div className='pools-list-item-second-column-buttons-wrapper'>
             <Button variant='primary' label='stake' onClick={makeStake} disabled={appStore.requestsAreNotAllowed || pool.isSuspended}/>
@@ -226,6 +244,7 @@ const PoolsList: FC<Props> = (props: Props) => {
 
 
         <div className='pools-list-item-third-column'>
+          <div className="pools-item-title">Buy product</div>
           <div className='pools-list-item-input'>Amount ({pool.marginTitle}): <input type='number' onChange={e => setProtectValue(+e.target.value)} /></div>
           <div className='pools-list-item-insurance-price'>{`You pay: ${insPrice === 0 ? 'N/A' : `${parseFloat(insPrice.toFixed(3))} ${pool.marginTitle}`}`}</div>
           <div className='pools-list-item-third-column-buttons-wrapper'>
@@ -235,6 +254,7 @@ const PoolsList: FC<Props> = (props: Props) => {
 
           <div className='pools-list-item-fourth-column'>
             <Button  variant='secondary' label={positionsLoading ? 'loading ...' : 'show purchased products'} onClick={checkProducts} disabled={appStore.requestsAreNotAllowed || positionsLoading}/>
+          </div>
           </div>
       </div>
     )

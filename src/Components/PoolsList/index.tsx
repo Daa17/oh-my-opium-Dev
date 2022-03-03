@@ -12,6 +12,7 @@ import Wrapping from '../Wrapping'
 import Maintenance from '../Maintenance'
 
 import './styles.scss'
+import Filters from '../Filters'
 
 const PoolsList: FC<{}> = () => {
   const [ popupIsOpened, setPopupIsOpened ] = useState(false) 
@@ -28,10 +29,9 @@ const PoolsList: FC<{}> = () => {
     let positions:  PositionType[] | undefined = []
 
     await getPurchasedProductsTheGraph(pool, userAddress)
-      .then(res => {positions = res; console.log('getPurchasedProductsTheGraph positions',res)})
+      .then(res => positions = res)
       .catch(async e => {
         await getPurchasedProducts(pool, userAddress, (e) => alert.error(e.message)).then(res => positions = res)
-        console.log('getPurchasedProductsTheGraph catch',e)
       })
 
     if (positions && positions.length) {
@@ -42,42 +42,6 @@ const PoolsList: FC<{}> = () => {
       alert.error('There are no purchased products')
     }
   }
-
-  
-
-  // useEffect(() => {
-  //   const getAllPurchasedProducts = async () => {
-  //     let positions: PositionType[] | undefined = [];
-  //     const pools = appStore.poolsByNetwork.filter((pool) => !pool.isSuspended);
-  //     await Promise.all(
-  //       pools.map(async (pool) => {
-  //         await getPurchasedProductsTheGraph(pool, userAddress).then((res) => {
-  //           positions = res;
-  //           console.log("positions outside if ", positions);
-  //         });
-  //       })
-  //     )
-  //       .then(() => {
-  //         if (positions && positions.length) {
-  //           console.log("positions inside if ", positions);
-  //           // setPopupIsOpened(true);
-  //           setPositions(positions);
-  //           setPositionProductTitle("All products");
-  //         } else {
-  //           alert.error("There are no purchased products");
-  //         }
-  //       })
-  //       .catch((e) => {
-  //         alert.error(
-  //           "Something wen wrong, please try to show products in the pool"
-  //         );
-  //       });
-  //   };
-  //    getAllPurchasedProducts()
-  //   return ()=>{ 
-  //     getAllPurchasedProducts()
-  //   }
-  // }, [userAddress, alert]);
 
   const closePopup = () => {
     setPopupIsOpened(false)
@@ -140,21 +104,7 @@ const PoolsList: FC<{}> = () => {
         closePopup={closeMaintenance}
         component={<Maintenance pool={poolToMaintain}/>}
       />
-      {positions && positions.length ? (
-        positions.map((props) => (
-          <div
-            style={{
-              backgroundColor: "white",
-              padding: "10px",
-              marginBottom: "10px",
-            }}
-          >
-            {typeof props == "object" && JSON.stringify(props)}
-          </div>
-        ))
-      ) : (
-        <p style={{ color: "red" }}>positions is empty array</p>
-      )}
+      <Filters/>
       {appStore.poolsByNetwork.map((pool) => {
         return <PoolListItem pool={pool} showPurchasedProducts={() => showPurchasedProducts(pool)} showMaintenance={() => showMaintenance(pool)} key={pool.poolAddress}/>
       })}

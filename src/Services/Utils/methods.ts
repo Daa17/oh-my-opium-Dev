@@ -201,13 +201,6 @@ export const getPremium = async (
   const decimals = await stakingContract?.methods.decimals().call()
   const premiumBN = await stakingContract?.methods.getRequiredPremium(quantity).call()
   premium = +convertFromBN(premiumBN, decimals)
-
-  console.log("stakingContract", stakingContract);
-  console.log("quantity", quantity);
-  console.log("availableQuantity", availableQuantity);
-  console.log("premiumBN", premiumBN);
-  console.log("decimals", decimals);
-  
   return premium
 }
 
@@ -222,12 +215,9 @@ export const getInsurancePrice = async(
   if (!premium) return 0
 
   const quantity = Math.floor(value / nominal)
-  console.log("premium", premium);
-  console.log("quantity", quantity);
 
   return quantity * premium
 }
-
 
 export const getPurchasedProducts = async (
   pool: PoolType,
@@ -246,16 +236,13 @@ export const getPurchasedProducts = async (
 
   
   const positions: PositionType[] = []
-  
- 
+
   // Get positions from DB
   if (dbPositions) {
     for (let pos of dbPositions) {
       const { endTime, address } = pos
       const wrapperContract = createTokenContractInstance(address)
       const balance = await wrapperContract?.methods.balanceOf(userAddress).call()
-      console.log('iside if balance', balance, 'boolean' ,balance !== "0")
-
       if (balance !== '0') {
         const modifiedBalance: PositionType = { balance: +convertFromBN(balance, decimals), address, endTime}
         positions.push(modifiedBalance)
@@ -272,7 +259,6 @@ export const getPurchasedProducts = async (
 
   for (let i of Array(batchAmount)) {
     try {
-      console.log(i)
       // Waiting time between requests
       await new Promise(resolve => setTimeout(resolve, 1000))
       
@@ -288,7 +274,6 @@ export const getPurchasedProducts = async (
         const modifiedBalances: { balance: number, address: string, blockNumber: number}[] = balances.filter(el => +el.balance).map(el => ({ ...el, balance: +convertFromBN(el.balance, decimals)}))
     
         // Get endTime
-        console.log('modifiedBalances before finalizedBalances', modifiedBalances)
         const finalizedBalances: PositionType[] = await Promise.all(modifiedBalances.map(async (el) => {
           const der = await stakingContractReadOnly?.methods.derivative().call(undefined, el.blockNumber+1)
           return {...el, endTime: der.endTime}
@@ -302,8 +287,7 @@ export const getPurchasedProducts = async (
     fromBlock = fromBlock + blocksInBatch
     toBlock = toBlock + blocksInBatch
   }
-  console.log('final positions',positions)
-
+  
   return positions
 }
 
@@ -326,26 +310,17 @@ export const getPurchasedProductsTheGraph = async (
           }
         }
       `)
-      console.log('fetchTheGraph response' , response)
       const eventPositions: [{endTime: string, longPositionAddress: string}]  = response.longPositionTokens
-      console.log('eventPositions' , eventPositions)
-
       const balances: { balance: string, address: string, endTime: number }[] = await Promise.all(eventPositions.map(async (event) => {
         const wrapperContract = createTokenContractInstance(event.longPositionAddress)
         const balance = await wrapperContract?.methods.balanceOf(userAddress).call()
         return { balance, address: event.longPositionAddress, endTime: +event.endTime}
       }))
-      console.log('balances' , balances)
-
+  
       // Remove zero balance and convert from BigNumber
-      const modifiedBalances: { balance: number, address: string, endTime: number}[] = balances
-      // .filter(el => +el.balance)
-      .map(el => ({ ...el, balance: +convertFromBN(el.balance, decimals)}))
-      console.log('modifiedBalances' , modifiedBalances)
-
+      const modifiedBalances: { balance: number, address: string, endTime: number}[] = balances.filter(el => +el.balance).map(el => ({ ...el, balance: +convertFromBN(el.balance, decimals)}))
+  
       positions.push(...modifiedBalances)
-      console.log('modifiedBalances positions' , positions)
-
     } catch (error) {
       console.log({error})
       throw error

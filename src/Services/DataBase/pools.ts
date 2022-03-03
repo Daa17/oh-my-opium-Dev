@@ -18,20 +18,8 @@ import {positions as turboWeeklyETH} from './positions/polygon/turboWeeklyETH'
 import {positions as turboMATIC} from './positions/polygon/turboMATIC'
 
 
-export const ethPools = [ 
-{
-    title: '$OPIUM Option Call',    
-    poolAddress: '0xc1650f389de9056636d968832eb63382e3970fa1',    
-    nominal: 1,    
-    isSuspended: false,    
-    marginTitle: 'OPIUM',    
-    positions: opiumOptionCall,    
-    oracle: {      
-      address: '0x64dcb00e36a6238dad28e59c71c5214500539ef7',      
-      type: OracleTypeEnum.OPTIMISTIC
-    }, 
-},
-{
+export const ethPools = [
+  {
     title: 'USDT Protection',
     poolAddress: '0x5afFE41805a9E57fEd3657d0e64D96aeA0B77885',
     nominal: 1,
@@ -41,6 +29,18 @@ export const ethPools = [
     oracle: {
       address: '0x89c9c6731817ce9d3f52dc96e1481086bc1b328c',
       type: OracleTypeEnum.WITH_TIMESTAMP
+    }
+  },
+  {
+    title: '$OPIUM Option Call',
+    poolAddress: '0xc1650f389de9056636d968832eb63382e3970fa1',
+    nominal: 1,
+    isSuspended: false,
+    marginTitle: 'OPIUM',
+    positions: opiumOptionCall,
+    oracle: {
+      address: '0x64dcb00e36a6238dad28e59c71c5214500539ef7',
+      type: OracleTypeEnum.OPTIMISTIC
     }
   },
   {
@@ -110,39 +110,6 @@ export const bscPools = [
 ]
 
 export const polygonPools = [
-  {
-    title: "Test: Turbo ETH",
-    poolAddress: "0x4BFE09731Cb258CB5DFECF8219b3d1D27aa942a9",
-    nominal: 1,
-    marginTitle: "WETH",
-    isSuspended: false,
-    oracle: {
-      address: "0x0D876632F321fdcAbC540eEA5867c4799A627ed8",
-      type: OracleTypeEnum.WITH_TIMESTAMP,
-    },
-  },
-  {
-    title: 'Test: Turbo ETH',
-    poolAddress: '0xaf2d53cd17eE9B6475f2da63423c178Af43b65C0',
-    nominal: 1,
-    marginTitle: 'WETH',
-    isSuspended: false,
-    oracle: {
-      address: '0x0D876632F321fdcAbC540eEA5867c4799A627ed8',
-      type: OracleTypeEnum.WITH_TIMESTAMP
-    }
-  }, 
-  {
-    title: 'Test: Turbo ETH',
-    poolAddress: '0x040c58c14e34B5C1fAB80E43B9bD79b1E95Ef49E',
-    nominal: 1,
-    marginTitle: 'WETH',
-    isSuspended: false,
-    oracle: {
-      address: '0x0D876632F321fdcAbC540eEA5867c4799A627ed8',
-      type: OracleTypeEnum.WITH_TIMESTAMP
-    }
-  },
   {
     title: 'RealT 2661-2663 Cortland Rent insurance',
     poolAddress: '0x20120864944fC47fed4821C1c4B1b6a7D400844b',
