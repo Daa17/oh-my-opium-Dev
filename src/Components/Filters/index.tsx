@@ -6,8 +6,8 @@ import '../../styles/main.scss'
 import './styles.scss'
 
 const tabItems = [
-    {title: "All pools", eventKey: "All pools", content: <p>All pools</p>},
-    {title: "My stake", eventKey: "My stake", content: <p>My stake</p>}
+    {title: "All pools", eventKey: "All pools", content: <span></span>},
+    {title: "My stake", eventKey: "My stake", content: <span></span>}
     
 ]
 const programsDropdownItems = [

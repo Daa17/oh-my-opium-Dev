@@ -5,7 +5,6 @@ import './App.css';
 // import Filters from './Components/Filters';
 import Header from './Components/Header'
 import MainTabs from './Components/MainTabs';
-import PoolsList from './Components/PoolsList';
 // import PositionsList from './Components/PositionsList';
 
 const options = {
@@ -48,7 +47,6 @@ function App() {
         <BrowserView>
           <Header />
           <MainTabs />
-          <PoolsList />
           {/* <PositionsList
               positions={positions}
           /> */}
