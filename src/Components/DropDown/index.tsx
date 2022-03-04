@@ -57,6 +57,7 @@ export default function MuiDropDown(props: any) {
           >
             {props.data.map(({ title, value }: any) => (
               <FormControlLabel
+                key={value}
                 value={value}
                 control={<Radio />}
                 label={title}

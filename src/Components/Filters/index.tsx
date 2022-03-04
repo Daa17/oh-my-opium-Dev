@@ -21,15 +21,15 @@ const sortDropdownItems = [
   { title: "APR", value: "APR" },
   { title: "name", value: "name" },
 ];
-const mobileFilterItems = [
-  { title: "turbo", value: "turbo" },
-  { title: "inshurance", value: "inshurance" },
-  { title: "$OPIUM products", value: "$OPIUM products" },
-  { title: "expiration date", value: "expiration date" },
-  { title: "liquidity", value: "liquidity" },
-  { title: "APR", value: "APR" },
-  { title: "name", value: "name" },
-];
+// const mobileFilterItems = [
+//   { title: "turbo", value: "turbo" },
+//   { title: "inshurance", value: "inshurance" },
+//   { title: "$OPIUM products", value: "$OPIUM products" },
+//   { title: "expiration date", value: "expiration date" },
+//   { title: "liquidity", value: "liquidity" },
+//   { title: "APR", value: "APR" },
+//   { title: "name", value: "name" },
+// ];
 const applyFilter = () => {};
 const Filters: FC<{}> = () => {
   return (
