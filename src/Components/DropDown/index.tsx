@@ -8,6 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
+import { Button } from "@opiumteam/react-opium-components";
 
 import "./styles.scss";
 
@@ -20,7 +21,7 @@ export default function MuiDropDown(props: any) {
     } = event;
     setData(typeof value === "string" ? value.split(",") : value);
   };
-
+  
   return (
     <FormControl className="dropDown-default-styles" sx={{ m: 1, width: 300 }}>
       <InputLabel
@@ -42,31 +43,57 @@ export default function MuiDropDown(props: any) {
         renderValue={() => null}
         // MenuProps={MenuProps}
       >
-        {props.isCheckbox ? (
-          props.data?.map(({ title, value }: any) => (
-            <MenuItem key={title} value={value}>
-              <Checkbox checked={data.indexOf(title) > -1} />
-              <ListItemText primary={title} />
-            </MenuItem>
-          ))
-        ) : (
-          <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="female"
-            name="radio-buttons-group"
-          >
-            {props.data.map(({ title, value }: any) => (
-              <FormControlLabel
-                key={value}
-                value={value}
-                control={<Radio />}
-                label={title}
-              />
-            ))}
-          </RadioGroup>
+        <p>{props.checkboxHeader}</p>
+        {props.checkboxData?.map(({ title, value }: any) => (
+          <MenuItem key={title} value={value}>
+            <Checkbox checked={data.indexOf(title) > -1} />
+            <ListItemText primary={title} />
+          </MenuItem>
+        ))}
+
+        {props?.radioData && (
+          <div>
+            <p>{props.radioHeader}</p>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue={
+                props?.radioData?.length && props.radioData[0]?.value
+              }
+              name="radio-buttons-group"
+            >
+              {props.radioData.map(({ title, value }: any) => (
+                <FormControlLabel
+                  key={value}
+                  value={value}
+                  control={<Radio />}
+                  label={title}
+                />
+              ))}
+            </RadioGroup>
+          </div>
         )}
+        {props.data && (
+          <div>
+            <p>{props.header}</p>
+            {props.data?.map(({ title, value, iconUrl }: any) => (
+              <div>
+                <p>{title}</p>
+                <img src={iconUrl} alt="icon" />
+              </div>
+            ))}
+          </div>
+        )}
+        <Button
+          variant="secondary"
+          className="apply_filter"
+          style={{
+            backgroundColor: "red",
+            color: "#fff",
+          }}
+          label="apply"
+          onClick={() => {}}
+        />
       </Select>
-      {props.children}
     </FormControl>
   );
 }

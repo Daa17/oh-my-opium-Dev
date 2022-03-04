@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import { AuthType } from "@opiumteam/mobx-web3";
 import {
   Button,
-  DropdownSelector,
   OpiumLink,
   ETheme,
   Popup,
@@ -16,30 +15,35 @@ import { getScanLink } from "../../Services/Utils/transaction";
 import { PositionType } from "../../Services/Utils/types";
 import { shortenAddress } from "../../Services/Utils/helpers";
 import PositionsList from "../PositionsList";
+import MuiDropDown from "../DropDown";
+
+import DimondIcon from "../../images/diamond-purple.svg";
+import CircleIcone from "../../images/circle.svg";
+import EllipseIcon from "../../images/ellipse.svg";
 
 import "../../styles/main.scss";
 import "./styles.scss";
 
 const dropdownItems = [
-  { title: "Ethereum", value: "1" },
-  { title: "Binance", value: "56" },
-  { title: "Polygon", value: "137" },
+  { title: "Ethereum", value: "1", iconUrl: DimondIcon },
+  { title: "Binance", value: "56", iconUrl: CircleIcone },
+  { title: "Polygon", value: "137", iconUrl: EllipseIcon },
 ];
 const Header: FC<{}> = () => {
-  const [dropDownTitle, setDropDownTitle] = useState(dropdownItems[0].title);
+  // const [dropDownTitle, setDropDownTitle] = useState(dropdownItems[0].title);
   const [popupIsOpened, setPopupIsOpened] = useState(false);
   const [positions, setPositions] = useState<PositionType[]>([]);
   const [positionProductTitle, setPositionProductTitle] = useState<string>("");
   // const [ positionsAreLoading, setPositionsAreLoading ] = useState(false)
   // const alert = useAlert();
 
-  const handleSelect = (index: string) => {
-    setDropDownTitle(dropdownItems[+index].title);
-    authStore.changeNetwork(
-      dropdownItems[+index].title,
-      +dropdownItems[+index].value
-    );
-  };
+  // const handleSelect = (index: string) => {
+  //   setDropDownTitle(dropdownItems[+index].title);
+  //   authStore.changeNetwork(
+  //     dropdownItems[+index].title,
+  //     +dropdownItems[+index].value
+  //   );
+  // };
   const { requiredNetworkName, currentNetworkName, address } =
     authStore.blockchainStore;
 
@@ -104,10 +108,11 @@ const Header: FC<{}> = () => {
         {
           authStore.loggedIn && authStore.blockchainStore.address && (
             <div className="dropdown-wrapper">
-              <DropdownSelector
-                title={shortenAddress(address)}
-                items={dropdownItems}
-                onSelect={(eventKey) => handleSelect(eventKey)}
+              <MuiDropDown
+                // title={shortenAddress(address)}
+                data={dropdownItems}
+                header="Network"
+                // onSelect={(eventKey) => handleSelect(eventKey)}
               />
             </div>
           )
@@ -125,10 +130,11 @@ const Header: FC<{}> = () => {
       </div>
       <div className="header-buttons-wrapper">
         <div className="dropdown-wrapper">
-          <DropdownSelector
-            title={dropDownTitle}
-            items={dropdownItems}
-            onSelect={(eventKey) => handleSelect(eventKey)}
+          <MuiDropDown
+            // title={shortenAddress(address)}
+            data={dropdownItems}
+            header="Network"
+            // onSelect={(eventKey) => handleSelect(eventKey)}
           />
           {requiredNetworkName !== currentNetworkName && (
             <div className="red-network">change network in wallet</div>
