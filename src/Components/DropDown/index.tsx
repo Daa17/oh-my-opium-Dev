@@ -14,14 +14,16 @@ import "./styles.scss";
 
 export default function MuiDropDown(props: any) {
   const [data, setData] = React.useState<string[]>([]);
-
+  const [activeNetwork, setActiveNetwork] = React.useState<any>(props?.header);
   const handleChange = (event: SelectChangeEvent<typeof data>) => {
+    console.log(event.target);
     const {
       target: { value },
     } = event;
     setData(typeof value === "string" ? value.split(",") : value);
   };
-  
+  console.log(data);
+
   return (
     <FormControl className="dropDown-default-styles" sx={{ m: 1, width: 300 }}>
       <InputLabel
@@ -30,70 +32,81 @@ export default function MuiDropDown(props: any) {
         id="demo-multiple-checkbox-label"
         shrink={false}
       >
-        {props.title}
+        {props.title || activeNetwork || "Network"}
       </InputLabel>
-      <Select
-        variant="standard"
-        id="demo-multiple-checkbox"
-        placeholder={props.title}
-        defaultValue={props.title}
-        multiple
-        value={data}
-        onChange={handleChange}
-        renderValue={() => null}
-        // MenuProps={MenuProps}
-      >
-        <p>{props.checkboxHeader}</p>
-        {props.checkboxData?.map(({ title, value }: any) => (
-          <MenuItem key={title} value={value}>
-            <Checkbox checked={data.indexOf(title) > -1} />
-            <ListItemText primary={title} />
-          </MenuItem>
-        ))}
+      {props.isCheckbox || props.isRadio ? (
+        <Select
+          variant="standard"
+          id="demo-multiple-checkbox"
+          placeholder={props.title}
+          defaultValue={props.title}
+          multiple
+          value={data}
+          onChange={handleChange}
+          renderValue={() => null}
+          // MenuProps={MenuProps}
+        >
+          <p>{props.checkboxHeader}</p>
+          {props.checkboxData?.map(({ title, value }: any) => (
+            <MenuItem key={title} value={value}>
+              <Checkbox checked={data.indexOf(title) > -1} />
+              <ListItemText primary={title} />
+            </MenuItem>
+          ))}
 
-        {props?.radioData && (
-          <div>
-            <p>{props.radioHeader}</p>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue={
-                props?.radioData?.length && props.radioData[0]?.value
-              }
-              name="radio-buttons-group"
-            >
-              {props.radioData.map(({ title, value }: any) => (
-                <FormControlLabel
-                  key={value}
-                  value={value}
-                  control={<Radio />}
-                  label={title}
-                />
-              ))}
-            </RadioGroup>
-          </div>
-        )}
-        {props.data && (
-          <div>
-            <p>{props.header}</p>
-            {props.data?.map(({ title, value, iconUrl }: any) => (
-              <div>
+          {props?.radioData && (
+            <div>
+              <p>{props.radioHeader}</p>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue={
+                  props?.radioData?.length && props.radioData[0]?.value
+                }
+                name="radio-buttons-group"
+                onChange={handleChange}
+              >
+                {props.radioData.map(({ title, value }: any) => (
+                  <FormControlLabel
+                    key={value}
+                    value={value}
+                    control={<Radio />}
+                    label={title}
+                  />
+                ))}
+              </RadioGroup>
+            </div>
+          )}
+          <Button
+            variant="secondary"
+            className="apply_filter"
+            style={{
+              backgroundColor: "red",
+              color: "#fff",
+            }}
+            label="apply"
+            onClick={() => {}}
+          />
+        </Select>
+      ) : (
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={activeNetwork}
+          label="Age"
+          onChange={(e: SelectChangeEvent) =>
+            setActiveNetwork(e.target.value as string)
+          }
+        >
+          <p>{props.header}</p>
+          {props?.data &&
+            props.data?.map(({ title, iconUrl }: any) => (
+              <MenuItem key={title} value={title}>
                 <p>{title}</p>
                 <img src={iconUrl} alt="icon" />
-              </div>
+              </MenuItem>
             ))}
-          </div>
-        )}
-        <Button
-          variant="secondary"
-          className="apply_filter"
-          style={{
-            backgroundColor: "red",
-            color: "#fff",
-          }}
-          label="apply"
-          onClick={() => {}}
-        />
-      </Select>
+        </Select>
+      )}
     </FormControl>
   );
 }
