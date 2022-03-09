@@ -42,30 +42,6 @@
             top: 50%;
             transform: translate(0, -50%);
           }
-          &:nth-of-type(1) {
-            &::after {
-              background: url("../../images/diamond-purple.svg");
-              background-repeat: no-repeat;
-              background-size: contain;
-              background-position: center;
-            }
-          }
-          &:nth-of-type(2) {
-            &::after {
-              background: url("../../images/circle.svg");
-              background-repeat: no-repeat;
-              background-size: contain;
-              background-position: center;
-            }
-          }
-          &:nth-of-type(3) {
-            &::after {
-              background: url("../../images/ellipse.svg");
-              background-repeat: no-repeat;
-              background-size: contain;
-              background-position: center;
-            }
-          }
         }
       } 
     }

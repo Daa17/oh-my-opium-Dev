@@ -1,6 +1,124 @@
-.dropDown-default-styles {
-    background-color: aqua;
-    .dropDown-label {
-        color: gold;
+.dropdown-wrapper {
+    padding: 0;
+    .dropDown-default-styles {
+        margin: 0;
+        .dropDown-label {
+            position: static;
+            font-family: "Montserrat", sans-serif;
+            font-size: 1.14rem;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 20px;
+            color: #fff;
+            margin-bottom: 0;
+        }
+        .MuiInput-root {
+            margin-top: 0;
+            .MuiSelect-select {
+                padding: 0;
+            }
+        }
+    }
+}
+.MuiPaper-root {
+    position: relative;
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    padding: 2.35rem 1.07rem 1.42rem 1.07rem; 
+    // background-color: #222234 !important;
+    // &::before {
+    //     content: "";
+    //     width: 0;
+    //     height: 0;
+    //     top: 0;
+    //     right: 0;
+    //     transform: translate(0, -90%);
+    //     position: absolute;
+    //     border-left: 10px solid transparent;
+    //     border-right: 10px solid transparent;
+    //     border-bottom: 18px solid #222234;
+    //     z-index: 2;
+    //   }
+    //   &::after {
+    //     content: "";
+    //     width: 0;
+    //     height: 0;
+    //     top: 0;
+    //     right: 0;
+    //     transform: translate(0, -100%);
+    //     position: absolute;
+    //     border-left: 10px solid transparent;
+    //     border-right: 10px solid transparent;
+    //     border-bottom: 18px solid #fff;
+    //     z-index: 1;
+    //   }
+}
+.MuiList-root {
+    color: #fff;
+      h4 {
+        font-weight: 500;
+        font-size: 1rem;
+        line-height: 20px;
+        margin-bottom: 1rem;
+    }
+}
+.MuiSelect-nativeInput {
+  &:focus{
+    outline: none;
+  }
+}
+// .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+//     svg {
+//         width: 0.625rem;
+//         height: 0.625rem;
+//         border-radius: 0.5px
+//     }
+// }
+.menu_item {
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.5) !important;
+    &:last-of-type {
+        border-bottom: 0 !important;
+    }
+}
+.MuiListItemText-root {
+    .MuiTypography-root {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+        font-size: 0.75rem;
+        line-height: 0.93rem
+    }
+}
+
+.MuiInput-root {
+    &::before {
+        display: none;
+    }
+    &::after {
+        display: none;
+    }
+}
+// .MuiMenuItem-root.Mui-selected  {
+//     background-color: transparent !important;
+// }
+// .MuiRadio-root {
+//     svg {
+//         width: 10px;
+//         height: 10px;
+//     }
+// }
+.MuiFormControlLabel-root {
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.5);
+    &:last-child {
+        border-bottom: 0;
+    }
+    .MuiTypography-root {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+        font-size: 0.75rem;
+        line-height: 0.93rem;
+        margin-left: 0.68rem;
     }
 }
