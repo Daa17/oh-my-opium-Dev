@@ -2,6 +2,10 @@ import { FC, useState } from "react";
 import { observer } from "mobx-react";
 // import { useAlert } from "react-alert";
 import { AuthType } from "@opiumteam/mobx-web3";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
 import {
   Button,
   OpiumLink,
@@ -29,51 +33,21 @@ const dropdownItems = [
   { title: "Binance", value: "56", iconUrl: CircleIcone },
   { title: "Polygon", value: "137", iconUrl: EllipseIcon },
 ];
+
 const Header: FC<{}> = () => {
   // const [dropDownTitle, setDropDownTitle] = useState(dropdownItems[0].title);
   const [popupIsOpened, setPopupIsOpened] = useState(false);
   const [positions, setPositions] = useState<PositionType[]>([]);
   const [positionProductTitle, setPositionProductTitle] = useState<string>("");
-  // const [ positionsAreLoading, setPositionsAreLoading ] = useState(false)
-  // const alert = useAlert();
-
-  // const handleSelect = (index: string) => {
-  //   setDropDownTitle(dropdownItems[+index].title);
-  //   authStore.changeNetwork(
-  //     dropdownItems[+index].title,
-  //     +dropdownItems[+index].value
-  //   );
-  // };
-  const { requiredNetworkName, currentNetworkName, address } =
-    authStore.blockchainStore;
-
-  // const getAllPurchasedProducts = async () => {
-  //   setPositionsAreLoading(true)
-  //   let positions: PositionType[] | undefined = [];
-  //   const pools = appStore.poolsByNetwork.filter((pool) => !pool.isSuspended);
-  //   await Promise.all(
-  //     pools.map(async (pool) => {
-  //       await getPurchasedProductsTheGraph(pool, address).then(
-  //         (res) => (positions = res)
-  //       );
-  //     })
-  //   )
-  //     .then(() => {
-  //       if (positions && positions.length) {
-  //         setPopupIsOpened(true);
-  //         setPositions(positions);
-  //         setPositionProductTitle("All products");
-  //       } else {
-  //         alert.error("There are no purchased products");
-  //       }
-  //     })
-  //     .catch(() => {
-  //       alert.error(
-  //         "Something wen wrong, please try to show products in the pool"
-  //       );
-  //     });
-  //   setPositionsAreLoading(false)
-  // };
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const { address } = authStore.blockchainStore;
 
   const closePopup = () => {
     setPopupIsOpened(false);
@@ -83,7 +57,7 @@ const Header: FC<{}> = () => {
   // const handleMobileMenu = () => {
   //   console.log('You clicked button.');
   // }
-
+  console.log(authStore.loggedIn, "hhh", address);
   return (
     <div className="header-wrapper">
       <Popup
@@ -105,28 +79,16 @@ const Header: FC<{}> = () => {
         />
         <Button label='wOPIUM' onClick={() => {appStore.setWrappingPopupIsOpened(true)}} disabled={appStore.requestsAreNotAllowed || authStore.blockchainStore.requiredNetworkName !== 'Mainnet'}/> */}
       <div className="mobile-menu-wrapper">
-        {
-          authStore.loggedIn && authStore.blockchainStore.address && (
-            <div className="dropdown-wrapper">
-              <MuiDropDown
-                // title={shortenAddress(address)}
-                data={dropdownItems}
-                header="Network"
-                // onSelect={(eventKey) => handleSelect(eventKey)}
-              />
-            </div>
-          )
-
-          // <Button
-          //   label={(shortenAddress(address))}
-          //   style={{
-          //     backgroundColor: "transparent",
-          //     color: "#fff"
-          //   }}
-          //   className="mobile_btn"
-          //   onClick={() => handleMobileMenu()}
-          // />
-        }
+        {authStore.loggedIn && authStore.blockchainStore.address && (
+          <div className="dropdown-wrapper">
+            <MuiDropDown
+              // title={shortenAddress(address)}
+              data={dropdownItems}
+              header="Network"
+              // onSelect={(eventKey) => handleSelect(eventKey)}
+            />
+          </div>
+        )}
       </div>
       <div className="header-buttons-wrapper">
         <div className="dropdown-wrapper">
@@ -136,9 +98,6 @@ const Header: FC<{}> = () => {
             header="Network"
             // onSelect={(eventKey) => handleSelect(eventKey)}
           />
-          {requiredNetworkName !== currentNetworkName && (
-            <div className="red-network">change network in wallet</div>
-          )}
         </div>
         {authStore.loggedIn && authStore.blockchainStore.address && (
           <OpiumLink
@@ -148,20 +107,92 @@ const Header: FC<{}> = () => {
             href={getScanLink(address, authStore.networkId)}
           />
         )}
-        <Button
-          variant="primary"
-          className="login-btn"
-          style={{
-            backgroundColor: "transparent",
-            color: "#fff",
-          }}
-          label={authStore.loggedIn && address ? "log out" : "login"}
-          onClick={
-            authStore.loggedIn && address
-              ? () => authStore.blockchainStore.logout()
-              : () => authStore.blockchainStore.login(AuthType.INJECTED)
-          }
-        />
+        <>
+          {!(authStore.loggedIn && address) ? (
+            <Button
+              variant="primary"
+              className="login-btn"
+              style={{
+                backgroundColor: "transparent",
+                color: "#fff",
+              }}
+              label="log in"
+              onClick={handleClick}
+            />
+          ) : (
+            <Button
+              variant="primary"
+              className="login-btn"
+              style={{
+                backgroundColor: "transparent",
+                color: "#fff",
+              }}
+              label="log out"
+              onClick={() => authStore.blockchainStore.logout()}
+            />
+          )}
+          <Menu
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={open}
+            onClose={handleClose}
+            onClick={handleClose}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                overflow: "visible",
+                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                mt: 1.5,
+                "& .MuiAvatar-root": {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                "&:before": {
+                  content: '""',
+                  display: "block",
+                  position: "absolute",
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: "background.paper",
+                  transform: "translateY(-50%) rotate(45deg)",
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: "left", vertical: "top" }}
+            anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+          >
+            <MenuItem>
+              <ListItemIcon>
+                <img src={CircleIcone} alt="icon" />
+              </ListItemIcon>
+              <Button
+                variant="primary"
+                className="login-btn"
+                style={{
+                  backgroundColor: "transparent",
+                  color: "#fff",
+                }}
+                label="MetaMask"
+                onClick={() =>
+                  authStore.blockchainStore.login(AuthType.INJECTED)
+                }
+              />
+            </MenuItem>
+            <Divider />
+
+            <MenuItem>
+              <ListItemIcon>
+                <img src={CircleIcone} alt="icon" />
+              </ListItemIcon>
+              Wallet connect
+            </MenuItem>
+          </Menu>
+        </>
       </div>
     </div>
   );

@@ -55,6 +55,7 @@ const Filters: FC<{}> = () => {
           </div>
         </div>
       </div>
+
       <div className="mobile_dropdowns">
         <div className="dropdown-wrapper">
           <MuiDropDown
@@ -64,6 +65,7 @@ const Filters: FC<{}> = () => {
             checkboxData={programsDropdownItems}
             radioData={sortDropdownItems}
             className="filter_dropdown"
+            mobile
           >
             <Button
               variant="secondary"

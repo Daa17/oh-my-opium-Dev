@@ -9,42 +9,48 @@ import ListItemText from "@mui/material/ListItemText";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import { Button } from "@opiumteam/react-opium-components";
-import { styled } from '@mui/material/styles';
 
 import "../../styles/main.scss";
 import "./styles.scss";
-import { scaleBand } from "d3-scale";
 
-const BpIcon = styled('span')(({ theme }) => ({
+// const BpIcon = styled("span")(({ theme }) => ({
+//   width: "0.625rem",
+//   height: "0.625rem",
+//   border: "0.5px solid #FFFFFF",
+//   marginRight: "0.4375rem",
 
-  width: '0.625rem',
-  height: '0.625rem',
-  border: '0.5px solid #FFFFFF',
-  marginRight: '0.4375rem',
-
-  '.Mui-focusVisible &': {
-    outline: '2px auto rgba(19,124,189,.6)',
-    outlineOffset: 2,
-  },
-  'input:hover ~ &': {
-    backgroundColor: theme.palette.mode === 'dark' ? '#30404d' : '#ebf1f5',
-  },
-}));
+//   ".Mui-focusVisible &": {
+//     outline: "2px auto rgba(19,124,189,.6)",
+//     outlineOffset: 2,
+//   },
+//   "input:hover ~ &": {
+//     backgroundColor: theme.palette.mode === "dark" ? "#30404d" : "#ebf1f5",
+//   },
+// }));
 
 export default function MuiDropDown(props: any) {
   const [data, setData] = React.useState<string[]>([]);
   const [activeNetwork, setActiveNetwork] = React.useState<any>(props?.header);
+
   const handleChange = (event: SelectChangeEvent<typeof data>) => {
-    console.log(event.target);
+    console.log("handle change", event.target.value);
+    props.header === "Network" &&
+      event.target.value &&
+      setActiveNetwork(event.target.value as string);
+
     const {
       target: { value },
     } = event;
-    setData(typeof value === "string" ? value.split(",") : value);
+    
+    value && setData(typeof value === "string" ? value.split(",") : value);
   };
   console.log(data);
 
   return (
-    <FormControl className="dropDown-default-styles" sx={{ m: 1 ,width: '195px', position: 'relative'}}>
+    <FormControl
+      className="dropDown-default-styles"
+      sx={{ m: 1, width: "195px", position: "relative" }}
+    >
       <InputLabel
         variant="filled"
         className="dropDown-label"
@@ -53,7 +59,7 @@ export default function MuiDropDown(props: any) {
       >
         {props.title || activeNetwork || "Network"}
       </InputLabel>
-      {props.isCheckbox || props.isRadio ? (
+      {props.isCheckbox || props.isRadio || props.mobile ? (
         <Select
           variant="standard"
           id="demo-multiple-checkbox"
@@ -65,77 +71,80 @@ export default function MuiDropDown(props: any) {
           renderValue={() => null}
           style={{
             // width: '12.125rem',
-            borderRadius: '10px',
-           
+            borderRadius: "10px",
           }}
           MenuProps={{
             PaperProps: {
               sx: {
-                bgcolor: '#222234',
-                overflow: 'initial',
+                bgcolor: "#222234",
+                overflow: "initial",
                 // top: '20px !important',
-                '& .MuiList-root': {
-                  padding: 0
+                "& .MuiList-root": {
+                  padding: 0,
                 },
-                '& .MuiMenuItem-root': {
-                  '& .Mui-selected': {
-                    backgroundColor: 'transparent',
+                "& .MuiMenuItem-root": {
+                  "& .Mui-selected": {
+                    backgroundColor: "transparent",
                   },
-                }, 
-                '& .Mui-selected': {
-                  backgroundColor: 'transparent'
                 },
-                '&:before': {
+                "& .Mui-selected": {
+                  backgroundColor: "transparent",
+                },
+                "&:before": {
                   content: `" "`,
                   width: 0,
                   height: 0,
                   top: 0,
                   right: 0,
-                  transform: 'translate(0, -85%)',
-                  position: 'absolute',
-                  borderLeft: '10px solid transparent',
-                  borderRight: '10px solid transparent',
-                  borderBottom: '18px solid #222234',
-                  zIndex: 2
+                  transform: "translate(0, -85%)",
+                  position: "absolute",
+                  borderLeft: "10px solid transparent",
+                  borderRight: "10px solid transparent",
+                  borderBottom: "18px solid #222234",
+                  zIndex: 2,
                 },
-                '&:after': {
+                "&:after": {
                   content: `" "`,
                   width: 0,
                   height: 0,
                   top: 0,
                   right: 0,
-                  transform: 'translate(0, -100%)',
-                  position: 'absolute',
-                  borderLeft: '10px solid transparent',
-                  borderRight: '10px solid transparent',
-                  borderBottom: '18px solid #fff',
-                  zIndex: 1
-                }
+                  transform: "translate(0, -100%)",
+                  position: "absolute",
+                  borderLeft: "10px solid transparent",
+                  borderRight: "10px solid transparent",
+                  borderBottom: "18px solid #fff",
+                  zIndex: 1,
+                },
               },
             },
-        
+
             transformOrigin: {
               vertical: "top",
-              horizontal: "center"
+              horizontal: "center",
             },
           }}
         >
-          <h4>{props.checkboxHeader}</h4>
+          {props.checkboxData && <h4>{props.checkboxHeader}</h4>}
           {props.checkboxData?.map(({ title, value }: any) => (
-            <MenuItem key={title} value={value} className="menu_item"
+            <MenuItem
+              key={title}
+              value={value}
+              className="menu_item"
               style={{
-                padding: '0.37rem 0',
-                marginBottom: '0.3rem'
+                padding: "0.37rem 0",
+                marginBottom: "0.3rem",
               }}
             >
-              <Checkbox checked={data.indexOf(title) > -1} 
-                   style={{
-                    padding: 0,
-                    color: "#fff",
-                    transform: 'scale(0.8)',
-                    marginRight: '0.3rem',
-                  }}
-                  size="small" 
+              <Checkbox
+                checked={data.indexOf(title) > -1}
+                style={{
+                  padding: 0,
+                  color: "#fff",
+                  transform: "scale(0.8)",
+                  marginRight: "0.3rem",
+                }}
+                size="small"
               />
               <ListItemText primary={title} />
             </MenuItem>
@@ -156,18 +165,21 @@ export default function MuiDropDown(props: any) {
                   <FormControlLabel
                     key={value}
                     value={value}
-                    control={<Radio style={{ 
-                      padding: 0, 
-                      color: "#fff",
-                      transform: 'scale(0.7)'
-                    }}
-                    size="small" 
-                    />}
+                    control={
+                      <Radio
+                        style={{
+                          padding: 0,
+                          color: "#fff",
+                          transform: "scale(0.7)",
+                        }}
+                        size="small"
+                      />
+                    }
                     label={title}
                     style={{
-                      fontSize: '0.75rem',
-                      padding: '0.37rem 0',
-                      margin: '0 0 0.3rem 0',
+                      fontSize: "0.75rem",
+                      padding: "0.37rem 0",
+                      margin: "0 0 0.3rem 0",
                     }}
                   />
                 ))}
@@ -187,54 +199,52 @@ export default function MuiDropDown(props: any) {
           id="demo-simple-select"
           value={activeNetwork}
           label="Age"
-          onChange={(e: SelectChangeEvent) =>
-            setActiveNetwork(e.target.value as string)
-          }
+          onChange={handleChange}
           style={{
-            borderRadius: '10px'
+            borderRadius: "10px",
           }}
           MenuProps={{
             PaperProps: {
               sx: {
-                bgcolor: '#222234',
-                overflow: 'initial',
-                '& .MuiList-root': {
-                  padding: 0
+                bgcolor: "#222234",
+                overflow: "initial",
+                "& .MuiList-root": {
+                  padding: 0,
                 },
-                '& .MuiMenuItem-root': {
-                  '& .Mui-selected': {
-                    backgroundColor: 'transparent',
+                "& .MuiMenuItem-root": {
+                  "& .Mui-selected": {
+                    backgroundColor: "transparent",
                   },
                 },
-                '& .Mui-selected': {
-                  backgroundColor: 'transparent'
+                "& .Mui-selected": {
+                  backgroundColor: "transparent",
                 },
-                '&:before': {
+                "&:before": {
                   content: `" "`,
                   width: 0,
                   height: 0,
                   top: 0,
                   right: 0,
-                  transform: 'translate(0, -90%)',
-                  position: 'absolute',
-                  borderLeft: '10px solid transparent',
-                  borderRight: '10px solid transparent',
-                  borderBottom: '18px solid #222234',
-                  zIndex: 2
+                  transform: "translate(0, -90%)",
+                  position: "absolute",
+                  borderLeft: "10px solid transparent",
+                  borderRight: "10px solid transparent",
+                  borderBottom: "18px solid #222234",
+                  zIndex: 2,
                 },
-                '&:after': {
+                "&:after": {
                   content: `" "`,
                   width: 0,
                   height: 0,
                   top: 0,
                   right: 0,
-                  transform: 'translate(0, -100%)',
-                  position: 'absolute',
-                  borderLeft: '10px solid transparent',
-                  borderRight: '10px solid transparent',
-                  borderBottom: '18px solid #fff',
-                  zIndex: 1
-                }
+                  transform: "translate(0, -100%)",
+                  position: "absolute",
+                  borderLeft: "10px solid transparent",
+                  borderRight: "10px solid transparent",
+                  borderBottom: "18px solid #fff",
+                  zIndex: 1,
+                },
               },
             },
           }}
@@ -248,6 +258,9 @@ export default function MuiDropDown(props: any) {
               </MenuItem>
             ))}
         </Select>
+      )}
+      {activeNetwork !== "Network" && props.header === "Network" && (
+        <div className="red-network">change network in wallet</div>
       )}
     </FormControl>
   );
