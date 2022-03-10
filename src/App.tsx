@@ -5,6 +5,7 @@ import './App.css';
 // import Filters from './Components/Filters';
 import Header from './Components/Header'
 import MainTabs from './Components/MainTabs';
+
 // import PositionsList from './Components/PositionsList';
 
 const options = {
@@ -41,9 +42,9 @@ function App() {
   return (
     <AlertProvider template={AlertTemplate} {...options}>
       <div className="App">
-        <MobileView >
+        {/* <MobileView >
           <div className='mobile-text'>Oh My Opium does not support mobile devices yet. <br/><br/> Please use desktop version.</div>
-        </MobileView>
+        </MobileView> */}
         <BrowserView>
           <Header />
           <MainTabs />
