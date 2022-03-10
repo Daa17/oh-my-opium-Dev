@@ -41,10 +41,14 @@ export default function MuiDropDown(props: any) {
     const {
       target: { value },
     } = event;
-    
+
     value && setData(typeof value === "string" ? value.split(",") : value);
   };
   console.log(data);
+
+  const changeNetworkTitle = (event: SelectChangeEvent<typeof data>) => {
+    setActiveNetwork(event.target.value as string);
+  };
 
   return (
     <FormControl
@@ -57,7 +61,7 @@ export default function MuiDropDown(props: any) {
         id="demo-multiple-checkbox-label"
         shrink={false}
       >
-        {props.title || activeNetwork || "Network"}
+        {!activeNetwork && props.title}
       </InputLabel>
       {props.isCheckbox || props.isRadio || props.mobile ? (
         <Select
@@ -198,10 +202,11 @@ export default function MuiDropDown(props: any) {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={activeNetwork}
-          label="Age"
           onChange={handleChange}
+          renderValue={(selected: any) => selected}
           style={{
             borderRadius: "10px",
+            background: "aqua",
           }}
           MenuProps={{
             PaperProps: {
