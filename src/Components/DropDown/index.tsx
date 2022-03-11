@@ -44,12 +44,8 @@ export default function MuiDropDown(props: any) {
 
     value && setData(typeof value === "string" ? value.split(",") : value);
   };
-  console.log(data);
 
-  const changeNetworkTitle = (event: SelectChangeEvent<typeof data>) => {
-    setActiveNetwork(event.target.value as string);
-  };
-
+  
   return (
     <FormControl
       className="dropDown-default-styles"
