@@ -20,20 +20,13 @@ import { PositionType } from "../../Services/Utils/types";
 import { shortenAddress } from "../../Services/Utils/helpers";
 import PositionsList from "../PositionsList";
 import MuiDropDown from "../DropDown";
-
-import DimondIcon from "../../images/diamond-purple.svg";
-import  EllipseIcon from "../../images/circle.svg";
-import  CircleIcone from "../../images/ellipse.svg";
+import { dropdownItems } from "./constants";
+import CircleIcone from "../../images/ellipse.svg";
 import MetamaskIcon from "../../images/metamask_icon.svg";
 
 import "../../styles/main.scss";
 import "./styles.scss";
-
-const dropdownItems = [
-  { title: "Ethereum", value: "1", iconUrl: DimondIcon },
-  { title: "Binance", value: "56", iconUrl:  EllipseIcon },
-  { title: "Polygon", value: "137", iconUrl: CircleIcone },
-];
+import { MobileAuthMenu } from "./mobileAuthMenu";
 
 const Header: FC<{}> = () => {
   // const [dropDownTitle, setDropDownTitle] = useState(dropdownItems[0].title);
@@ -42,14 +35,15 @@ const Header: FC<{}> = () => {
   const [positionProductTitle, setPositionProductTitle] = useState<string>("");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const { address } = authStore.blockchainStore;
+  const shortAddress = shortenAddress(address);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const { address } = authStore.blockchainStore;
-
   const closePopup = () => {
     setPopupIsOpened(false);
     setPositionProductTitle("");
@@ -58,7 +52,6 @@ const Header: FC<{}> = () => {
   // const handleMobileMenu = () => {
   //   console.log('You clicked button.');
   // }
-  console.log(authStore.loggedIn, "hhh", address);
   return (
     <div className="header-wrapper">
       <Popup
@@ -80,16 +73,7 @@ const Header: FC<{}> = () => {
         />
         <Button label='wOPIUM' onClick={() => {appStore.setWrappingPopupIsOpened(true)}} disabled={appStore.requestsAreNotAllowed || authStore.blockchainStore.requiredNetworkName !== 'Mainnet'}/> */}
       <div className="mobile-menu-wrapper">
-        {authStore.loggedIn && authStore.blockchainStore.address && (
-          <div className="dropdown-wrapper">
-            <MuiDropDown
-              // title={shortenAddress(address)}
-              data={dropdownItems}
-              header="Network"
-              // onSelect={(eventKey) => handleSelect(eventKey)}
-            />
-          </div>
-        )}
+        <MobileAuthMenu shortAddress={shortAddress} />
       </div>
       <div className="header-buttons-wrapper">
         <div className="dropdown-wrapper">
@@ -145,10 +129,10 @@ const Header: FC<{}> = () => {
                 overflow: "visible",
                 filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                 mt: 1.5,
-                bgcolor: '#222234',
+                bgcolor: "#222234",
                 left: "auto",
                 right: "20px",
-        
+
                 "&:before": {
                   content: `" "`,
                   width: 0,
@@ -176,18 +160,19 @@ const Header: FC<{}> = () => {
                   zIndex: 1,
                 },
                 "& .MuiList-root": {
-                  padding: 0
-                }
+                  padding: 0,
+                },
               },
             }}
             transformOrigin={{ horizontal: "left", vertical: "top" }}
             anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
           >
             <h5>Wallet connect</h5>
-            <MenuItem style={{
-              justifyContent: "space-between",
-              padding: "0.3rem 0"
-            }}
+            <MenuItem
+              style={{
+                justifyContent: "space-between",
+                padding: "0.3rem 0",
+              }}
             >
               <Button
                 variant="primary"
@@ -204,16 +189,23 @@ const Header: FC<{}> = () => {
                   authStore.blockchainStore.login(AuthType.INJECTED)
                 }
               />
-              <ListItemIcon style={{minWidth: "1.2rem"}}>
-                <img src={MetamaskIcon} alt="icon"/>
+              <ListItemIcon style={{ minWidth: "1.2rem" }}>
+                <img src={MetamaskIcon} alt="icon" />
               </ListItemIcon>
             </MenuItem>
-            <Divider style={{borderTop: "0.5px solid rgba(255, 255, 255, 0.5)",  margin: "0"}} />
-            <MenuItem style={{
-              justifyContent: "space-between",
-              padding: "0.3rem 0"
-            }}>
-            <Button
+            <Divider
+              style={{
+                borderTop: "0.5px solid rgba(255, 255, 255, 0.5)",
+                margin: "0",
+              }}
+            />
+            <MenuItem
+              style={{
+                justifyContent: "space-between",
+                padding: "0.3rem 0",
+              }}
+            >
+              <Button
                 variant="primary"
                 className="login-btn"
                 style={{
@@ -228,7 +220,7 @@ const Header: FC<{}> = () => {
                   authStore.blockchainStore.login(AuthType.INJECTED)
                 }
               />
-              <ListItemIcon style={{minWidth: "1.2rem"}}>
+              <ListItemIcon style={{ minWidth: "1.2rem" }}>
                 <img src={CircleIcone} alt="icon" />
               </ListItemIcon>
             </MenuItem>
