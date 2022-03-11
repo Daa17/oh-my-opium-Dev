@@ -20,6 +20,7 @@
         color: white;
     }
     .dropdown-wrapper {
+      max-width: 130px;
         .dropdown {
             button {
                 position: relative;
@@ -119,11 +120,11 @@
   color: #fff;
   margin-bottom: 0;
 }
-.css-hfutr2-MuiSvgIcon-root-MuiSelect-icon {
-  width: 1.2rem !important;
-  height: 1.2rem !important;
-  color: #fff !important;
-}
+// .css-hfutr2-MuiSvgIcon-root-MuiSelect-icon {
+//   width: 1.2rem !important;
+//   height: 1.2rem !important;
+//   color: #fff !important;
+// }
 .css-196u7in-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
   .MuiMenuItem-root {
     &:not(:last-child) {

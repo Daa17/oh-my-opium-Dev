@@ -49,8 +49,16 @@ export default function MuiDropDown(props: any) {
   return (
     <FormControl
       className="dropDown-default-styles"
-      sx={{ m: 1, width: "max-content", position: "relative" }}
-    >
+      sx={{ 
+        m: 1, 
+        width: "max-content", 
+        position: "relative",    
+        "& .MuiSvgIcon-root": {
+        width: "1.2rem",
+        height: "1.2rem",
+        color: "#fff",
+      },
+    }}>
       {!activeNetwork && (
         <InputLabel
           variant="filled"
@@ -72,7 +80,6 @@ export default function MuiDropDown(props: any) {
           onChange={handleChange}
           renderValue={() => null}
           style={{
-            // width: '12.125rem',
             borderRadius: "10px",
           }}
           MenuProps={{
@@ -80,7 +87,6 @@ export default function MuiDropDown(props: any) {
               sx: {
                 bgcolor: "#222234",
                 overflow: "initial",
-                // top: '20px !important',
                 "& .MuiList-root": {
                   padding: 0,
                 },
@@ -120,10 +126,9 @@ export default function MuiDropDown(props: any) {
                 },
               },
             },
-
             transformOrigin: {
               vertical: "top",
-              horizontal: "center",
+              horizontal: "left",
             },
           }}
         >
@@ -255,6 +260,14 @@ export default function MuiDropDown(props: any) {
                 },
               },
             },
+            anchorOrigin: {
+              vertical: "bottom",
+              horizontal: "right"
+            },
+            transformOrigin: {
+              vertical: "top",
+              horizontal: "right",
+            },
           }}
         >
           <h5>{props.header}</h5>
@@ -262,6 +275,7 @@ export default function MuiDropDown(props: any) {
             props.data?.map(({ title, iconUrl }: any) => (
               <MenuItem key={title} value={title} 
               style={{
+                width: "11.8rem",
                 padding: "0.375rem 0",
                 justifyContent: "space-between"
               }}

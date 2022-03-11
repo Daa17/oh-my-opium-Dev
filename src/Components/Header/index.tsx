@@ -129,10 +129,8 @@ const Header: FC<{}> = () => {
                 overflow: "visible",
                 filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                 mt: 1.5,
-                bgcolor: "#222234",
-                left: "auto",
-                right: "20px",
-
+                bgcolor: '#222234',
+        
                 "&:before": {
                   content: `" "`,
                   width: 0,
@@ -160,12 +158,19 @@ const Header: FC<{}> = () => {
                   zIndex: 1,
                 },
                 "& .MuiList-root": {
-                  padding: 0,
-                },
+                  padding: 0
+                }
+                
               },
             }}
-            transformOrigin={{ horizontal: "left", vertical: "top" }}
-            anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+            anchorOrigin={{ 
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{ 
+              vertical: "top",
+              horizontal: "right",
+            }}
           >
             <h5>Wallet connect</h5>
             <MenuItem

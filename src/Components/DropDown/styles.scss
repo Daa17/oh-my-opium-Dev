@@ -1,7 +1,7 @@
 .dropdown-wrapper {
     padding: 0;
     .dropDown-default-styles {
-        min-width: 195px;
+        min-width: 100%;
         margin: 0;
         .dropDown-label {
             position: static;
@@ -108,11 +108,11 @@
     }
 }
 
-.css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon {
-    width: 1.2rem !important;
-    height: 1.2rem !important;
-    color: #fff !important;
-}
+// .css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon {
+//     width: 1.2rem !important;
+//     height: 1.2rem !important;
+//     color: #fff !important;
+// }
 
 .apply_filter_mobile {
     display: none;
