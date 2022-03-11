@@ -99,6 +99,54 @@
     border: none !important;
     background-color: transparent !important;
 }
+.MuiOutlinedInput-root {
+  background: transparent;
+
+}
+.css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+ &.Mui-focused {
+  .MuiOutlinedInput-notchedOutline {
+    border: none;
+  }
+ }
+}
+.MuiSelect-select {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.14rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  color: #fff;
+  margin-bottom: 0;
+}
+.css-hfutr2-MuiSvgIcon-root-MuiSelect-icon {
+  width: 1.2rem !important;
+  height: 1.2rem !important;
+  color: #fff !important;
+}
+.css-196u7in-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
+  .MuiMenuItem-root {
+    &:not(:last-child) {
+      margin-bottom: 0.3rem;
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.5),
+    }
+  }
+}
+.MuiMenuItem-root {
+  p {
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.85rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 14.63px;
+    color: #fff;
+    margin-bottom: 0;
+  }
+  img {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}
 
 @media only screen and (max-width: 768px) {
     .header-wrapper {

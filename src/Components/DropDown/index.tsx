@@ -53,16 +53,18 @@ export default function MuiDropDown(props: any) {
   return (
     <FormControl
       className="dropDown-default-styles"
-      sx={{ m: 1, width: "195px", position: "relative" }}
+      sx={{ m: 1, width: "max-content", position: "relative" }}
     >
-      <InputLabel
-        variant="filled"
-        className="dropDown-label"
-        id="demo-multiple-checkbox-label"
-        shrink={false}
-      >
-        {!activeNetwork && props.title}
-      </InputLabel>
+      {!activeNetwork && (
+        <InputLabel
+          variant="filled"
+          className="dropDown-label"
+          id="demo-multiple-checkbox-label"
+          shrink={false}
+        >
+          {props.title}
+        </InputLabel>
+      )}
       {props.isCheckbox || props.isRadio || props.mobile ? (
         <Select
           variant="standard"
@@ -206,7 +208,12 @@ export default function MuiDropDown(props: any) {
           renderValue={(selected: any) => selected}
           style={{
             borderRadius: "10px",
-            background: "aqua",
+            color: "#fff",
+            fontFamily: "Montserrat, sans-serif",
+            fontSize: "1.14rem",
+            fontStyle: 'normal',
+            fontWeight: 500,
+            lineHeight: '20px'
           }}
           MenuProps={{
             PaperProps: {
@@ -254,12 +261,17 @@ export default function MuiDropDown(props: any) {
             },
           }}
         >
-          <h4>{props.header}</h4>
+          <h5>{props.header}</h5>
           {props?.data &&
             props.data?.map(({ title, iconUrl }: any) => (
-              <MenuItem key={title} value={title}>
+              <MenuItem key={title} value={title} 
+              style={{
+                padding: "0.375rem 0",
+                justifyContent: "space-between"
+              }}
+              >
                 <p>{title}</p>
-                <img src={iconUrl} alt="icon" />
+                <img src={iconUrl} alt="icon"/>
               </MenuItem>
             ))}
         </Select>

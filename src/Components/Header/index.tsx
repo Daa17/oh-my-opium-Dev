@@ -22,16 +22,17 @@ import PositionsList from "../PositionsList";
 import MuiDropDown from "../DropDown";
 
 import DimondIcon from "../../images/diamond-purple.svg";
-import CircleIcone from "../../images/circle.svg";
-import EllipseIcon from "../../images/ellipse.svg";
+import  EllipseIcon from "../../images/circle.svg";
+import  CircleIcone from "../../images/ellipse.svg";
+import MetamaskIcon from "../../images/metamask_icon.svg";
 
 import "../../styles/main.scss";
 import "./styles.scss";
 
 const dropdownItems = [
   { title: "Ethereum", value: "1", iconUrl: DimondIcon },
-  { title: "Binance", value: "56", iconUrl: CircleIcone },
-  { title: "Polygon", value: "137", iconUrl: EllipseIcon },
+  { title: "Binance", value: "56", iconUrl:  EllipseIcon },
+  { title: "Polygon", value: "137", iconUrl: CircleIcone },
 ];
 
 const Header: FC<{}> = () => {
@@ -140,56 +141,96 @@ const Header: FC<{}> = () => {
             PaperProps={{
               elevation: 0,
               sx: {
+                minWidth: "13.8rem",
                 overflow: "visible",
                 filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                 mt: 1.5,
-                "& .MuiAvatar-root": {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
+                bgcolor: '#222234',
+                left: "auto",
+                right: "20px",
+        
                 "&:before": {
-                  content: '""',
-                  display: "block",
-                  position: "absolute",
+                  content: `" "`,
+                  width: 0,
+                  height: 0,
                   top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: "background.paper",
-                  transform: "translateY(-50%) rotate(45deg)",
-                  zIndex: 0,
+                  right: 0,
+                  transform: "translate(0, -85%)",
+                  position: "absolute",
+                  borderLeft: "10px solid transparent",
+                  borderRight: "10px solid transparent",
+                  borderBottom: "18px solid #222234",
+                  zIndex: 2,
                 },
+                "&:after": {
+                  content: `" "`,
+                  width: 0,
+                  height: 0,
+                  top: 0,
+                  right: 0,
+                  transform: "translate(0, -100%)",
+                  position: "absolute",
+                  borderLeft: "10px solid transparent",
+                  borderRight: "10px solid transparent",
+                  borderBottom: "18px solid #fff",
+                  zIndex: 1,
+                },
+                "& .MuiList-root": {
+                  padding: 0
+                }
               },
             }}
             transformOrigin={{ horizontal: "left", vertical: "top" }}
             anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
           >
-            <MenuItem>
-              <ListItemIcon>
-                <img src={CircleIcone} alt="icon" />
-              </ListItemIcon>
+            <h5>Wallet connect</h5>
+            <MenuItem style={{
+              justifyContent: "space-between",
+              padding: "0.3rem 0"
+            }}
+            >
               <Button
                 variant="primary"
                 className="login-btn"
                 style={{
+                  fontSize: "0.8rem",
                   backgroundColor: "transparent",
                   color: "#fff",
+                  border: "none",
+                  padding: "0",
                 }}
                 label="MetaMask"
                 onClick={() =>
                   authStore.blockchainStore.login(AuthType.INJECTED)
                 }
               />
+              <ListItemIcon style={{minWidth: "1.2rem"}}>
+                <img src={MetamaskIcon} alt="icon"/>
+              </ListItemIcon>
             </MenuItem>
-            <Divider />
-
-            <MenuItem>
-              <ListItemIcon>
+            <Divider style={{borderTop: "0.5px solid rgba(255, 255, 255, 0.5)",  margin: "0"}} />
+            <MenuItem style={{
+              justifyContent: "space-between",
+              padding: "0.3rem 0"
+            }}>
+            <Button
+                variant="primary"
+                className="login-btn"
+                style={{
+                  fontSize: "0.8rem",
+                  backgroundColor: "transparent",
+                  color: "#fff",
+                  border: "none",
+                  padding: "0",
+                }}
+                label="Wallet connect"
+                onClick={() =>
+                  authStore.blockchainStore.login(AuthType.INJECTED)
+                }
+              />
+              <ListItemIcon style={{minWidth: "1.2rem"}}>
                 <img src={CircleIcone} alt="icon" />
               </ListItemIcon>
-              Wallet connect
             </MenuItem>
           </Menu>
         </>
