@@ -7,7 +7,9 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { SelectChangeEvent } from "@mui/material/Select";
-
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Typography from "@mui/material/Typography";
 import {
   Button,
   OpiumLink,
@@ -18,13 +20,12 @@ import authStore from "../../../Services/Stores/AuthStore";
 import { getScanLink } from "../../../Services/Utils/transaction";
 import { shortenAddress } from "../../../Services/Utils/helpers";
 import { dropdownItems, walletConnect } from "../constants";
-import CircleIcone from "../../../images/ellipse.svg";
+import { MenuItem } from "@mui/material";
 
 export const MobileAuthMenu = ({ shortAddress }: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [activeNetwork, setActiveNetwork] = useState<string>();
   const [activeWallet, setActiveWallet] = useState<string>();
-
   const open = Boolean(anchorEl);
   const { address } = authStore.blockchainStore;
 
@@ -115,82 +116,113 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
         transformOrigin={{ horizontal: "left", vertical: "top" }}
         anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
       >
-        <h5>Network</h5>
-        <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue={dropdownItems[0].value}
-          name="radio-buttons-group"
-          onChange={(e) => changeNetworkTitle(e, "Network")}
+        <Accordion
+          defaultExpanded
+          style={{
+            padding: 0,
+            border: "none",
+            background: "transparent",
+            boxShadow: "none",
+          }}
         >
-          {dropdownItems?.map((item) => (
-            <>
-              <FormControlLabel
-                key={item.title}
-                value={item.value}
-                control={
-                  <Radio
-                    style={{
-                      padding: 0,
-                      color: "#fff",
-                      transform: "scale(0.7)",
-                    }}
-                    size="small"
-                  />
-                }
-                label={item.title}
-                style={{
-                  fontSize: "0.75rem",
-                  padding: "0.37rem 0",
-                  margin: "0 0 0.3rem 0",
-                }}
-              />
-              <ListItemIcon style={{ minWidth: "1.2rem" }}>
-                <img src={item.iconUrl} alt="icon" />
-              </ListItemIcon>
-            </>
-          ))}
-        </RadioGroup>
-        <h5>Wallet connect</h5>
-        <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue={walletConnect[0].value}
-          name="radio-buttons-group"
-          onChange={(e) => changeNetworkTitle(e, "Wallet")}
-        >
-          {walletConnect?.map((item) => (
-            <>
-              <FormControlLabel
-                key={item.title}
-                value={item.title}
-                control={
-                  <Radio
-                    style={{
-                      padding: 0,
-                      color: "#fff",
-                      transform: "scale(0.7)",
-                    }}
-                    size="small"
-                  />
-                }
-                label={item.title}
-                style={{
-                  fontSize: "0.75rem",
-                  padding: "0.37rem 0",
-                  margin: "0 0 0.3rem 0",
-                }}
-              />
-              <ListItemIcon style={{ minWidth: "1.2rem" }}>
-                <img src={item.iconUrl} alt="icon" />
-              </ListItemIcon>
-            </>
-          ))}
-          <Divider
+          <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
+            <Typography>Network</Typography>
+          </AccordionSummary>
+          <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            defaultValue={dropdownItems[0].value}
+            name="radio-buttons-group"
+            onChange={(e) => changeNetworkTitle(e, "Network")}
+          >
+            {dropdownItems?.map((item) => (
+              <div>
+                <FormControlLabel
+                  key={item.title}
+                  value={item.value}
+                  control={
+                    <Radio
+                      style={{
+                        padding: 0,
+                        color: "#fff",
+                        transform: "scale(0.7)",
+                      }}
+                      size="small"
+                    />
+                  }
+                  label={item.title}
+                  style={{
+                    fontSize: "0.75rem",
+                    padding: "0.37rem 0",
+                    margin: "0 0 0.3rem 0",
+                  }}
+                />
+                <ListItemIcon style={{ minWidth: "1.2rem" }}>
+                  <img src={item.iconUrl} alt="icon" />
+                </ListItemIcon>
+              </div>
+            ))}
+          </RadioGroup>
+        </Accordion>
+        {!(authStore.loggedIn && address) && (
+          <Accordion
+            defaultExpanded
             style={{
-              borderTop: "0.5px solid rgba(255, 255, 255, 0.5)",
-              margin: "0",
+              padding: 0,
+              border: "none",
+              background: "transparent",
+              boxShadow: "none",
             }}
-          />
-        </RadioGroup>
+          >
+            <AccordionSummary
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <Typography>Wallet connect</Typography>
+            </AccordionSummary>
+            <MenuItem>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue={walletConnect[0].value}
+                name="radio-buttons-group"
+                onChange={(e) => changeNetworkTitle(e, "Wallet")}
+              >
+                {walletConnect?.map((item) => (
+                  <div>
+                    <FormControlLabel
+                      key={item.title}
+                      value={item.title}
+                      control={
+                        <Radio
+                          style={{
+                            padding: 0,
+                            color: "#fff",
+                            transform: "scale(0.7)",
+                          }}
+                          size="small"
+                        />
+                      }
+                      label={item.title}
+                      style={{
+                        fontSize: "0.75rem",
+                        padding: "0.37rem 0",
+                        margin: "0 0 0.3rem 0",
+                      }}
+                    />
+                    <ListItemIcon style={{ minWidth: "1.2rem" }}>
+                      <img src={item.iconUrl} alt="icon" />
+                    </ListItemIcon>
+                  </div>
+                ))}
+                <Divider
+                  style={{
+                    borderTop: "0.5px solid rgba(255, 255, 255, 0.5)",
+                    margin: "0",
+                  }}
+                />
+              </RadioGroup>
+            </MenuItem>
+          </Accordion>
+        )}
         {authStore.loggedIn && authStore.blockchainStore.address && (
           <OpiumLink
             theme={ETheme.DARK}
