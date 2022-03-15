@@ -81,6 +81,7 @@ export default function MuiDropDown(props: any) {
           renderValue={() => null}
           style={{
             borderRadius: "10px",
+            
           }}
           MenuProps={{
             PaperProps: {
@@ -214,7 +215,7 @@ export default function MuiDropDown(props: any) {
             fontSize: "1.14rem",
             fontStyle: 'normal',
             fontWeight: 500,
-            lineHeight: '20px'
+            lineHeight: '20px',
           }}
           MenuProps={{
             PaperProps: {
@@ -277,7 +278,9 @@ export default function MuiDropDown(props: any) {
               style={{
                 width: "11.8rem",
                 padding: "0.375rem 0",
-                justifyContent: "space-between"
+                justifyContent: "space-between",
+                marginBottom: "0.3rem",
+                borderBottom: "0.5px solid rgba(255, 255, 255, 0.5)",
               }}
               >
                 <p>{title}</p>

@@ -5,8 +5,8 @@ import MetamaskIcon from "../../images/metamask_icon.svg";
 
 export const dropdownItems = [
   { title: "Ethereum", value: "1", iconUrl: DimondIcon },
-  { title: "Binance", value: "56", iconUrl: EllipseIcon },
-  { title: "Polygon", value: "137", iconUrl: CircleIcone },
+  { title: "BSC Mainnet", value: "56", iconUrl: EllipseIcon },
+  { title: "Other", value: "137", iconUrl: CircleIcone },
 ];
 
 export const walletConnect = [

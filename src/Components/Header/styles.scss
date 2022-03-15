@@ -9,44 +9,44 @@
     background-color: #0A0A1E;
     .mobile-menu-wrapper {
         display: none;
-        .dropdown {
-            .dropdown-menu {
-                transform: translate(-30%, 40%) !important;
-            }
-        }
+        // .dropdown {
+        //     .dropdown-menu {
+        //         transform: translate(-30%, 40%) !important;
+        //     }
+        // }
     }
     .header-title {
         font-size: 1.42rem;
         color: white;
     }
-    .dropdown-wrapper {
-      max-width: 130px;
-        .dropdown {
-            button {
-                position: relative;
-                font-weight: 500;
-                font-size: 1.15rem;
-                line-height: 1.25rem;
-                text-transform: capitalize;
-                letter-spacing: 0;
-                padding: 0.42rem 1.28rem;
-            }
-            .dropdown-menu {
-                .dropdown-item {
-                    position: relative;
-                    &::after {
-                        content: '';
-                        width: 1.14rem;
-                        height: 1.14rem;
-                        position: absolute;
-                        right: 0;
-                        top: 50%;
-                        transform: translate(0, -50%);
-                    }
-                }
-            }
-        }
-    }
+    // .dropdown-wrapper {
+    //   max-width: 130px;
+    //     .dropdown {
+    //         button {
+    //             position: relative;
+    //             font-weight: 500;
+    //             font-size: 1.15rem;
+    //             line-height: 1.25rem;
+    //             text-transform: capitalize;
+    //             letter-spacing: 0;
+    //             padding: 0.42rem 1.28rem;
+    //         }
+    //         .dropdown-menu {
+    //             .dropdown-item {
+    //                 position: relative;
+    //                 &::after {
+    //                     content: '';
+    //                     width: 1.14rem;
+    //                     height: 1.14rem;
+    //                     position: absolute;
+    //                     right: 0;
+    //                     top: 50%;
+    //                     transform: translate(0, -50%);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
     .header-buttons-wrapper {
         display: flex;
         flex-direction: row;
@@ -63,21 +63,9 @@
                     letter-spacing: 0;
                     padding: 0.42rem 1.28rem;
                 }
-                .dropdown-menu {
-                    transform: translate(-40%, 37%) !important;
-                }
-            }
-        }
-        .opium-link {
-            a {
-                color: #fff;
-                font-weight: 500;
-                font-size: 1.15rem;
-                line-height: 1.25rem;
-                letter-spacing: 0;
-                &::before {
-                    display: none;
-                }
+                // .dropdown-menu {
+                //     transform: translate(-40%, 37%) !important;
+                // }
             }
         }
         .login-btn {
@@ -93,6 +81,18 @@
         color: white;
         display: flex;
         flex-direction: column;
+    }
+}
+.opium-link {
+    a {
+        color: #fff;
+        font-weight: 500;
+        font-size: 1.15rem;
+        line-height: 1.25rem;
+        letter-spacing: 0;
+        &::before {
+            display: none;
+        }
     }
 }
 
@@ -120,11 +120,6 @@
   color: #fff;
   margin-bottom: 0;
 }
-// .css-hfutr2-MuiSvgIcon-root-MuiSelect-icon {
-//   width: 1.2rem !important;
-//   height: 1.2rem !important;
-//   color: #fff !important;
-// }
 .css-196u7in-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper {
   .MuiMenuItem-root {
     &:not(:last-child) {
@@ -182,15 +177,6 @@
         .header-buttons-wrapper {
             flex-direction: column;
             display: none;
-            // .dropdown-wrapper {
-            //   order: 2;
-            // }
-            // .opium-link {
-            //   order: 1;
-            // }
-            // .login-btn {
-            //   order: 3;
-            // }
         }
     }
 }

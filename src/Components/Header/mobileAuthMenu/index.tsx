@@ -22,6 +22,10 @@ import { shortenAddress } from "../../../Services/Utils/helpers";
 import { dropdownItems, walletConnect } from "../constants";
 import { MenuItem } from "@mui/material";
 
+import DiamondIcon from "../../../images/diamond-purple.svg";
+import "../../../styles/main.scss";
+import "./style.scss";
+
 export const MobileAuthMenu = ({ shortAddress }: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [activeNetwork, setActiveNetwork] = useState<string>();
@@ -49,13 +53,26 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
   };
 
   return (
-    <div>
+    <div className="btn-wrapper">
+      <ListItemIcon 
+      style={{ 
+        minWidth: "0.625rem",
+        position: "absolute",
+        top: "50%",
+        transform: "translate(0, -50%)",
+        left: "0.93rem"
+      }}>
+        <img src={DiamondIcon} alt="icon" />
+      </ListItemIcon>
       <Button
         variant="primary"
         className="login-btn"
         style={{
+          fontFamily: "Montserrat, sans-serif",
+          fontSize: "0.8rem",
           backgroundColor: "transparent",
           color: "#fff",
+          padding: "0.125rem 0.93rem 0.125rem 1.87rem"
         }}
         label={
           (authStore.loggedIn &&
@@ -80,8 +97,6 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
             mt: 1.5,
             bgcolor: "#222234",
             left: "auto",
-            right: "20px",
-
             "&:before": {
               content: `" "`,
               width: 0,
@@ -123,9 +138,34 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
             border: "none",
             background: "transparent",
             boxShadow: "none",
+            color: "#fff",
+          }}
+          sx={{
+            "&.MuiAccordion-root": {
+              "&.Mui-expanded": {
+                "&:first-of-type": {
+                  marginBottom: "27px"
+                }
+              }
+            }
           }}
         >
-          <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
+          <AccordionSummary 
+            aria-controls="panel1a-content" 
+            id="panel1a-header" 
+            style={{
+              minHeight: 'auto',
+              padding: 0
+            }}
+            sx={{
+              "& .MuiAccordionSummary-content": {
+                margin: "0 0 0.6rem 0",
+                "&.Mui-expanded": {
+                  margin: "0 0 0.6rem 0",
+                }
+              }
+            }}
+            >
             <Typography>Network</Typography>
           </AccordionSummary>
           <RadioGroup
@@ -134,33 +174,41 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
             name="radio-buttons-group"
             onChange={(e) => changeNetworkTitle(e, "Network")}
           >
-            {dropdownItems?.map((item) => (
-              <div>
-                <FormControlLabel
-                  key={item.title}
-                  value={item.value}
-                  control={
-                    <Radio
-                      style={{
-                        padding: 0,
-                        color: "#fff",
-                        transform: "scale(0.7)",
-                      }}
-                      size="small"
-                    />
-                  }
-                  label={item.title}
-                  style={{
-                    fontSize: "0.75rem",
-                    padding: "0.37rem 0",
-                    margin: "0 0 0.3rem 0",
-                  }}
-                />
-                <ListItemIcon style={{ minWidth: "1.2rem" }}>
-                  <img src={item.iconUrl} alt="icon" />
-                </ListItemIcon>
-              </div>
+           {dropdownItems?.map((item) => (
+              <FormControlLabel
+                key={item.title}
+                value={item.value}
+                control={
+                  <Radio
+                    style={{
+                      padding: 0,
+                      color: "#fff",
+                      transform: "scale(0.7)",
+                    }}
+                    size="small"
+                  />
+                }
+                label={
+                  <div className="title_wrapper">
+                    {item.title}
+                    <ListItemIcon style={{ minWidth: "1.2rem" }}>
+                      <img src={item.iconUrl} alt="icon" />
+                    </ListItemIcon>
+                  </div>
+                }
+                style={{
+                  fontSize: "0.75rem",
+                  padding: "0.37rem 0",
+                  margin: "0 0 0.18rem 0",
+                }}
+              />
             ))}
+            <Divider
+              style={{
+                borderTop: "0.5px solid rgba(255, 255, 255, 0.5)",
+                margin: "0",
+              }}
+            />
           </RadioGroup>
         </Accordion>
         {!(authStore.loggedIn && address) && (
@@ -171,47 +219,62 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
               border: "none",
               background: "transparent",
               boxShadow: "none",
+              color: "#fff",
             }}
           >
             <AccordionSummary
               aria-controls="panel2a-content"
               id="panel2a-header"
+              style={{
+                minHeight: 'auto',
+                padding: 0
+              }}
+              sx={{
+                "& .MuiAccordionSummary-content": {
+                  margin: "0 0 0.6rem 0",
+                  "&.Mui-expanded": {
+                    margin: "0 0 0.6rem 0"
+                  }
+                }
+              }}
             >
               <Typography>Wallet connect</Typography>
             </AccordionSummary>
-            <MenuItem>
+            <MenuItem style={{padding: 0}}>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 defaultValue={walletConnect[0].value}
                 name="radio-buttons-group"
                 onChange={(e) => changeNetworkTitle(e, "Wallet")}
               >
-                {walletConnect?.map((item) => (
-                  <div>
-                    <FormControlLabel
-                      key={item.title}
-                      value={item.title}
-                      control={
-                        <Radio
-                          style={{
-                            padding: 0,
-                            color: "#fff",
-                            transform: "scale(0.7)",
-                          }}
-                          size="small"
-                        />
-                      }
-                      label={item.title}
-                      style={{
-                        fontSize: "0.75rem",
-                        padding: "0.37rem 0",
-                        margin: "0 0 0.3rem 0",
-                      }}
-                    />
-                    <ListItemIcon style={{ minWidth: "1.2rem" }}>
-                      <img src={item.iconUrl} alt="icon" />
-                    </ListItemIcon>
-                  </div>
+            {walletConnect?.map((item) => (
+                  <FormControlLabel
+                    key={item.title}
+                    value={item.title}
+                    control={
+                      <Radio
+                        style={{
+                          padding: 0,
+                          color: "#fff",
+                          transform: "scale(0.7)",
+                        }}
+                        size="small"
+                      />
+                    }
+                    label={
+                      <div className="title_wrapper">
+                        {item.title}
+                        <ListItemIcon style={{ minWidth: "1.2rem" }}>
+                          <img src={item.iconUrl} alt="icon" />
+                        </ListItemIcon>
+                      </div>
+                    }
+                    style={{
+                      fontSize: "0.75rem",
+                      padding: "0.37rem 0",
+                      margin: "0 0 0.18rem 0",
+                    }}
+                  />
                 ))}
                 <Divider
                   style={{
@@ -236,8 +299,11 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
             variant="primary"
             className="login-btn"
             style={{
+              width: "100%",
               backgroundColor: "transparent",
               color: "#fff",
+              marginTop: "1.06rem",
+              padding: "0.125rem 0"
             }}
             label="log in"
             onClick={logInHandler}
@@ -247,8 +313,11 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
             variant="primary"
             className="login-btn"
             style={{
+              width: "100%",
               backgroundColor: "transparent",
               color: "#fff",
+              marginTop: "1.06rem",
+              padding: "0.125rem 0"
             }}
             label="log out"
             onClick={() => authStore.blockchainStore.logout()}
