@@ -25,6 +25,7 @@ import { MenuItem } from "@mui/material";
 import DiamondIcon from "../../../images/diamond-purple.svg";
 import "../../../styles/main.scss";
 import "./style.scss";
+import { transform } from "typescript";
 
 export const MobileAuthMenu = ({ shortAddress }: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -97,6 +98,9 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
             mt: 1.5,
             bgcolor: "#222234",
             left: "auto",
+            borderTopLeftRadius: "10px",
+            borderBottomLeftRadius: "10px",
+            borderBottomRightRadius: "10px",
             "&:before": {
               content: `" "`,
               width: 0,
@@ -105,9 +109,9 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
               right: 0,
               transform: "translate(0, -85%)",
               position: "absolute",
-              borderLeft: "10px solid transparent",
-              borderRight: "10px solid transparent",
-              borderBottom: "18px solid #222234",
+              borderLeft: "0.62rem solid transparent",
+              borderRight: "0.62rem solid transparent",
+              borderBottom: "1.1rem solid #222234",
               zIndex: 2,
             },
             "&:after": {
@@ -118,9 +122,9 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
               right: 0,
               transform: "translate(0, -100%)",
               position: "absolute",
-              borderLeft: "10px solid transparent",
-              borderRight: "10px solid transparent",
-              borderBottom: "18px solid #fff",
+              borderLeft: "0.62rem solid transparent",
+              borderRight: "0.62rem solid transparent",
+              borderBottom: "1.1rem solid #fff",
               zIndex: 1,
             },
             "& .MuiList-root": {
@@ -128,8 +132,15 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
             },
           },
         }}
-        transformOrigin={{ horizontal: "left", vertical: "top" }}
-        anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+        anchorOrigin={{ 
+          horizontal: "left", 
+          vertical: "bottom" 
+        }}
+        transformOrigin={{ 
+          vertical: -20,
+          horizontal: 80,
+        }}
+        
       >
         <Accordion
           defaultExpanded
@@ -144,9 +155,37 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
             "&.MuiAccordion-root": {
               "&.Mui-expanded": {
                 "&:first-of-type": {
-                  marginBottom: "27px"
-                }
+                  marginBottom: "2.4rem"
+                },
               }
+            },
+            "& .MuiButtonBase-root" : {
+              width: "fit-content",
+              "&.Mui-expanded" : {
+                width: "fit-content",
+              }
+            },
+            "& .MuiAccordionSummary-content": {
+                position: "relative",
+                "&::before": {
+                  content: `""`,
+                  width: 0,
+                  height: 0, 
+                  position: "absolute",
+                  top: "50%",
+                  right: "0",
+                  transform: "translate(0, -50%)",
+                  borderLeft: "0.2rem solid transparent",
+                  borderRight: "0.2rem solid transparent",
+                  borderTop: "0.35rem solid #fff",
+                  transition: "transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+                },
+                "&.Mui-expanded" : {
+                  "&::before": {
+                    transform: "translate(0, -50%) rotate(180deg)",
+                    transition: "transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+                  }
+                }
             }
           }}
         >
@@ -155,13 +194,16 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
             id="panel1a-header" 
             style={{
               minHeight: 'auto',
-              padding: 0
+              padding: 0,
+              marginBottom: "0.43rem"
             }}
             sx={{
               "& .MuiAccordionSummary-content": {
-                margin: "0 0 0.6rem 0",
+                margin: "0",
+                paddingRight: "0.81rem",
                 "&.Mui-expanded": {
-                  margin: "0 0 0.6rem 0",
+                  margin: "0",
+                  paddingRight: "0.81rem",
                 }
               }
             }}
@@ -226,16 +268,40 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
               aria-controls="panel2a-content"
               id="panel2a-header"
               style={{
+                width: "fit-content",
                 minHeight: 'auto',
-                padding: 0
+                padding: 0,
+                marginBottom: "0.43rem",
               }}
               sx={{
                 "& .MuiAccordionSummary-content": {
-                  margin: "0 0 0.6rem 0",
+                  margin: "0",
+                  paddingRight: "0.81rem",
+                  width: "fit-content",
+                  position: "relative",
+
+                  "&::before": {
+                    content: `""`,
+                    width: 0,
+                    height: 0, 
+                    position: "absolute",
+                    top: "50%",
+                    right: "0",
+                    transform: "translate(0, -50%)",
+                    borderLeft: "0.2rem solid transparent",
+                    borderRight: "0.2rem solid transparent",
+                    borderTop: "0.35rem solid #fff",
+                    transition: "transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+                  },
                   "&.Mui-expanded": {
-                    margin: "0 0 0.6rem 0"
+                    margin: "0",
+                    paddingRight: "0.81rem",
+                    "&::before": {
+                      transform: "translate(0, -50%) rotate(180deg)",
+                      transition: "transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+                    }
                   }
-                }
+                },
               }}
             >
               <Typography>Wallet connect</Typography>

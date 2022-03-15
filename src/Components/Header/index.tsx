@@ -130,7 +130,9 @@ const Header: FC<{}> = () => {
                 filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                 mt: 1.5,
                 bgcolor: '#222234',
-        
+                borderTopLeftRadius: "10px",
+                borderBottomLeftRadius: "10px",
+                borderBottomRightRadius: "10px",
                 "&:before": {
                   content: `" "`,
                   width: 0,
@@ -168,8 +170,8 @@ const Header: FC<{}> = () => {
               horizontal: "right",
             }}
             transformOrigin={{ 
-              vertical: "top",
-              horizontal: "right",
+              vertical: -7,
+              horizontal: 190,
             }}
           >
             <h5>Wallet connect</h5>

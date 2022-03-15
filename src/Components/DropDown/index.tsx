@@ -12,6 +12,7 @@ import { Button } from "@opiumteam/react-opium-components";
 
 import "../../styles/main.scss";
 import "./styles.scss";
+import { NONAME } from "dns";
 
 // const BpIcon = styled("span")(({ theme }) => ({
 //   width: "0.625rem",
@@ -79,15 +80,14 @@ export default function MuiDropDown(props: any) {
           value={data}
           onChange={handleChange}
           renderValue={() => null}
-          style={{
-            borderRadius: "10px",
-            
-          }}
           MenuProps={{
             PaperProps: {
               sx: {
                 bgcolor: "#222234",
                 overflow: "initial",
+                borderTopLeftRadius: "10px",
+                borderBottomLeftRadius: "10px",
+                borderBottomRightRadius: "10px",
                 "& .MuiList-root": {
                   padding: 0,
                 },
@@ -142,6 +142,11 @@ export default function MuiDropDown(props: any) {
               style={{
                 padding: "0.37rem 0",
                 marginBottom: "0.3rem",
+              }}
+              sx={{
+                "&:not(:last-of-type)" : {
+                  borderBottom: "0.5px solid rgba(255, 255, 255, 0.5)",
+                }
               }}
             >
               <Checkbox
@@ -209,19 +214,22 @@ export default function MuiDropDown(props: any) {
           onChange={handleChange}
           renderValue={(selected: any) => selected}
           style={{
-            borderRadius: "10px",
+            // borderRadius: "10px",
             color: "#fff",
             fontFamily: "Montserrat, sans-serif",
             fontSize: "1.14rem",
             fontStyle: 'normal',
             fontWeight: 500,
-            lineHeight: '20px',
+            lineHeight: '1.25rem',
           }}
           MenuProps={{
             PaperProps: {
               sx: {
                 bgcolor: "#222234",
                 overflow: "initial",
+                borderTopLeftRadius: "10px",
+                borderBottomLeftRadius: "10px",
+                borderBottomRightRadius: "10px",
                 "& .MuiList-root": {
                   padding: 0,
                 },
@@ -229,6 +237,10 @@ export default function MuiDropDown(props: any) {
                   "& .Mui-selected": {
                     backgroundColor: "transparent",
                   },
+                  "&:not(:last-of-type)": {
+                    borderBottom: "0.5px solid rgba(255, 255, 255, 0.5)",
+                    marginBottom: "0.3rem",
+                  }
                 },
                 "& .Mui-selected": {
                   backgroundColor: "transparent",
@@ -266,8 +278,8 @@ export default function MuiDropDown(props: any) {
               horizontal: "right"
             },
             transformOrigin: {
-              vertical: "top",
-              horizontal: "right",
+              vertical: -7,
+              horizontal: 200,
             },
           }}
         >
@@ -275,13 +287,11 @@ export default function MuiDropDown(props: any) {
           {props?.data &&
             props.data?.map(({ title, iconUrl }: any) => (
               <MenuItem key={title} value={title} 
-              style={{
-                width: "11.8rem",
-                padding: "0.375rem 0",
-                justifyContent: "space-between",
-                marginBottom: "0.3rem",
-                borderBottom: "0.5px solid rgba(255, 255, 255, 0.5)",
-              }}
+                style={{
+                  width: "11.8rem",
+                  padding: "0.375rem 0",
+                  justifyContent: "space-between",
+                }}
               >
                 <p>{title}</p>
                 <img src={iconUrl} alt="icon"/>
