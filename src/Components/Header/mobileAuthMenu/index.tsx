@@ -10,12 +10,7 @@ import { SelectChangeEvent } from "@mui/material/Select";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
-import {
-  Button,
-  OpiumLink,
-  ETheme,
-  Popup,
-} from "@opiumteam/react-opium-components";
+import { Button, OpiumLink, ETheme } from "@opiumteam/react-opium-components";
 import authStore from "../../../Services/Stores/AuthStore";
 import { getScanLink } from "../../../Services/Utils/transaction";
 import { shortenAddress } from "../../../Services/Utils/helpers";
@@ -56,14 +51,15 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
 
   return (
     <div className="btn-wrapper">
-      <ListItemIcon 
-      style={{ 
-        minWidth: "0.625rem",
-        position: "absolute",
-        top: "50%",
-        transform: "translate(0, -50%)",
-        left: "0.93rem"
-      }}>
+      <ListItemIcon
+        style={{
+          minWidth: "0.625rem",
+          position: "absolute",
+          top: "50%",
+          transform: "translate(0, -50%)",
+          left: "0.93rem",
+        }}
+      >
         <img src={DiamondIcon} alt="icon" />
       </ListItemIcon>
       <Button
@@ -74,7 +70,7 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
           fontSize: "0.8rem",
           backgroundColor: "transparent",
           color: "#fff",
-          padding: "0.125rem 0.93rem 0.125rem 1.87rem"
+          padding: "0.125rem 0.93rem 0.125rem 1.87rem",
         }}
         label={
           (authStore.loggedIn &&
@@ -133,15 +129,14 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
             },
           },
         }}
-        anchorOrigin={{ 
-          horizontal: "left", 
-          vertical: "bottom" 
+        anchorOrigin={{
+          horizontal: "left",
+          vertical: "bottom",
         }}
-        transformOrigin={{ 
+        transformOrigin={{
           vertical: -20,
           horizontal: 80,
         }}
-        
       >
         <Accordion
           defaultExpanded
@@ -156,47 +151,48 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
             "&.MuiAccordion-root": {
               "&.Mui-expanded": {
                 "&:first-of-type": {
-                  marginBottom: "2.4rem"
+                  marginBottom: "2.4rem",
                 },
-              }
+              },
             },
-            "& .MuiButtonBase-root" : {
+            "& .MuiButtonBase-root": {
               width: "fit-content",
-              "&.Mui-expanded" : {
+              "&.Mui-expanded": {
                 width: "fit-content",
-              }
+              },
             },
             "& .MuiAccordionSummary-content": {
-                position: "relative",
+              position: "relative",
+              "&::before": {
+                content: `""`,
+                width: 0,
+                height: 0,
+                position: "absolute",
+                top: "50%",
+                right: "0",
+                transform: "translate(0, -50%)",
+                borderLeft: "0.2rem solid transparent",
+                borderRight: "0.2rem solid transparent",
+                borderTop: "0.35rem solid #fff",
+                transition: "transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+              },
+              "&.Mui-expanded": {
                 "&::before": {
-                  content: `""`,
-                  width: 0,
-                  height: 0, 
-                  position: "absolute",
-                  top: "50%",
-                  right: "0",
-                  transform: "translate(0, -50%)",
-                  borderLeft: "0.2rem solid transparent",
-                  borderRight: "0.2rem solid transparent",
-                  borderTop: "0.35rem solid #fff",
-                  transition: "transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+                  transform: "translate(0, -50%) rotate(180deg)",
+                  transition:
+                    "transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
                 },
-                "&.Mui-expanded" : {
-                  "&::before": {
-                    transform: "translate(0, -50%) rotate(180deg)",
-                    transition: "transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
-                  }
-                }
-            }
+              },
+            },
           }}
         >
-          <AccordionSummary 
-            aria-controls="panel1a-content" 
-            id="panel1a-header" 
+          <AccordionSummary
+            aria-controls="panel1a-content"
+            id="panel1a-header"
             style={{
-              minHeight: 'auto',
+              minHeight: "auto",
               padding: 0,
-              marginBottom: "0.43rem"
+              marginBottom: "0.43rem",
             }}
             sx={{
               "& .MuiAccordionSummary-content": {
@@ -205,10 +201,10 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
                 "&.Mui-expanded": {
                   margin: "0",
                   paddingRight: "0.81rem",
-                }
-              }
+                },
+              },
             }}
-            >
+          >
             <Typography>Network</Typography>
           </AccordionSummary>
           <RadioGroup
@@ -217,7 +213,7 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
             name="radio-buttons-group"
             onChange={(e) => changeNetworkTitle(e, "Network")}
           >
-           {dropdownItems?.map((item) => (
+            {dropdownItems?.map((item) => (
               <FormControlLabel
                 key={item.title}
                 value={item.value}
@@ -270,7 +266,7 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
               id="panel2a-header"
               style={{
                 width: "fit-content",
-                minHeight: 'auto',
+                minHeight: "auto",
                 padding: 0,
                 marginBottom: "0.43rem",
               }}
@@ -284,7 +280,7 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
                   "&::before": {
                     content: `""`,
                     width: 0,
-                    height: 0, 
+                    height: 0,
                     position: "absolute",
                     top: "50%",
                     right: "0",
@@ -292,29 +288,31 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
                     borderLeft: "0.2rem solid transparent",
                     borderRight: "0.2rem solid transparent",
                     borderTop: "0.35rem solid #fff",
-                    transition: "transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+                    transition:
+                      "transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
                   },
                   "&.Mui-expanded": {
                     margin: "0",
                     paddingRight: "0.81rem",
                     "&::before": {
                       transform: "translate(0, -50%) rotate(180deg)",
-                      transition: "transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
-                    }
-                  }
+                      transition:
+                        "transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+                    },
+                  },
                 },
               }}
             >
               <Typography>Wallet connect</Typography>
             </AccordionSummary>
-            <MenuItem style={{padding: 0}}>
+            <MenuItem style={{ padding: 0 }}>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 defaultValue={walletConnect[0].value}
                 name="radio-buttons-group"
                 onChange={(e) => changeNetworkTitle(e, "Wallet")}
               >
-            {walletConnect?.map((item) => (
+                {walletConnect?.map((item) => (
                   <FormControlLabel
                     key={item.title}
                     value={item.title}
@@ -370,7 +368,7 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
               backgroundColor: "transparent",
               color: "#fff",
               marginTop: "1.06rem",
-              padding: "0.125rem 0"
+              padding: "0.125rem 0",
             }}
             label="log in"
             onClick={logInHandler}
@@ -384,7 +382,7 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
               backgroundColor: "transparent",
               color: "#fff",
               marginTop: "1.06rem",
-              padding: "0.125rem 0"
+              padding: "0.125rem 0",
             }}
             label="log out"
             onClick={() => authStore.blockchainStore.logout()}

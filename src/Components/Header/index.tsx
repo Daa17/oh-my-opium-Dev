@@ -6,18 +6,13 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
-import {
-  Button,
-  OpiumLink,
-  ETheme,
-} from "@opiumteam/react-opium-components";
+import { Button, OpiumLink, ETheme } from "@opiumteam/react-opium-components";
 import authStore from "../../Services/Stores/AuthStore";
 // import appStore from "../../Services/Stores/AppStore";
 import { getScanLink } from "../../Services/Utils/transaction";
 // import { getPurchasedProductsTheGraph } from "../../Services/Utils/methods";
-import { PositionType } from "../../Services/Utils/types";
+// import { PositionType } from "../../Services/Utils/types";
 import { shortenAddress } from "../../Services/Utils/helpers";
-import PositionsList from "../PositionsList";
 import MuiDropDown from "../DropDown";
 import { dropdownItems } from "./constants";
 import CircleIcone from "../../images/ellipse.svg";
@@ -29,9 +24,9 @@ import { MobileAuthMenu } from "./mobileAuthMenu";
 
 const Header: FC<{}> = () => {
   // const [dropDownTitle, setDropDownTitle] = useState(dropdownItems[0].title);
-  const [popupIsOpened, setPopupIsOpened] = useState(false);
-  const [positions, setPositions] = useState<PositionType[]>([]);
-  const [positionProductTitle, setPositionProductTitle] = useState<string>("");
+  // const [popupIsOpened, setPopupIsOpened] = useState(false);
+  // const [positions, setPositions] = useState<PositionType[]>([]);
+  // const [positionProductTitle, setPositionProductTitle] = useState<string>("");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -43,11 +38,11 @@ const Header: FC<{}> = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const closePopup = () => {
-    setPopupIsOpened(false);
-    setPositionProductTitle("");
-    setPositions([]);
-  };
+  // const closePopup = () => {
+  //   setPopupIsOpened(false);
+  //   setPositionProductTitle("");
+  //   setPositions([]);
+  // };
   // const handleMobileMenu = () => {
   //   console.log('You clicked button.');
   // }
@@ -128,7 +123,7 @@ const Header: FC<{}> = () => {
                 overflow: "visible",
                 filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
                 mt: 1.5,
-                bgcolor: '#222234',
+                bgcolor: "#222234",
                 borderTopLeftRadius: "10px",
                 borderBottomLeftRadius: "10px",
                 borderBottomRightRadius: "10px",
@@ -159,16 +154,15 @@ const Header: FC<{}> = () => {
                   zIndex: 1,
                 },
                 "& .MuiList-root": {
-                  padding: 0
-                }
-                
+                  padding: 0,
+                },
               },
             }}
-            anchorOrigin={{ 
+            anchorOrigin={{
               vertical: "bottom",
               horizontal: "right",
             }}
-            transformOrigin={{ 
+            transformOrigin={{
               vertical: -7,
               horizontal: 190,
             }}
