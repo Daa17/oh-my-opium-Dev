@@ -10,7 +10,6 @@ import {
   Button,
   OpiumLink,
   ETheme,
-  Popup,
 } from "@opiumteam/react-opium-components";
 import authStore from "../../Services/Stores/AuthStore";
 // import appStore from "../../Services/Stores/AppStore";
@@ -54,7 +53,7 @@ const Header: FC<{}> = () => {
   // }
   return (
     <div className="header-wrapper">
-      <Popup
+      {/* <Popup
         theme={ETheme.DARK}
         titleSize="lg"
         title="Purchased products"
@@ -63,7 +62,7 @@ const Header: FC<{}> = () => {
         popupIsOpen={popupIsOpened}
         closePopup={closePopup}
         component={<PositionsList positions={positions} />}
-      />
+      /> */}
       <div className="header-title">Oh my Opium</div>
       {/* <Button 
           variant='primary' 

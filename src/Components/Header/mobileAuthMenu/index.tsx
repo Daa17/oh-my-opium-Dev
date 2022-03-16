@@ -25,7 +25,6 @@ import { MenuItem } from "@mui/material";
 import DiamondIcon from "../../../images/diamond-purple.svg";
 import "../../../styles/main.scss";
 import "./style.scss";
-import { transform } from "typescript";
 
 export const MobileAuthMenu = ({ shortAddress }: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -39,6 +38,8 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    console.log(activeWallet);
+    console.log(shortAddress);
   };
   const changeNetworkTitle = (
     event: SelectChangeEvent<typeof activeNetwork>,

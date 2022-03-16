@@ -12,7 +12,6 @@ import { Button } from "@opiumteam/react-opium-components";
 
 import "../../styles/main.scss";
 import "./styles.scss";
-import { NONAME } from "dns";
 
 // const BpIcon = styled("span")(({ theme }) => ({
 //   width: "0.625rem",
