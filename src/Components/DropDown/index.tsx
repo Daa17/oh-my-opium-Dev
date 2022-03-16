@@ -214,7 +214,6 @@ export default function MuiDropDown(props: any) {
           onChange={handleChange}
           renderValue={(selected: any) => selected}
           style={{
-            // borderRadius: "10px",
             color: "#fff",
             fontFamily: "Montserrat, sans-serif",
             fontSize: "1.14rem",
@@ -230,6 +229,7 @@ export default function MuiDropDown(props: any) {
                 borderTopLeftRadius: "10px",
                 borderBottomLeftRadius: "10px",
                 borderBottomRightRadius: "10px",
+            
                 "& .MuiList-root": {
                   padding: 0,
                 },
