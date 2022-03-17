@@ -13,30 +13,19 @@ import { Button } from "@opiumteam/react-opium-components";
 import "../../styles/main.scss";
 import "./styles.scss";
 
-// const BpIcon = styled("span")(({ theme }) => ({
-//   width: "0.625rem",
-//   height: "0.625rem",
-//   border: "0.5px solid #FFFFFF",
-//   marginRight: "0.4375rem",
-
-//   ".Mui-focusVisible &": {
-//     outline: "2px auto rgba(19,124,189,.6)",
-//     outlineOffset: 2,
-//   },
-//   "input:hover ~ &": {
-//     backgroundColor: theme.palette.mode === "dark" ? "#30404d" : "#ebf1f5",
-//   },
-// }));
-
 export default function MuiDropDown(props: any) {
   const [data, setData] = React.useState<string[]>([]);
-  const [activeNetwork, setActiveNetwork] = React.useState<any>(props?.header);
+  const [activeNetwork, setActiveNetwork] = React.useState<any>("");
 
   const handleChange = (event: SelectChangeEvent<typeof data>) => {
-    console.log("handle change", event.target.value);
-    props.header === "Network" &&
-      event.target.value &&
+    if (props?.header === "Network" && event.target.value) {
+      let activeItem = props?.data?.find(
+        (item: { title: string | string[] }) =>
+          item.title === event.target.value
+      );
+      props?.handleNetworkList(activeItem);
       setActiveNetwork(event.target.value as string);
+    }
 
     const {
       target: { value },
@@ -45,20 +34,23 @@ export default function MuiDropDown(props: any) {
     value && setData(typeof value === "string" ? value.split(",") : value);
   };
 
-  
+  React.useEffect(() => {
+    props.data?.length && setActiveNetwork(props.data[0]?.title);
+  }, [props.data]);
   return (
     <FormControl
       className="dropDown-default-styles"
-      sx={{ 
-        m: 1, 
-        width: "max-content", 
-        position: "relative",    
+      sx={{
+        m: 1,
+        width: "max-content",
+        position: "relative",
         "& .MuiSvgIcon-root": {
-        width: "1.2rem",
-        height: "1.2rem",
-        color: "#fff",
-      },
-    }}>
+          width: "1.2rem",
+          height: "1.2rem",
+          color: "#fff",
+        },
+      }}
+    >
       {!activeNetwork && (
         <InputLabel
           variant="filled"
@@ -143,9 +135,9 @@ export default function MuiDropDown(props: any) {
                 marginBottom: "0.3rem",
               }}
               sx={{
-                "&:not(:last-of-type)" : {
+                "&:not(:last-of-type)": {
                   borderBottom: "0.5px solid rgba(255, 255, 255, 0.5)",
-                }
+                },
               }}
             >
               <Checkbox
@@ -216,9 +208,9 @@ export default function MuiDropDown(props: any) {
             color: "#fff",
             fontFamily: "Montserrat, sans-serif",
             fontSize: "1.14rem",
-            fontStyle: 'normal',
+            fontStyle: "normal",
             fontWeight: 500,
-            lineHeight: '1.25rem',
+            lineHeight: "1.25rem",
           }}
           MenuProps={{
             PaperProps: {
@@ -228,7 +220,7 @@ export default function MuiDropDown(props: any) {
                 borderTopLeftRadius: "10px",
                 borderBottomLeftRadius: "10px",
                 borderBottomRightRadius: "10px",
-            
+
                 "& .MuiList-root": {
                   padding: 0,
                 },
@@ -239,7 +231,7 @@ export default function MuiDropDown(props: any) {
                   "&:not(:last-of-type)": {
                     borderBottom: "0.5px solid rgba(255, 255, 255, 0.5)",
                     marginBottom: "0.3rem",
-                  }
+                  },
                 },
                 "& .Mui-selected": {
                   backgroundColor: "transparent",
@@ -274,7 +266,7 @@ export default function MuiDropDown(props: any) {
             },
             anchorOrigin: {
               vertical: "bottom",
-              horizontal: "right"
+              horizontal: "right",
             },
             transformOrigin: {
               vertical: -7,
@@ -285,7 +277,9 @@ export default function MuiDropDown(props: any) {
           <h5>{props.header}</h5>
           {props?.data &&
             props.data?.map(({ title, iconUrl }: any) => (
-              <MenuItem key={title} value={title} 
+              <MenuItem
+                value={title}
+                key={title}
                 style={{
                   width: "11.8rem",
                   padding: "0.375rem 0",
@@ -293,7 +287,7 @@ export default function MuiDropDown(props: any) {
                 }}
               >
                 <p>{title}</p>
-                <img src={iconUrl} alt="icon"/>
+                <img src={iconUrl} alt="icon" />
               </MenuItem>
             ))}
         </Select>

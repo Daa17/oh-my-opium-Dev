@@ -38,6 +38,12 @@ const Header: FC<{}> = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleChangeNetworkList = (data: { title: string; value: number }) => {
+    // console.log(index);
+    // console.log(dropdownItems[+index]);
+    authStore.changeNetwork(data?.title, data?.value);
+  };
   // const closePopup = () => {
   //   setPopupIsOpened(false);
   //   setPositionProductTitle("");
@@ -46,6 +52,7 @@ const Header: FC<{}> = () => {
   // const handleMobileMenu = () => {
   //   console.log('You clicked button.');
   // }
+
   return (
     <div className="header-wrapper">
       {/* <Popup
@@ -75,6 +82,7 @@ const Header: FC<{}> = () => {
             // title={shortenAddress(address)}
             data={dropdownItems}
             header="Network"
+            handleNetworkList={handleChangeNetworkList}
             // onSelect={(eventKey) => handleSelect(eventKey)}
           />
         </div>
