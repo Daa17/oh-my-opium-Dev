@@ -63,19 +63,6 @@
   background: transparent;
 
 }
-.css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
-    &.Mui-focused {
-        .MuiOutlinedInput-notchedOutline {
-            border: none;
-        }
-    }
-    &:hover {
-        .MuiOutlinedInput-notchedOutline {
-            border: 0;
-        }
-    }
-}
-
 .MuiSelect-select {
   font-family: "Montserrat", sans-serif;
   font-size: 1.14rem;

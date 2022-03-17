@@ -54,10 +54,13 @@ export default function MuiDropDown(props: any) {
         width: "max-content", 
         position: "relative",    
         "& .MuiSvgIcon-root": {
-        width: "1.2rem",
-        height: "1.2rem",
-        color: "#fff",
-      },
+          width: "1.2rem",
+          height: "1.2rem",
+          color: "#fff",
+        },
+        "& .MuiOutlinedInput-notchedOutline": {
+         display: "none",
+        }
     }}>
       {!activeNetwork && (
         <InputLabel
