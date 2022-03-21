@@ -55,35 +55,16 @@ const Header: FC<{}> = () => {
 
   return (
     <div className="header-wrapper">
-      {/* <Popup
-        theme={ETheme.DARK}
-        titleSize="lg"
-        title="Purchased products"
-        subtitle={positionProductTitle}
-        className="positions-list-popup"
-        popupIsOpen={popupIsOpened}
-        closePopup={closePopup}
-        component={<PositionsList positions={positions} />}
-      /> */}
       <div className="header-title">Oh my Opium</div>
-      {/* <Button 
-          variant='primary' 
-          label={positionsAreLoading ? 'loading...' : 'my products'}
-          onClick={getAllPurchasedProducts} 
-          disabled={appStore.requestsAreNotAllowed || positionsAreLoading}
-        />
-        <Button label='wOPIUM' onClick={() => {appStore.setWrappingPopupIsOpened(true)}} disabled={appStore.requestsAreNotAllowed || authStore.blockchainStore.requiredNetworkName !== 'Mainnet'}/> */}
       <div className="mobile-menu-wrapper">
         <MobileAuthMenu shortAddress={shortAddress} />
       </div>
       <div className="header-buttons-wrapper">
         <div className="dropdown-wrapper">
           <MuiDropDown
-            // title={shortenAddress(address)}
             data={dropdownItems}
             header="Network"
             handleNetworkList={handleChangeNetworkList}
-            // onSelect={(eventKey) => handleSelect(eventKey)}
           />
         </div>
         {authStore.loggedIn && authStore.blockchainStore.address && (

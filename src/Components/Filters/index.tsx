@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 import { Tabs, Button } from "@opiumteam/react-opium-components";
 import MuiDropDown from "../DropDown";
-// import PoolsList from '../PoolsList'
+
+import FilterIcon from "../../images/filter_icon.svg"
 
 import "../../styles/main.scss";
 import "./styles.scss";
@@ -35,7 +36,7 @@ const Filters: FC<{}> = () => {
         />
       </div>
       <div className="dropdowns_container">
-        <div className="dropdown-wrapper">
+        <div className="dropdown-wrapper programs">
           <MuiDropDown
             isCheckbox
             checkboxHeader="Programs"
@@ -45,7 +46,7 @@ const Filters: FC<{}> = () => {
         </div>
         <div className="sort_dropdown">
           <span>Sort by:</span>
-          <div className="dropdown-wrapper">
+          <div className="dropdown-wrapper sorting">
             <MuiDropDown
               isRadio
               radioHeader="Sort By"
@@ -58,6 +59,7 @@ const Filters: FC<{}> = () => {
 
       <div className="mobile_dropdowns">
         <div className="dropdown-wrapper">
+          <img src={FilterIcon} alt="filter_icon" className="filter_icon"/>
           <MuiDropDown
             title=" "
             radioHeader="Sort By"

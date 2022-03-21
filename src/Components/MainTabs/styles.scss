@@ -1,5 +1,5 @@
 .main_tabs {
-   nav {
+   & > nav {
     padding: 0 4.5rem;
     background: #222234;
     .nav-link {
@@ -15,6 +15,7 @@
     }
 }
 .nav-tabs {
+    top: 0;
     .nav-item {
         &.active {
             border-bottom: 3px solid #fff !important;

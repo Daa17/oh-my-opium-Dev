@@ -63,14 +63,12 @@
   background: transparent;
 
 }
-.MuiSelect-select {
-  font-family: "Montserrat", sans-serif;
-  font-size: 1.14rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 0.31rem;
-  color: #fff;
-  margin-bottom: 0;
+.MuiSelect-select{
+    &.MuiInputBase-input {
+        &.MuiOutlinedInput-input{
+            min-height: auto;
+          }
+    }
 }
 .MuiMenuItem-root {
   p {

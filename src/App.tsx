@@ -2,11 +2,8 @@ import { positions, Provider as AlertProvider } from "react-alert";
 import { BrowserView } from "react-device-detect";
 
 import "./App.css";
-// import Filters from './Components/Filters';
 import Header from "./Components/Header";
 import MainTabs from "./Components/MainTabs";
-
-// import PositionsList from './Components/PositionsList';
 
 const options = {
   timeout: 5000,
@@ -44,15 +41,9 @@ function App() {
   return (
     <AlertProvider template={AlertTemplate} {...options}>
       <div className="App">
-        {/* <MobileView >
-          <div className='mobile-text'>Oh My Opium does not support mobile devices yet. <br/><br/> Please use desktop version.</div>
-        </MobileView> */}
         <BrowserView>
           <Header />
           <MainTabs />
-          {/* <PositionsList
-              positions={positions}
-          /> */}
         </BrowserView>
       </div>
     </AlertProvider>
