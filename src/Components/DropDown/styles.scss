@@ -4,7 +4,6 @@
         min-width: 100%;
         margin: 0;
         .dropDown-label {
-            position: static;
             font-family: "Montserrat", sans-serif;
             font-size: 1.14rem;
             font-style: normal;
@@ -33,12 +32,14 @@
     color: #fff;
     padding: 0;
     h4 {
-        width: 7rem;
+        width: fit-content;
+        max-width: fit-content;
         position: relative;
         font-weight: 800;
         font-size: 1.1rem;
         line-height: 20px;
         margin-bottom: 0.7rem;
+        padding-right: 1rem;
         &::after {
             content: '';
             position: absolute;
@@ -96,9 +97,6 @@
         line-height: 0.93rem;
         margin-left: 0.45rem;
     }
-}
-.apply_filter_mobile {
-    display: none;
 }
 
 .red-network {

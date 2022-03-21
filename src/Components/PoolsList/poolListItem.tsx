@@ -274,7 +274,7 @@ const PoolsList: FC<Props> = (props: Props) => {
       <div className="pools-list-item-header-wrapper">
         <div className="pools-list-item-header-info">
           <div className="pools-list-item-header-title">
-            <img style={{ maxWidth: "100px" }} src={pool?.icon} alt="icon" />
+            <img src={pool?.icon} alt="icon" />
             <span>{pool.title}</span>
           </div>
           <div className="pools-list-item-header-address">

@@ -8,6 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
+import CheckBoxOutlineBlankIcon from "@mui/material/Checkbox";
 import { Button } from "@opiumteam/react-opium-components";
 
 import "../../styles/main.scss";
@@ -46,7 +47,6 @@ export default function MuiDropDown(props: any) {
         position: "relative",
         "& .MuiSvgIcon-root": {
           width: "1.2rem",
-          height: "1.2rem",
           color: "#fff",
         },
         "& .MuiOutlinedInput-notchedOutline": {
@@ -59,6 +59,9 @@ export default function MuiDropDown(props: any) {
           className="dropDown-label"
           id="demo-multiple-checkbox-label"
           shrink={false}
+          style={{
+            transform: "none",
+          }}
         >
           {props.title}
         </InputLabel>
@@ -76,6 +79,7 @@ export default function MuiDropDown(props: any) {
           MenuProps={{
             PaperProps: {
               sx: {
+                width:"195px",
                 bgcolor: "#222234",
                 overflow: "initial",
                 borderTopLeftRadius: "10px",
@@ -85,8 +89,11 @@ export default function MuiDropDown(props: any) {
                   padding: 0,
                 },
                 "& .MuiMenuItem-root": {
-                  "& .Mui-selected": {
+                  "&.Mui-selected": {
                     backgroundColor: "transparent",
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                    }
                   },
                 },
                 "& .Mui-selected": {
@@ -121,8 +128,8 @@ export default function MuiDropDown(props: any) {
               },
             },
             transformOrigin: {
-              vertical: "top",
-              horizontal: "left",
+              vertical: -20,
+              horizontal: 130,
             },
           }}
         >
@@ -133,8 +140,10 @@ export default function MuiDropDown(props: any) {
               value={value}
               className="menu_item"
               style={{
+                height: "auto",
+                minHeight: "auto",
                 padding: "0.37rem 0",
-                marginBottom: "0.3rem",
+                marginBottom: "0.38rem",
               }}
               sx={{
                 "&:not(:last-of-type)": {
@@ -146,18 +155,31 @@ export default function MuiDropDown(props: any) {
                 checked={data.indexOf(title) > -1}
                 style={{
                   padding: 0,
-                  color: "#fff",
-                  transform: "scale(0.8)",
                   marginRight: "0.3rem",
                 }}
+                // checkedIcon={<CheckBoxOutlineBlankIcon />}
+                sx={{
+                  color: "#fff",
+                  "& .MuiSvgIcon-root": {
+                    width: "1rem",
+                    height: "1rem"
+                  },
+                  "&.Mui-checked": {
+                    "& .MuiSvgIcon-root" : {
+                      fill: "#fff",
+                    }
+                  }
+
+                }}
                 size="small"
+                
               />
               <ListItemText primary={title} />
             </MenuItem>
           ))}
 
           {props?.radioData && (
-            <div>
+            <div className="sorting_wrapper">
               <h4>{props.radioHeader}</h4>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
@@ -176,9 +198,14 @@ export default function MuiDropDown(props: any) {
                         style={{
                           padding: 0,
                           color: "#fff",
-                          transform: "scale(0.7)",
                         }}
                         size="small"
+                        sx= {{
+                          "& .MuiSvgIcon-root": {
+                            width: "0.9rem",
+                            height: "1rem"
+                          },
+                        }}
                       />
                     }
                     label={title}
@@ -194,7 +221,7 @@ export default function MuiDropDown(props: any) {
           )}
           <Button
             variant="secondary"
-            className="apply_filter_mobile"
+            className="apply_filter"
             label="apply"
             onClick={() => {}}
           />
@@ -207,6 +234,7 @@ export default function MuiDropDown(props: any) {
           onChange={handleChange}
           renderValue={(selected: any) => selected}
           style={{
+            minHeight: "auto",
             color: "#fff",
             fontFamily: "Montserrat, sans-serif",
             fontSize: "1.14rem",
@@ -222,7 +250,6 @@ export default function MuiDropDown(props: any) {
                 borderTopLeftRadius: "10px",
                 borderBottomLeftRadius: "10px",
                 borderBottomRightRadius: "10px",
-
                 "& .MuiList-root": {
                   padding: 0,
                 },
