@@ -5,13 +5,18 @@
     padding: 0.5rem 4.5rem 1.14rem;
     .filters_tab_wrapper {
         margin-right: 1.55rem;
+        .filter-tabs {
+            padding: 0 4.5rem;
+            background: #222234
+        }
         nav {
             padding: 0;
             .nav-link {
+                font-size: 1.14rem !important;
                 font-style: normal;
                 font-weight: 500;
                 line-height: 20px;
-                padding: 0.8rem 0;
+                padding: 0.85rem 0;
             }
         }
     }
@@ -35,24 +40,25 @@
     }
     .dropdown-wrapper {
         &.programs {
-            min-width: 7.5rem; 
+            min-width: 7.5rem;
         }
         &.sorting {
-            min-width: 10.6rem; 
+            min-width: 10.6rem;
         }
-        
     }
     .mobile_dropdowns {
         display: none;
     }
 }
+
 .nav-tabs {
-    &.color-scheme-DARK  {
+    &.color-scheme-DARK {
         .nav-item {
             font-size: 1.14rem;
         }
     }
 }
+
 .opiumBtn {
     &.btn {
         &.apply_filter {
@@ -65,10 +71,9 @@
 
 @media only screen and (max-width: 768px) {
     .main_tabs {
-        nav  {
+        nav {
             padding: 0 1.14rem;
         }
-      
     }
     .filters_wrapper {
         padding: 1.25rem 1.14rem;
@@ -81,7 +86,7 @@
             .filter_icon {
                 position: absolute;
             }
-            .MuiSvgIcon-root  {
+            .MuiSvgIcon-root {
                 display: none;
             }
         }
@@ -94,7 +99,7 @@
         }
     }
     .nav-tabs {
-        &.color-scheme-DARK  {
+        &.color-scheme-DARK {
             .nav-item {
                 font-size: 0.8rem;
             }
@@ -108,5 +113,4 @@
     .sorting_wrapper {
         margin-top: 2rem;
     }
-   
 }
