@@ -26,9 +26,10 @@ import {
 import { PoolType } from "../../Services/Utils/types";
 import { getScanLink } from "../../Services/Utils/transaction";
 import Arrow from "./arrow";
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
 
+import {Tabs } from '@opiumteam/react-opium-components';
+
+import "rc-slider/assets/index.css";
 import "./styles.scss";
 
 type Props = {
@@ -254,17 +255,10 @@ const PoolsList: FC<Props> = (props: Props) => {
     setPositionsLoading(false);
   };
 
-  const marks = {
-    0: "15 Oct 2021",
-    25: "6 Nov 2021",
-    50: "20 Nov 2021",
-    75: "25 Nov 2021",
-    100: "12 Dec 2021",
-  };
+  
   function log() {
     console.log("val"); //eslint-disable-line
   }
-  console.log("pool", pool);
 
   const renderHeader = () => {
     console.log("render", pool.poolAddress);
@@ -293,173 +287,250 @@ const PoolsList: FC<Props> = (props: Props) => {
     );
   };
 
+  const tabItems = [
+    {title: "Stake", eventKey: "stake", content: 
+    <div className="pools-list-item-stake mobile">
+    <div className="pools-list-item-input">
+      Amount to stake ({pool.marginTitle}):{" "}
+      <input
+        type="number"
+        onChange={(e) => setStakeValue(+e.target.value)}
+      />
+    </div>
+    <div className="buttons-wrapper">
+      <Button
+        variant="secondary"
+        label="stake"
+        onClick={makeStake}
+        disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
+      />
+      <Button
+        variant="secondary"
+        label="unstake"
+        onClick={makeUnstake}
+        disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
+      />
+    </div>
+  </div>},
+    {title: "Buy product", eventKey: "buy", content: 
+
+    <div className="pools-list-item-buy mobile">
+    <div className="pools-list-item-input">
+      Amount ({pool.marginTitle}):{" "}
+      <input
+        type="number"
+        onChange={(e) => setProtectValue(+e.target.value)}
+      />
+    </div>
+
+    <div className="buy-buttons-wrapper">
+      <div className="pools-list-item-insurance-price">
+        <span>You pay: </span>
+        {`${insPrice === 0
+            ? "N/A"
+            : `${parseFloat(insPrice.toFixed(3))} ${pool.marginTitle}`
+          }`}
+      </div>
+      <Button
+        variant="secondary"
+        label="buy"
+        onClick={makeHedging}
+        disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
+      />
+    </div>
+  </div>
+  },
+]
+
   const renderBody = () => {
     return (
       <div className="pools-list-item-body-wrapper">
         <div className="pools-item-title">Phase name</div>
         <div className="pools-list-subttitle">{phaseInfo.tradingPhase}</div>
-        <Slider
-          min={0}
-          marks={marks}
-          step={null}
-          onChange={log}
-          defaultValue={40}
-        />
-        <div className="pools-list-item-info">
-          <div className="pools-list-item-first-column">
-            {pool.isSuspended ? (
-              <div>Pool is suspended</div>
-            ) : isMaintainable ? (
-              <div>
-                <div className="pool-list-item-no-epoch">
-                  Epoch is not initialized
+      
+        {pool.isSuspended ? (
+          <div>Pool is suspended</div>
+        ) : isMaintainable ? (
+          <div>
+            <div className="pool-list-item-no-epoch">
+              Epoch is not initialized
+            </div>
+            <Button
+              variant="secondary"
+              className="blue"
+              size="sm"
+              label="open maintenance"
+              onClick={showMaintenance}
+              disabled={appStore.requestsAreNotAllowed}
+            />
+          </div>
+        ) : (
+          <div className="pools-list-item-phase-wrapper">
+            <div className="pools-list-item-phase-current">
+              Current phase:
+              {appStore.requestsAreNotAllowed ? (
+                "Please check your network"
+              ) : phaseInfoIsLoading ? (
+                "Loading..."
+              ) : (
+                <div className="current-phase-text">
+                  {phaseInfo.currentPhaseText}
                 </div>
-                <Button
-                  variant="secondary"
-                  className="blue"
-                  size="sm"
-                  label="open maintenance"
-                  onClick={showMaintenance}
-                  disabled={appStore.requestsAreNotAllowed}
-                />
-              </div>
-            ) : (
-              <div className="pools-list-item-phase-wrapper">
-                <div className="pools-list-item-phase-current">
-                  Current phase:
-                  {appStore.requestsAreNotAllowed ? (
-                    "Please check your network"
-                  ) : phaseInfoIsLoading ? (
-                    "Loading..."
-                  ) : (
-                    <div className="current-phase-text">
-                      {phaseInfo.currentPhaseText}
-                    </div>
-                  )}
-                </div>
-                <div
-                  className={`pools-list-item-phase ${
-                    "REBALANCING" === phaseInfo.currentPhaseText && "bold-text"
+              )}
+            </div>
+            <div
+              className={`pools-list-item-phase ${"REBALANCING" === phaseInfo.currentPhaseText && "bold-text"
+                }`}
+            >
+              Rebalancing phase:
+              {appStore.requestsAreNotAllowed
+                ? "Please check your network"
+                : phaseInfoIsLoading
+                  ? "Loading..."
+                  : phaseInfo.stakingPhase}
+            </div>
+            <div
+              className={`pools-list-item-phase ${"TRADING" === phaseInfo.currentPhaseText && "bold-text"
+                }`}
+            >
+              Trading phase:
+              {appStore.requestsAreNotAllowed
+                ? "Please check your network"
+                : phaseInfoIsLoading
+                  ? "Loading..."
+                  : phaseInfo.tradingPhase}
+            </div>
+            {phaseInfo.stakingOnly && (
+              <div
+                className={`pools-list-item-phase ${"STAKING (ONLY)" === phaseInfo.currentPhaseText &&
+                  "bold-text"
                   }`}
-                >
-                  Rebalancing phase:
-                  {appStore.requestsAreNotAllowed
-                    ? "Please check your network"
-                    : phaseInfoIsLoading
+              >
+                Staking (only) phase:
+                {appStore.requestsAreNotAllowed
+                  ? "Please check your network"
+                  : phaseInfoIsLoading
                     ? "Loading..."
-                    : phaseInfo.stakingPhase}
-                </div>
-                <div
-                  className={`pools-list-item-phase ${
-                    "TRADING" === phaseInfo.currentPhaseText && "bold-text"
-                  }`}
-                >
-                  Trading phase:
-                  {appStore.requestsAreNotAllowed
-                    ? "Please check your network"
-                    : phaseInfoIsLoading
-                    ? "Loading..."
-                    : phaseInfo.tradingPhase}
-                </div>
-                {phaseInfo.stakingOnly && (
-                  <div
-                    className={`pools-list-item-phase ${
-                      "STAKING (ONLY)" === phaseInfo.currentPhaseText &&
-                      "bold-text"
-                    }`}
-                  >
-                    Staking (only) phase:
-                    {appStore.requestsAreNotAllowed
-                      ? "Please check your network"
-                      : phaseInfoIsLoading
-                      ? "Loading..."
-                      : phaseInfo.stakingOnly}
-                  </div>
-                )}
-                <div
-                  className={`pools-list-item-phase ${
-                    "WAITING" === phaseInfo.currentPhaseText && "bold-text"
-                  }`}
-                >
-                  Waiting phase:
-                  {appStore.requestsAreNotAllowed
-                    ? "Please check your network"
-                    : phaseInfoIsLoading
-                    ? "Loading..."
-                    : phaseInfo.notInitialized}
-                </div>
+                    : phaseInfo.stakingOnly}
               </div>
             )}
+            <div
+              className={`pools-list-item-phase ${"WAITING" === phaseInfo.currentPhaseText && "bold-text"
+                }`}
+            >
+              Waiting phase:
+              {appStore.requestsAreNotAllowed
+                ? "Please check your network"
+                : phaseInfoIsLoading
+                  ? "Loading..."
+                  : phaseInfo.notInitialized}
+            </div>
           </div>
-          <div className="pools-list-item-second-column">
-            <div className="pools-item-title">Stake</div>
-            <div className="pools-list-item-input">
-              Amount to stake ({pool.marginTitle}):{" "}
-              <input
-                type="number"
-                onChange={(e) => setStakeValue(+e.target.value)}
-              />
+        )}
+        <div className="pools-list-item-info">
+          <div className="pools-list-info">
+            <div className="pools-list-info-row">
+              <span className="pools-list-info-title">Total staked in pool:</span>
+              <span className="pools-list-info-amount">88 USDC</span>
             </div>
-            <div className="pools-list-item-second-column-buttons-wrapper">
-              <Button
-                variant="primary"
-                label="stake"
-                onClick={makeStake}
-                disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
-              />
-              <Button
-                variant="secondary"
-                label="unstake"
-                onClick={makeUnstake}
-                disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
-              />
+            <div className="pools-list-info-row">
+              <span className="pools-list-info-title">Strike price:</span>
+              <span className="pools-list-info-amount">88 USDC</span>
             </div>
-            <div className="pools-list-item-balance">
-              <div>Staked balance: </div>
-              <div>
+            <div className="pools-list-info-row">
+              <span className="pools-list-info-title">Current pool's utilization:</span>
+              <span className="pools-list-info-amount">88%</span>
+            </div>
+            <div className="pools-list-info-row">
+              <span className="pools-list-info-title">Return since instription:</span>
+              <span className="pools-list-info-amount">0%</span>
+            </div>
+            <div className="pools-list-info-row">
+              <span className="pools-list-info-title">Staked balance:</span>
+              <span className="pools-list-info-amount blue">
                 {appStore.requestsAreNotAllowed
                   ? "Please check your network"
                   : balanceIsLoading
-                  ? "Loading..."
-                  : balance}
-              </div>
+                    ? "Loading..."
+                    : balance}
+              </span>
             </div>
-          </div>
-
-          <div className="pools-list-item-third-column">
-            <div className="pools-item-title">Buy product</div>
-            <div className="pools-list-item-input">
-              Amount ({pool.marginTitle}):{" "}
-              <input
-                type="number"
-                onChange={(e) => setProtectValue(+e.target.value)}
-              />
-            </div>
-            <div className="pools-list-item-insurance-price">{`You pay: ${
-              insPrice === 0
-                ? "N/A"
-                : `${parseFloat(insPrice.toFixed(3))} ${pool.marginTitle}`
-            }`}</div>
-            <div className="pools-list-item-third-column-buttons-wrapper">
-              <Button
-                variant="primary"
-                label="buy product"
-                onClick={makeHedging}
-                disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
-              />
-            </div>
-          </div>
-
-          <div className="pools-list-item-fourth-column">
             <Button
               variant="secondary"
               label={
-                positionsLoading ? "loading ..." : "show purchased products"
+                positionsLoading ? "loading ..." : "see positions in the pool"
               }
               onClick={checkProducts}
               disabled={appStore.requestsAreNotAllowed || positionsLoading}
             />
           </div>
+          <div className="buy_stake_wrapper">
+            <div className="pools-list-item-stake">
+              <div className="pools-item-title-wrapper">
+                <span>Stake</span>
+                <a href="#">read more</a>
+              </div>
+              <div className="pools-list-item-input">
+                Amount to stake ({pool.marginTitle}):{" "}
+                <input
+                  type="number"
+                  onChange={(e) => setStakeValue(+e.target.value)}
+                />
+              </div>
+              <div className="buttons-wrapper">
+                <Button
+                  variant="secondary"
+                  label="stake"
+                  onClick={makeStake}
+                  disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
+                />
+                <Button
+                  variant="secondary"
+                  label="unstake"
+                  onClick={makeUnstake}
+                  disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
+                />
+              </div>
+            </div>
+
+            <div className="pools-list-item-buy">
+              <div className="pools-item-title-wrapper">
+                <span>Buy product</span>
+                <a href="#">read more</a>
+              </div>
+              <div className="pools-list-item-input">
+                Amount ({pool.marginTitle}):{" "}
+                <input
+                  type="number"
+                  onChange={(e) => setProtectValue(+e.target.value)}
+                />
+              </div>
+
+              <div className="buy-buttons-wrapper">
+                <div className="pools-list-item-insurance-price">
+                  <span>You pay: </span>
+                  {`${insPrice === 0
+                      ? "N/A"
+                      : `${parseFloat(insPrice.toFixed(3))} ${pool.marginTitle}`
+                    }`}
+                </div>
+                <Button
+                  variant="secondary"
+                  label="buy"
+                  onClick={makeHedging}
+                  disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
+                />
+              </div>
+            </div>
+            <div className="mobile-tabs">
+              <Tabs
+                     id= "buy-stack-tabs"
+                     items={tabItems}
+                     defaultActiveKey="stake"
+              />
+            </div>
+          </div>
+
         </div>
       </div>
     );
