@@ -8,7 +8,6 @@ import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
-import CheckBoxOutlineBlankIcon from "@mui/material/Checkbox";
 import { Button } from "@opiumteam/react-opium-components";
 
 import "../../styles/main.scss";
@@ -50,9 +49,10 @@ export default function MuiDropDown(props: any) {
           color: "#fff",
         },
         "& .MuiOutlinedInput-notchedOutline": {
-         display: "none",
-        }
-    }}>
+          display: "none",
+        },
+      }}
+    >
       {!activeNetwork && (
         <InputLabel
           variant="filled"
@@ -79,7 +79,7 @@ export default function MuiDropDown(props: any) {
           MenuProps={{
             PaperProps: {
               sx: {
-                width:"195px",
+                width: "195px",
                 bgcolor: "#222234",
                 overflow: "initial",
                 borderTopLeftRadius: "10px",
@@ -93,7 +93,7 @@ export default function MuiDropDown(props: any) {
                     backgroundColor: "transparent",
                     "&:hover": {
                       backgroundColor: "transparent",
-                    }
+                    },
                   },
                 },
                 "& .Mui-selected": {
@@ -162,17 +162,15 @@ export default function MuiDropDown(props: any) {
                   color: "#fff",
                   "& .MuiSvgIcon-root": {
                     width: "1rem",
-                    height: "1rem"
+                    height: "1rem",
                   },
                   "&.Mui-checked": {
-                    "& .MuiSvgIcon-root" : {
+                    "& .MuiSvgIcon-root": {
                       fill: "#fff",
-                    }
-                  }
-
+                    },
+                  },
                 }}
                 size="small"
-                
               />
               <ListItemText primary={title} />
             </MenuItem>
@@ -200,10 +198,10 @@ export default function MuiDropDown(props: any) {
                           color: "#fff",
                         }}
                         size="small"
-                        sx= {{
+                        sx={{
                           "& .MuiSvgIcon-root": {
                             width: "0.9rem",
-                            height: "1rem"
+                            height: "1rem",
                           },
                         }}
                       />
@@ -316,7 +314,7 @@ export default function MuiDropDown(props: any) {
                 }}
               >
                 <p>{title}</p>
-                <img src={iconUrl} alt="icon" />
+                <img style={{ maxWidth: "15px" }} src={iconUrl} alt="icon" />
               </MenuItem>
             ))}
         </Select>

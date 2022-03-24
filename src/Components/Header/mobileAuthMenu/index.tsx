@@ -231,7 +231,11 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
                   <div className="title_wrapper">
                     {item.title}
                     <ListItemIcon style={{ minWidth: "1.2rem" }}>
-                      <img src={item.iconUrl} alt="icon" />
+                      <img
+                        style={{ maxWidth: "15px" }}
+                        src={item.iconUrl}
+                        alt="icon"
+                      />
                     </ListItemIcon>
                   </div>
                 }
@@ -330,7 +334,11 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
                       <div className="title_wrapper">
                         {item.title}
                         <ListItemIcon style={{ minWidth: "1.2rem" }}>
-                          <img src={item.iconUrl} alt="icon" />
+                          <img
+                            style={{ maxWidth: "15px" }}
+                            src={item.iconUrl}
+                            alt="icon"
+                          />
                         </ListItemIcon>
                       </div>
                     }

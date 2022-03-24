@@ -1,16 +1,15 @@
-import React, { FC } from "react";
-import { Tabs, Button } from "@opiumteam/react-opium-components";
+import { FC, useState, SyntheticEvent } from "react";
+import { Button } from "@opiumteam/react-opium-components";
+import { useNavigate } from "react-router-dom";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import MuiDropDown from "../DropDown";
 
-import FilterIcon from "../../images/filter_icon.svg"
+import FilterIcon from "../../images/filter_icon.svg";
 
 import "../../styles/main.scss";
 import "./styles.scss";
 
-const tabItems = [
-  { title: "All pools", eventKey: "All pools", content: <span></span> },
-  { title: "My stake", eventKey: "My stake", content: <span></span> },
-];
 const programsDropdownItems = [
   { title: "turbo", value: "turbo" },
   { title: "inshurance", value: "inshurance" },
@@ -24,16 +23,33 @@ const sortDropdownItems = [
   { title: "name", value: "name" },
 ];
 
+interface IFilter {
+  nestedPath?: string;
+}
+
 const applyFilter = () => {};
-const Filters: FC<{}> = () => {
+const Filters: FC<IFilter> = ({ nestedPath }) => {
+  let navigate = useNavigate();
+
+  const [value, setValue] = useState<string>("all-pools");
+
+  const handleChange = (event: SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+    navigate(`/${nestedPath}/pools/${newValue}`);
+  };
+
   return (
     <div className="filters_wrapper">
       <div className="filters_tab_wrapper">
         <Tabs
-          id="filters"
-          items={tabItems}
-          // defaultActiveKey="pools"
-        />
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          className="filter-tabs"
+        >
+          <Tab label="All Pools" value="all-pools" />
+          <Tab label="My Stake" value="my-stake" />
+        </Tabs>
       </div>
       <div className="dropdowns_container">
         <div className="dropdown-wrapper programs">
@@ -59,7 +75,7 @@ const Filters: FC<{}> = () => {
 
       <div className="mobile_dropdowns">
         <div className="dropdown-wrapper">
-          <img src={FilterIcon} alt="filter_icon" className="filter_icon"/>
+          <img src={FilterIcon} alt="filter_icon" className="filter_icon" />
           <MuiDropDown
             title=" "
             radioHeader="Sort By"
