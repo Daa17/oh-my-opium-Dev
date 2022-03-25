@@ -16,7 +16,7 @@ const MainTabs: FC<{}> = () => {
            <Tabs
                 id= "main-tabs"
                 items={tabItems}
-                // defaultActiveKey="pools"
+                defaultActiveKey="pools"
            />
         </div>
     )

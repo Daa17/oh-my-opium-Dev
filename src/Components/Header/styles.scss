@@ -1,184 +1,114 @@
-.header-wrapper {
-  width: 100%;
-  height: 5rem;
-  display: flex;
-  flex-direction: row;
-  padding: 0 4.5rem;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #0A0A1E;
-  .mobile-menu-wrapper {
-    display: none;
-    .dropdown {
-      .dropdown-menu {
-        transform: translate(-30%, 40%) !important;
-      }
-    }
-  }
-  .header-title {
-    font-size: 1.42rem;
-    color: white;
-  }
-  .dropdown-wrapper {
-    .dropdown {
-      button {
-        position: relative;
-        font-weight: 500;
-        font-size: 1.15rem;
-        line-height: 1.25rem;
-        text-transform: capitalize;
-        letter-spacing: 0;
-        padding: 0.42rem 1.28rem; 
-      }
-      .dropdown-menu {
-        .dropdown-item {
-          position: relative;
-          &::after {
-            content: '';
-            width: 1.14rem;
-            height: 1.14rem;
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translate(0, -50%);
-          }
-          &:nth-of-type(1) {
-            &::after {
-              background: url("../../images/diamond-purple.svg");
-              background-repeat: no-repeat;
-              background-size: contain;
-              background-position: center;
+        .header-wrapper {
+            width: 100%;
+            height: 5rem;
+            display: flex;
+            flex-direction: row;
+            padding: 0 4.5rem;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #0A0A1E;
+            .mobile-menu-wrapper {
+                display: none;
             }
-          }
-          &:nth-of-type(2) {
-            &::after {
-              background: url("../../images/circle.svg");
-              background-repeat: no-repeat;
-              background-size: contain;
-              background-position: center;
+            .header-title {
+                font-size: 1.42rem;
+                color: white;
             }
-          }
-          &:nth-of-type(3) {
-            &::after {
-              background: url("../../images/ellipse.svg");
-              background-repeat: no-repeat;
-              background-size: contain;
-              background-position: center;
+            .header-buttons-wrapper {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                .dropdown-wrapper {
+                    margin-right: 2.3rem;
+                    .dropdown {
+                        button {
+                            position: relative;
+                            font-weight: 500;
+                            font-size: 1.15rem;
+                            line-height: 1.25rem;
+                            text-transform: capitalize;
+                            letter-spacing: 0;
+                            padding: 0.42rem 1.28rem;
+                        }
+                    }
+                }
+                .login-btn {
+                    font-weight: 500;
+                    font-size: 1.15rem;
+                    line-height: 1.25rem;
+                    letter-spacing: 0;
+                    padding: 0.5rem 1.85rem;
+                    margin-left: 1.42rem;
+                }
             }
-          }
+            .header-network-wrapper {
+                color: white;
+                display: flex;
+                flex-direction: column;
+            }
         }
-      } 
-    }
-  } 
-  .header-buttons-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    .dropdown-wrapper {
-      margin-right: 2.3rem;
-      .dropdown {
-        button {
-          position: relative;
-          font-weight: 500;
-          font-size: 1.15rem;
-          line-height: 1.25rem;
-          text-transform: capitalize;
-          letter-spacing: 0;
-          padding: 0.42rem 1.28rem; 
+        
+        .opium-link {
+            a {
+                color: #fff;
+                font-weight: 500;
+                font-size: 1.15rem;
+                line-height: 1.25rem;
+                letter-spacing: 0;
+                &::before {
+                    display: none;
+                }
+            }
         }
-        .dropdown-menu {
-          transform: translate(-40%, 37%) !important;
-        } 
-      }
-    } 
-    .opium-link {
-      a {
-        color: #fff;
-        font-weight: 500;
-        font-size: 1.15rem;
-        line-height: 1.25rem;
-        letter-spacing: 0;
-        &::before {
-          display: none;
+        
+        .MuiOutlinedInput-root {
+            background: transparent;
         }
-      }
-    }
-    .login-btn {
-      font-weight: 500;
-      font-size: 1.15rem;
-      line-height: 1.25rem;
-      letter-spacing: 0;
-      padding: 0.5rem 1.85rem;
-      margin-left: 1.42rem;
-    }
-  }
-
-  .header-network-wrapper {
-    color: white;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .red-network {
-    position: absolute;
-    right: 0;
-    bottom: -1.4rem;
-    white-space: nowrap;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 0.85rem;
-    line-height: 1.42rem;
-    color: #F6029C;
-  }
-}
-
-#dropdown-selector-toggle {
-  border: none !important;
-  background-color: transparent !important;
-}
-@media only screen and (max-width: 768px) {
-  .header-wrapper {
-    padding: 0 1.14rem;
-    .mobile-menu-wrapper {
-      display: flex;
-      .dropdown {
-        display: flex;
-        justify-content: center;
-        border: 1px solid #FFFFFF;
-        box-sizing: border-box;
-        border-radius: 100px;
-        padding: 0.35rem 1rem;
-        &::before {
-          content: '';
-          width: 0.71rem;
-          height: 1.071rem;
-          display: inline-block;
-          background: url("../../images/diamond-purple.svg");
-          background-repeat: no-repeat;
-          background-size: cover;
-          margin-right: 0.85rem;
+        
+        .MuiSelect-select {
+            &.MuiInputBase-input {
+                &.MuiOutlinedInput-input {
+                    min-height: auto;
+                }
+            }
         }
-        button {
-          padding: 0;
-          &::after {
-            display: none;
-          }
-
+        
+        .MuiMenuItem-root {
+            p {
+                font-family: "Montserrat", sans-serif;
+                font-size: 1.14rem;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 0.31rem;
+                color: #fff;
+                margin-bottom: 0;
+            }
+            .MuiMenuItem-root {
+                p {
+                    font-family: "Montserrat", sans-serif;
+                    font-size: 0.85rem;
+                    font-style: normal;
+                    font-weight: 800;
+                    line-height: 0.9rem;
+                    color: #fff;
+                    margin-bottom: 0;
+                }
+                img {
+                    width: 1.2rem;
+                    height: 1.2rem;
+                }
+            }
         }
-      }
-    }
-    .header-buttons-wrapper {
-      flex-direction: column;
-      display: none;
-      // .dropdown-wrapper {
-      //   order: 2;
-      // }
-      // .opium-link {
-      //   order: 1;
-      // }
-      // .login-btn {
-      //   order: 3;
-      // }
-    }
-  }
-}
+        
+        @media only screen and (max-width: 768px) {
+            .header-wrapper {
+                padding: 0 1.14rem;
+                .mobile-menu-wrapper {
+                    display: flex;
+                }
+                .header-buttons-wrapper {
+                    flex-direction: column;
+                    display: none;
+                }
+            }
+        }

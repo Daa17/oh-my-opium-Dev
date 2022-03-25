@@ -1,79 +1,101 @@
-import React, { FC } from "react";
-import { Tabs, Button } from "@opiumteam/react-opium-components";
+import { FC, useState, SyntheticEvent } from "react";
+import { Button } from "@opiumteam/react-opium-components";
+import { useNavigate } from "react-router-dom";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import MuiDropDown from "../DropDown";
-// import PoolsList from '../PoolsList'
+
+import FilterIcon from "../../images/filter_icon.svg";
 
 import "../../styles/main.scss";
 import "./styles.scss";
 
-const tabItems = [
-  { title: "All pools", eventKey: "All pools", content: <span></span> },
-  { title: "My stake", eventKey: "My stake", content: <span></span> },
-];
 const programsDropdownItems = [
   { title: "turbo", value: "turbo" },
   { title: "inshurance", value: "inshurance" },
   { title: "$OPIUM products", value: "$OPIUM products" },
 ];
+
 const sortDropdownItems = [
   { title: "expiration date", value: "expiration date" },
   { title: "liquidity", value: "liquidity" },
   { title: "APR", value: "APR" },
   { title: "name", value: "name" },
 ];
-const mobileFilterItems = [
-  { title: "turbo", value: "turbo" },
-  { title: "inshurance", value: "inshurance" },
-  { title: "$OPIUM products", value: "$OPIUM products" },
-  { title: "expiration date", value: "expiration date" },
-  { title: "liquidity", value: "liquidity" },
-  { title: "APR", value: "APR" },
-  { title: "name", value: "name" },
-];
+
+interface IFilter {
+  nestedPath?: string;
+}
+
 const applyFilter = () => {};
-const Filters: FC<{}> = () => {
+const Filters: FC<IFilter> = ({ nestedPath }) => {
+  let navigate = useNavigate();
+
+  const [value, setValue] = useState<string>("all-pools");
+
+  const handleChange = (event: SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+    navigate(`/${nestedPath}/pools/${newValue}`);
+  };
+
   return (
     <div className="filters_wrapper">
       <div className="filters_tab_wrapper">
         <Tabs
-          id="filters"
-          items={tabItems}
-          // defaultActiveKey="pools"
-        />
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          className="filter-tabs"
+        >
+          <Tab label="All Pools" value="all-pools" />
+          <Tab label="My Stake" value="my-stake" />
+        </Tabs>
       </div>
       <div className="dropdowns_container">
-        <div className="dropdown-wrapper">
+        <div className="dropdown-wrapper programs">
           <MuiDropDown
             isCheckbox
+            checkboxHeader="Programs"
             title="Programs"
-            data={programsDropdownItems}
+            checkboxData={programsDropdownItems}
           />
         </div>
         <div className="sort_dropdown">
           <span>Sort by:</span>
-          <div className="dropdown-wrapper">
-            <MuiDropDown title="expiration date" data={sortDropdownItems} />
+          <div className="dropdown-wrapper sorting">
+            <MuiDropDown
+              isRadio
+              radioHeader="Sort By"
+              title="expiration date"
+              radioData={sortDropdownItems}
+            />
           </div>
         </div>
       </div>
+
       <div className="mobile_dropdowns">
         <div className="dropdown-wrapper">
-          {/* <MuiDropDown
+          <img src={FilterIcon} alt="filter_icon" className="filter_icon" />
+          <MuiDropDown
             title=" "
-            items={mobileFilterItems}
+            radioHeader="Sort By"
+            checkboxHeader="Programs"
+            checkboxData={programsDropdownItems}
+            radioData={sortDropdownItems}
             className="filter_dropdown"
-          > */}
-          <Button
-            variant="secondary"
-            className="apply_filter"
-            style={{
-              backgroundColor: "transparent",
-              color: "#fff",
-            }}
-            label="apply"
-            onClick={applyFilter}
-          />
-          {/* </MuiDropDown> */}
+            mobile
+          >
+            <Button
+              variant="secondary"
+              className="apply_filter"
+              style={{
+                backgroundColor: "transparent",
+                color: "#fff",
+              }}
+              label="apply"
+              onClick={applyFilter}
+            />
+          </MuiDropDown>
         </div>
       </div>
     </div>
