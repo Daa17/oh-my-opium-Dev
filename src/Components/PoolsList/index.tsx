@@ -61,7 +61,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
       "Turbo AAVE" ||
       "Daily Turbo ETH";
     setPoolsByNetwork(poolsByNetwork);
-    console.log(data, isTurbo);
+    console.log("data", data, isTurbo);
   };
 
   const closePopup = () => {
