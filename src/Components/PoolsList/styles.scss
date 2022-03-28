@@ -286,7 +286,10 @@
     }
 }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1024px) {
+    .CollapseContainer {
+        padding: 0 2.7rem;
+    }
     .pools-list-item-header-wrapper {
         flex-direction: column;
         .pools-list-item-header-info {
