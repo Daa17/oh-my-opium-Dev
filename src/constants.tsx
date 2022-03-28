@@ -1,0 +1,5 @@
+export const POOLS = 'pools'
+export const ALL_POOLS = 'all-pools'
+export const MY_STAKE = 'my-stake'
+export const POSITIONS = 'positions'
+export const WOPIUM = 'wOpium'

@@ -34,7 +34,6 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
   const handleClose = () => {
     setAnchorEl(null);
     console.log(activeWallet);
-    console.log(shortAddress);
   };
   const changeNetworkTitle = (
     event: SelectChangeEvent<typeof activeNetwork>,
