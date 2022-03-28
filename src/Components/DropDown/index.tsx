@@ -26,7 +26,6 @@ export default function MuiDropDown(props: any) {
       props?.handleNetworkList(activeItem);
       setActiveNetwork(event.target.value as string);
     }
-
     const {
       target: { value },
     } = event;
@@ -34,9 +33,14 @@ export default function MuiDropDown(props: any) {
     value && setData(typeof value === "string" ? value.split(",") : value);
   };
 
+  const applyDropDownFilters = () => {
+    props.applyFilter(data);
+  };
+
   React.useEffect(() => {
     props.data?.length && setActiveNetwork(props.data[0]?.title);
   }, [props.data]);
+
   return (
     <FormControl
       className="dropDown-default-styles"
@@ -217,12 +221,14 @@ export default function MuiDropDown(props: any) {
               </RadioGroup>
             </div>
           )}
-          <Button
-            variant="secondary"
-            className="apply_filter"
-            label="apply"
-            onClick={() => {}}
-          />
+          <MenuItem>
+            <Button
+              variant="secondary"
+              className="apply_filter"
+              label="apply"
+              onClick={applyDropDownFilters}
+            />
+          </MenuItem>
         </Select>
       ) : (
         <Select

@@ -1,11 +1,11 @@
-import { FC, useState, SyntheticEvent } from "react";
-import { Button } from "@opiumteam/react-opium-components";
+import { FC, useState, SyntheticEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import MuiDropDown from "../DropDown";
-
+import { useLocation } from "react-router";
 import FilterIcon from "../../images/filter_icon.svg";
+import { MY_STAKE, ALL_POOLS, POOLS } from "../../constants";
 
 import "../../styles/main.scss";
 import "./styles.scss";
@@ -25,18 +25,29 @@ const sortDropdownItems = [
 
 interface IFilter {
   nestedPath?: string;
+  poolsFilterHandler: any;
 }
 
-const applyFilter = () => {};
-const Filters: FC<IFilter> = ({ nestedPath }) => {
+const Filters: FC<IFilter> = ({ nestedPath, poolsFilterHandler }) => {
   let navigate = useNavigate();
-
-  const [value, setValue] = useState<string>("all-pools");
-
+  let location = useLocation();
+  const [value, setValue] = useState<string>(ALL_POOLS);
+  const currentPath = location.pathname;
+  let currentValue = currentPath.substring(
+    currentPath.lastIndexOf("/") + 1,
+    currentPath.length
+  );
+  const applyFilter = (data: any) => {
+    poolsFilterHandler(data);
+  };
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue);
-    navigate(`/${nestedPath}/pools/${newValue}`);
+    navigate(`/${nestedPath}/${POOLS}/${newValue}`);
   };
+
+  useEffect(() => {
+    setValue(currentValue);
+  }, [currentPath, currentValue]);
 
   return (
     <div className="filters_wrapper">
@@ -47,8 +58,8 @@ const Filters: FC<IFilter> = ({ nestedPath }) => {
           aria-label="basic tabs example"
           className="filter-tabs"
         >
-          <Tab label="All Pools" value="all-pools" />
-          <Tab label="My Stake" value="my-stake" />
+          <Tab label="All Pools" value={ALL_POOLS} />
+          <Tab label="My Stake" value={MY_STAKE} />
         </Tabs>
       </div>
       <div className="dropdowns_container">
@@ -58,6 +69,7 @@ const Filters: FC<IFilter> = ({ nestedPath }) => {
             checkboxHeader="Programs"
             title="Programs"
             checkboxData={programsDropdownItems}
+            applyFilter={applyFilter}
           />
         </div>
         <div className="sort_dropdown">
@@ -68,6 +80,7 @@ const Filters: FC<IFilter> = ({ nestedPath }) => {
               radioHeader="Sort By"
               title="expiration date"
               radioData={sortDropdownItems}
+              applyFilter={applyFilter}
             />
           </div>
         </div>
@@ -84,18 +97,8 @@ const Filters: FC<IFilter> = ({ nestedPath }) => {
             radioData={sortDropdownItems}
             className="filter_dropdown"
             mobile
-          >
-            <Button
-              variant="secondary"
-              className="apply_filter"
-              style={{
-                backgroundColor: "transparent",
-                color: "#fff",
-              }}
-              label="apply"
-              onClick={applyFilter}
-            />
-          </MuiDropDown>
+            applyFilter={applyFilter}
+          />
         </div>
       </div>
     </div>

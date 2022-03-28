@@ -26,7 +26,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
   const [popupIsOpened, setPopupIsOpened] = useState(false);
   const [positions, setPositions] = useState<PositionType[]>([]);
   const [positionProductTitle, setPositionProductTitle] = useState<string>("");
-
+  const [poolsByNetwork, setPoolsByNetwork] = useState(appStore.poolsByNetwork);
   const [maintenanceIsOpened, setMaintenanceIsOpened] = useState(false);
   const [poolToMaintain, setPoolToMaintain] = useState<PoolType | null>(null);
   const alert = useAlert();
@@ -50,6 +50,18 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
     } else {
       alert.error("There are no purchased products");
     }
+  };
+  const poolsFilterHandler = (data: string[]) => {
+    let isTurbo =
+      "Turbo ETH" ||
+      "ETH Dump Protection" ||
+      "Weekly Turbo ETH" ||
+      "Turbo BTC" ||
+      "Turbo MATIC" ||
+      "Turbo AAVE" ||
+      "Daily Turbo ETH";
+    setPoolsByNetwork(poolsByNetwork);
+    console.log(data, isTurbo);
   };
 
   const closePopup = () => {
@@ -112,8 +124,11 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
         closePopup={closeMaintenance}
         component={<Maintenance pool={poolToMaintain} />}
       />
-      <Filters nestedPath={nestedPath} />
-      {appStore.poolsByNetwork.map((pool) => {
+      <Filters
+        poolsFilterHandler={poolsFilterHandler}
+        nestedPath={nestedPath}
+      />
+      {poolsByNetwork.map((pool) => {
         return (
           <PoolListItem
             pool={pool}
