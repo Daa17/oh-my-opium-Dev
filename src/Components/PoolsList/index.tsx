@@ -61,22 +61,28 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
       alert.error("There are no purchased products");
     }
   };
-  const poolsFilterHandler = (data: string[]) => {
+  const poolsFilterHandler = (checkedValue: any, sortedValue: any) => {
     let filteredDataArr: any = [];
-    const turbo = data.includes("turbo")
+    const turbo = checkedValue.includes("turbo")
       ? appStore.poolsByNetwork.filter((item) => isTurbo.includes(item.title))
       : [];
-    const opium = data.includes("$OPIUM products")
+    const opium = checkedValue.includes("$OPIUM products")
       ? appStore.poolsByNetwork.filter((item) => item.title === isOpium)
       : [];
-    const insurance = data.includes("inshurance")
+    const insurance = checkedValue.includes("inshurance")
       ? appStore.poolsByNetwork.filter(
           (item) => item.title !== isOpium && !isTurbo.includes(item.title)
         )
       : [];
-
-    const filteredData = filteredDataArr.concat(turbo, opium, insurance);
-    setPoolsByNetwork(filteredData);
+    const filteredData = filteredDataArr
+      .concat(turbo, opium, insurance)
+      .sort((a: any, b: any) => (a.title > b.title ? 1 : -1));
+    if (!checkedValue?.length) {
+      const filteredData = appStore.poolsByNetwork.sort((a, b) =>
+        a.title > b.title ? 1 : -1
+      );
+      setPoolsByNetwork(filteredData);
+    } else setPoolsByNetwork(filteredData);
   };
 
   const closePopup = () => {

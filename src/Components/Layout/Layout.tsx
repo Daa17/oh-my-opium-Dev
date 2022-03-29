@@ -24,20 +24,33 @@ const Layout: React.FC<ILayout> = () => {
       setValue(ALL_POOLS);
       navigate(`/${currentNetwork}/${POOLS}/${ALL_POOLS}`);
       setActiveLayout(POOLS);
+    } else if (newValue === WOPIUM) {
+      setValue(WOPIUM);
+      navigate(`/${currentNetwork}/${WOPIUM}`);
+      setActiveLayout(WOPIUM);
     } else {
       setValue(newValue);
       setActiveLayout(newValue);
       navigate(`/${currentNetwork}/${newValue}`);
     }
   };
+
   useEffect(() => {
     if (currentPath.includes(POSITIONS)) {
       setActiveLayout(POSITIONS);
       setValue(POSITIONS);
     }
+    if (currentPath.includes(WOPIUM)) {
+      setActiveLayout(WOPIUM);
+      setValue(WOPIUM);
+    }
     if (currentPath.includes(POSITIONS) && value !== ALL_POOLS) {
       navigate(`/${currentNetwork}/${POSITIONS}`);
+    }
+    if (currentPath.includes(WOPIUM) && value !== ALL_POOLS) {
+      navigate(`/${currentNetwork}/${WOPIUM}`);
     } else if (
+      !currentPath.includes(WOPIUM) &&
       !currentPath.includes(POSITIONS) &&
       !currentPath.includes(MY_STAKE)
     ) {
@@ -53,7 +66,9 @@ const Layout: React.FC<ILayout> = () => {
 
   const networkhandler = (network: string) => {
     setCurrentNetwork(network);
-    navigate(`/${network}/${activeLayout}/${value}`);
+    if (activeLayout === POOLS) {
+      navigate(`/${network}/${activeLayout}/${value}`);
+    } else navigate(`/${network}/${activeLayout}`);
   };
 
   useEffect(() => {

@@ -3,6 +3,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
+import FormGroup from "@mui/material/FormGroup";
+
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
@@ -15,29 +17,35 @@ import "../../styles/main.scss";
 import "./styles.scss";
 
 export default function MuiDropDown(props: any) {
-  const [data, setData] = React.useState<string[]>([]);
+  const [checkedValue, setCheckedValue] = React.useState<any>([]);
+  const [sortedValue, setSortedValue] = React.useState<any>(["name"]);
   const [activeNetwork, setActiveNetwork] = React.useState<any>("");
   const [open, toogleOpen] = React.useState<any>(false);
-  const handleChange = (event: SelectChangeEvent<typeof data>) => {
-    if (props?.header === "Network" && event.target.value) {
+  const handleChange = (value: string, type: string, checked?: boolean) => {
+    if (props?.header === "Network" && value) {
       let activeItem = props?.data?.find(
-        (item: { title: string | string[] }) =>
-          item.title === event.target.value
+        (item: { title: string | string[] }) => item.title === value
       );
       props?.handleNetworkList(activeItem);
-      setActiveNetwork(event.target.value as string);
+      setActiveNetwork(value as string);
     }
-    const {
-      target: { value },
-    } = event;
-
-    value && setData(typeof value === "string" ? value.split(",") : value);
+    const selectedData = () => {
+      if (type === "checkbox" && checked) {
+        setCheckedValue([...checkedValue, value]);
+      } else if (type === "checkbox" && !checked) {
+        setCheckedValue((prev: any) =>
+          prev.filter((item: string) => item !== value)
+        );
+      } else {
+        setSortedValue([value]);
+      }
+    };
+    selectedData();
   };
 
   const applyDropDownFilters = () => {
     toogleOpen(false);
-    const modifyData = data.filter((item) => item);
-    props.applyFilter(modifyData);
+    props.applyFilter(checkedValue, sortedValue);
   };
 
   React.useEffect(() => {
@@ -80,8 +88,7 @@ export default function MuiDropDown(props: any) {
           placeholder={props.title}
           defaultValue={props.title}
           multiple
-          value={data}
-          onChange={handleChange}
+          value={[]}
           open={open}
           onOpen={() => toogleOpen(true)}
           onClose={() => toogleOpen(false)}
@@ -89,46 +96,58 @@ export default function MuiDropDown(props: any) {
           MenuProps={filterSelectStyle}
         >
           {props.checkboxData && <h4>{props.checkboxHeader}</h4>}
-          {props.checkboxData?.map(({ title, value }: any) => (
-            <MenuItem
-              key={title}
-              value={value}
-              className="menu_item"
-              style={{
-                height: "auto",
-                minHeight: "auto",
-                padding: "0.37rem 0",
-                marginBottom: "0.38rem",
-              }}
-              sx={{
-                "&:not(:last-of-type)": {
-                  borderBottom: "0.5px solid rgba(255, 255, 255, 0.5)",
-                },
-              }}
-            >
-              <Checkbox
-                checked={data.indexOf(title) > -1}
+          <FormGroup
+            onChange={(e: any) =>
+              handleChange(e.target.value, e.target.type, e.target.checked)
+            }
+          >
+            {props.checkboxData?.map(({ title, value }: any) => (
+              <MenuItem
+                key={title}
+                value={value}
+                // onChange={() => handleChange}
+                className="menu_item"
                 style={{
-                  padding: 0,
-                  marginRight: "0.3rem",
+                  height: "auto",
+                  minHeight: "auto",
+                  padding: "0.37rem 0",
+                  marginBottom: "0.38rem",
                 }}
                 sx={{
-                  color: "#fff",
-                  "& .MuiSvgIcon-root": {
-                    width: "1rem",
-                    height: "1rem",
-                  },
-                  "&.Mui-checked": {
-                    "& .MuiSvgIcon-root": {
-                      fill: "#fff",
-                    },
+                  "&:not(:last-of-type)": {
+                    borderBottom: "0.5px solid rgba(255, 255, 255, 0.5)",
                   },
                 }}
-                size="small"
-              />
-              <ListItemText primary={title} />
-            </MenuItem>
-          ))}
+              >
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value={value}
+                      checked={checkedValue.indexOf(title) > -1}
+                      style={{
+                        padding: 0,
+                        marginRight: "0.3rem",
+                      }}
+                      sx={{
+                        color: "#fff",
+                        "& .MuiSvgIcon-root": {
+                          width: "1rem",
+                          height: "1rem",
+                        },
+                        "&.Mui-checked": {
+                          "& .MuiSvgIcon-root": {
+                            fill: "#fff",
+                          },
+                        },
+                      }}
+                      size="small"
+                    />
+                  }
+                  label={title}
+                />
+              </MenuItem>
+            ))}
+          </FormGroup>
 
           {props?.radioData && (
             <div className="sorting_wrapper">
@@ -139,14 +158,17 @@ export default function MuiDropDown(props: any) {
                   props?.radioData?.length && props.radioData[0]?.value
                 }
                 name="radio-buttons-group"
-                onChange={handleChange}
+                onChange={(e: any) =>
+                  handleChange(e.target.value, e.target.type)
+                }
               >
                 {props.radioData.map(({ title, value }: any) => (
                   <FormControlLabel
                     key={value}
-                    value={value}
+                    checked={sortedValue.indexOf(title) > -1}
                     control={
                       <Radio
+                        value={value}
                         style={{
                           padding: 0,
                           color: "#fff",
@@ -185,7 +207,7 @@ export default function MuiDropDown(props: any) {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={activeNetwork}
-          onChange={handleChange}
+          onChange={(e: any) => handleChange(e.target.value, e.target.type)}
           renderValue={(selected: any) => selected}
           style={{
             minHeight: "auto",
