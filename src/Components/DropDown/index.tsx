@@ -228,12 +228,20 @@ export default function MuiDropDown(props: any) {
                 key={title}
                 style={{
                   width: "11.8rem",
-                  padding: "0.375rem 0",
+                  padding: "0.4rem 0",
                   justifyContent: "space-between",
+                }}
+                sx= {{
+                  "&.Mui-selected": {
+                    backgroundColor: "transparent",
+                    "&:hover": {
+                      backgroundColor: "transparent"
+                    }
+                  }
                 }}
               >
                 <p>{title}</p>
-                <img style={{ maxWidth: "15px" }} src={iconUrl} alt="icon" />
+                <img src={iconUrl} alt="icon" />
               </MenuItem>
             ))}
         </Select>

@@ -63,16 +63,17 @@
     padding: 0 2.4vw;
     .pools-item-title-wrapper {
         display: flex;
+        align-items: center;
         justify-content: space-between;
         span {
-            font-size: 1rem;
+            font-size: 22px;
             font-style: normal;
             font-weight: 500;
             line-height: 1.25rem;
             color: #FFFFFF;
         }
         a {
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-style: normal;
             font-weight: 400;
             line-height: 0.894rem;
@@ -94,6 +95,7 @@
         flex-direction: row;
         align-items: flex-start;
         justify-content: space-between;
+        font-family: "Montserrat", sans-serif;
         padding: 2.8rem 0 2.18rem;
         .pools-list-info {
            min-width: 26.495vw;
@@ -115,13 +117,13 @@
                .pools-list-info-title {
                     font-style: normal;
                     font-weight: 400;
-                    font-size: 0.8rem;
+                    font-size: 12px;
                     line-height: 0.93rem;
                }
                .pools-list-info-amount {
                     font-style: normal;
                     font-weight: 800;
-                    font-size: 1rem;
+                    font-size: 1.1rem;
                     line-height: 1.25rem; 
                     &.blue {
                         color: #187CD8;
@@ -130,7 +132,7 @@
            }
            button {
                 width: 100%;
-                margin-top: 1.5rem;
+                margin-top: 1.7rem;
             }
         }
         .buy_stake_wrapper {
@@ -189,7 +191,7 @@
             font-weight: 400;
             font-size: 0.75rem;
             line-height: 0.93rem;
-            padding: 0.93rem 0;
+            padding: 1.4rem 0 1.1rem;
             input {
                 background: transparent;
                 border-radius: 0;
@@ -280,7 +282,7 @@
     .pools-list-item-body-wrapper {
         .pools-list-item-info {
             .pools-list-info {
-                margin-right: 6vw;
+                margin-right: 4vw;
             }
         }
     }
@@ -288,7 +290,7 @@
 
 @media only screen and (max-width: 1024px) {
     .CollapseContainer {
-        padding: 0 2.7rem;
+        padding: 0 2.2rem;
     }
     .pools-list-item-header-wrapper {
         flex-direction: column;
@@ -303,6 +305,7 @@
         }
     }
     .pools-list-item-body-wrapper {
+        padding: 0 3.7vw;
         .pools-list-item-info {
             .pools-list-info {
                 min-width: auto;
@@ -314,8 +317,15 @@
                     min-width: 100%;
                     margin-bottom: 1.875rem;
                     .buttons-wrapper {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                         button {
-                            min-width: 15vw;
+                            min-width: auto;
+                            flex: 1;
+                            &:first-of-type {
+                                margin-right: 2rem;
+                            }
                         } 
                     }
                 }
@@ -323,7 +333,7 @@
                     min-width: 100%;
                     .buy-buttons-wrapper  {
                         button {
-                            min-width: 15vw;
+                            min-width: 19vw;
                         } 
                     }
                 }
@@ -365,7 +375,7 @@
     }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 600px) {
     .pools-list-item-header-wrapper {
         .pools-list-item-header-info {
             .pools-list-item-header-title {
@@ -379,23 +389,36 @@
         }
     }
     .pools-list-item-body-wrapper {
+        padding: 0 1rem;
         .pools-list-item-info {
             flex-direction: column;
+            .pools-list-item-input {
+                padding: 2rem 0 1rem;
+            } 
             .pools-list-info {
                 min-width: 100%;
+                margin-right: 0;
+                button {
+                    margin-top: 1.5rem;
+                }
             }
             .buy_stake_wrapper {
                 min-width: 100%;
                 .pools-list-item-stake {
+                    margin-bottom: 0;
                     &.mobile {
-                        .buttons-wrapper {
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
-                            button {
-                                flex: 1;
-                            }
-                        }
+                     .buttons-wrapper {
+                         width: 100%;
+                         display: flex;
+                         align-items: center;
+                         justify-content: space-between;
+                         button {
+                             flex: 1;
+                             &:first-of-type {
+                                 margin-right: 1rem;
+                             }
+                         }
+                     }
                     }
                     &:not(.mobile) {
                         display: none;
@@ -416,24 +439,18 @@
                 .mobile-tabs {
                     width: 100%;
                     display: block;
-                    margin-top: 1.875rem;
-                    nav {
-                        padding: 0;
-                        .nav-link {
+                    margin-top: 1.3rem;
+                    .MuiTabs-flexContainer {
+                        .MuiButtonBase-root {
                             flex: 1;
-                            white-space: nowrap;
-                            font-size: 1rem;
-                            line-height: 1.25rem;
-                            padding: 0.43rem 0;
-                        }
-                    }
-                    .nav-tabs {
-                        .nav-item:not(:last-child) {
-                            margin-right: 1.25rem;
+                            padding: 0.55rem 0;
+                            &:first-of-type {
+                                margin-right: 1rem;
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
+}       

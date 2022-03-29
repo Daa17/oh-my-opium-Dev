@@ -54,6 +54,7 @@
         }
     }
     h5 {
+        font-family: "Montserrat", sans-serif;
         font-weight: 800;
         font-size: 1.1rem;
         line-height: 20px;
@@ -101,13 +102,14 @@
 
 .red-network {
     position: absolute;
-    right: 0.62rem;
-    bottom: 0;
-    white-space: nowrap;
+    right: 15px;
+    bottom: -7px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.85rem;
     font-style: normal;
     font-weight: 500;
-    font-size: 0.75rem;
     line-height: 1.25rem;
+    white-space: nowrap;
     color: #F6029C;
     z-index: 1;
 }
