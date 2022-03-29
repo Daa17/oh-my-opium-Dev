@@ -261,9 +261,9 @@ const PoolsList: FC<Props> = (props: Props) => {
   };
 
   const renderHeader = () => {
-    console.log("render", pool.poolAddress);
-    console.log("render", authStore.networkId);
-    console.log("ijiki", getScanLink(pool.poolAddress, authStore.networkId));
+    // console.log("render", pool.poolAddress);
+    // console.log("render", authStore.networkId);
+    // console.log("ijiki", getScanLink(pool.poolAddress, authStore.networkId));
     return (
       <div className="pools-list-item-header-wrapper">
         <div className="pools-list-item-header-info">
