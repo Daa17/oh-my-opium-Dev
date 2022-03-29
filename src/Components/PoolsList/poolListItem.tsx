@@ -30,6 +30,7 @@ import { getScanLink } from "../../Services/Utils/transaction";
 import Arrow from "./arrow";
 
 import "rc-slider/assets/index.css";
+import "../../styles/main.scss";
 import "./styles.scss";
 
 type Props = {
@@ -452,7 +453,7 @@ const PoolsList: FC<Props> = (props: Props) => {
                 <a href="/">read more</a>
               </div>
               <div className="pools-list-item-input">
-                Amount ({pool.marginTitle}):{" "}
+              Amount to protect: ({pool.marginTitle}):{" "}
                 <input
                   type="number"
                   onChange={(e) => setProtectValue(+e.target.value)}
@@ -481,10 +482,25 @@ const PoolsList: FC<Props> = (props: Props) => {
                 value={activeTab}
                 onChange={handleChange}
                 aria-label="basic tabs example"
-                style={{ background: "white" }}
+                classes={{
+                  flexContainer: "flexContainer",
+                  indicator: "indicator"
+                }}
+                style = {{
+                  minHeight: "25px"
+                }}
+                TabIndicatorProps={{ children: <span /> }}
               >
-                <Tab label="Stake" value="Stake"></Tab>
-                <Tab label="Buy product" value="BuyProduct"></Tab>
+                <Tab label="Stake" value="Stake"
+                     style = {{
+                      minHeight: "25px"
+                    }}
+                />
+                <Tab label="Buy product" value="BuyProduct"
+                     style = {{
+                      minHeight: "25px"
+                    }}
+                />
               </Tabs>
               {activeTab === "Stake" ? (
                 <div className="pools-list-item-stake mobile">
@@ -517,7 +533,7 @@ const PoolsList: FC<Props> = (props: Props) => {
               ) : (
                 <div className="pools-list-item-buy mobile">
                   <div className="pools-list-item-input">
-                    Amount ({pool.marginTitle}):{" "}
+                  Amount to protect: ({pool.marginTitle}):{" "}
                     <input
                       type="number"
                       onChange={(e) => setProtectValue(+e.target.value)}

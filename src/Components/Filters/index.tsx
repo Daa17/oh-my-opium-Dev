@@ -56,7 +56,6 @@ const Filters: FC<IFilter> = ({ nestedPath, poolsFilterHandler }) => {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
-          className="filter-tabs"
           classes={{
             flexContainer: "flexContainer",
             indicator: "indicator"
