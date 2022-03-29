@@ -2,7 +2,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    padding: 0.5rem 4.5rem 1.14rem;
+    padding: 1rem 4.5rem 1.14rem;
     .filters_tab_wrapper {
         margin-right: 2.2rem;
         .MuiTabs-flexContainer  {
@@ -58,7 +58,7 @@
 }
 @media only screen and (max-width: 1024px) {
     .filters_wrapper {
-        padding: 0.5rem 2.7rem 1.14rem;
+        padding: 1rem 2.7rem;
     }
 }
 @media only screen and (max-width: 768px) {
@@ -82,22 +82,24 @@
                 display: none;
             }
         }
-        .MuiTabs-flexContainer  {
-            .MuiButtonBase-root {
-                font-size: 0.8rem;
-                padding: 0;
-                &:first-of-type {
-                    margin-right: 1.7rem;
+        .filters_tab_wrapper {
+            .MuiTabs-flexContainer  {
+                .MuiButtonBase-root {
+                    font-size: 0.8rem;
+                    padding: 0;
+                    &:first-of-type {
+                        margin-right: 1.7rem;
+                    }
                 }
-            }
-            .MuiTabs-indicator {
-                &.indicator {
-                    & > span {
-                        max-width: 50px;
+                .MuiTabs-indicator {
+                    &.indicator {
+                        & > span {
+                            max-width: 50px;
+                        }
                     }
                 }
             }
-        }
+        }  
     }
     .sorting_wrapper {
         margin-top: 2rem;

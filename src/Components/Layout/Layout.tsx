@@ -71,16 +71,44 @@ const Layout: React.FC<ILayout> = () => {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          classes={{
+            flexContainer: "flexContainer",
+            indicator: "indicator"
+          }}
+          style = {{
+            minHeight: "25px"
+          }}
+          TabIndicatorProps={{ children: <span /> }}
         >
-          <Tab label="pools" value={ALL_POOLS} />
-          <Tab label="positions" value={POSITIONS} />
+          <Tab label="pools" value={ALL_POOLS} className="pools_btn"
+              style = {{
+                minHeight: "25px"
+              }}
+          />
+          <Tab label="positions" value={POSITIONS} 
+              style = {{
+                minHeight: "25px"
+              }}
+          />
         </Tabs>
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          classes={{
+            flexContainer: "flexContainer",
+            indicator: "indicator"
+          }}
+          style = {{
+            minHeight: "25px"
+          }}
+          TabIndicatorProps={{ children: <span /> }}
         >
-          <Tab label="wOpium" value={WOPIUM} />
+          <Tab label="wOPIUM" value={WOPIUM} 
+              style = {{
+                minHeight: "25px"
+              }}
+          />
         </Tabs>
       </div>
     </div>

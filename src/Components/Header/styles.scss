@@ -1,9 +1,8 @@
         .header-wrapper {
             width: 100%;
-            height: 5rem;
             display: flex;
             flex-direction: row;
-            padding: 0 4.5rem;
+            padding: 1.5rem 4.5rem 0.6rem;
             align-items: center;
             justify-content: space-between;
             background-color: #0A0A1E;
@@ -11,6 +10,7 @@
                 display: none;
             }
             .header-title {
+                font-family: "Montserrat", sans-serif;
                 font-size: 1.42rem;
                 color: white;
             }
@@ -37,7 +37,7 @@
                     font-size: 1.15rem;
                     line-height: 1.25rem;
                     letter-spacing: 0;
-                    padding: 0.5rem 1.85rem;
+                    padding: 0.6rem 1.85rem;
                     margin-left: 1.42rem;
                 }
             }
@@ -72,41 +72,30 @@
                 }
             }
         }
-        
-        .MuiMenuItem-root {
-            p {
-                font-family: "Montserrat", sans-serif;
-                font-size: 1.14rem;
-                font-style: normal;
-                font-weight: 500;
-                line-height: 0.31rem;
-                color: #fff;
-                margin-bottom: 0;
-            }
-            .MuiMenuItem-root {
-                p {
-                    font-family: "Montserrat", sans-serif;
-                    font-size: 0.85rem;
-                    font-style: normal;
-                    font-weight: 800;
-                    line-height: 0.9rem;
-                    color: #fff;
-                    margin-bottom: 0;
-                }
-                img {
-                    width: 1.2rem;
-                    height: 1.2rem;
-                }
-            }
+    .MuiMenuItem-root {
+        p {
+            font-family: "Montserrat", sans-serif;
+            font-size: 0.85rem;
+            font-style: normal;
+            font-weight: 800;
+            line-height: 0.9rem;
+            color: #fff;
+            margin-bottom: 0;
         }
+        img {
+            width: 1.2rem;
+            height: 1rem;
+        }
+    }
+        
         @media only screen and (max-width: 1024px) {
             .header-wrapper {
-                padding: 0 2.7rem;
+                padding: 1.5rem 2.7rem 0.6rem;
             }
         }
         @media only screen and (max-width: 768px) {
             .header-wrapper {
-                padding: 0 1.14rem;
+                padding: 1.14rem;
                 .mobile-menu-wrapper {
                     display: flex;
                 }
