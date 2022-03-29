@@ -26,7 +26,10 @@ import {
 import { PoolType } from "../../Services/Utils/types";
 import { getScanLink } from "../../Services/Utils/transaction";
 import Arrow from "./arrow";
-
+import Box from '@mui/material/Box';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
 import {Tabs } from '@opiumteam/react-opium-components';
 
 import "rc-slider/assets/index.css";
@@ -254,12 +257,13 @@ const PoolsList: FC<Props> = (props: Props) => {
     await showPurchasedProducts();
     setPositionsLoading(false);
   };
-
-  
-  function log() {
-    console.log("val"); //eslint-disable-line
-  }
-
+  const steps = [
+    '15 Oct 2021',
+    '6 Nov 2021',
+    '12 Dec 2021',
+    '25 Nov 2021'
+  ];
+ 
   const renderHeader = () => {
     console.log("render", pool.poolAddress);
     console.log("render", authStore.networkId);
@@ -341,13 +345,20 @@ const PoolsList: FC<Props> = (props: Props) => {
   </div>
   },
 ]
-
   const renderBody = () => {
     return (
       <div className="pools-list-item-body-wrapper">
         <div className="pools-item-title">Phase name</div>
         <div className="pools-list-subttitle">{phaseInfo.tradingPhase}</div>
-      
+        <Box sx={{ width: '100%' }}>
+          <Stepper activeStep={1} alternativeLabel>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        </Box>
         {pool.isSuspended ? (
           <div>Pool is suspended</div>
         ) : isMaintainable ? (
