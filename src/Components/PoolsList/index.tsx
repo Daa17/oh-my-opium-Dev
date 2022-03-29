@@ -18,6 +18,16 @@ import Maintenance from "../Maintenance";
 import "./styles.scss";
 import Filters from "../Filters";
 
+const isTurbo = [
+  "Turbo ETH",
+  "ETH Dump Protection",
+  "Weekly Turbo ETH",
+  "Turbo BTC",
+  "Turbo MATIC",
+  "Turbo AAVE",
+  "Daily Turbo ETH",
+];
+const isOpium = "$OPIUM Option Call";
 interface IPoolList {
   nestedPath?: string;
 }
@@ -52,16 +62,21 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
     }
   };
   const poolsFilterHandler = (data: string[]) => {
-    let isTurbo =
-      "Turbo ETH" ||
-      "ETH Dump Protection" ||
-      "Weekly Turbo ETH" ||
-      "Turbo BTC" ||
-      "Turbo MATIC" ||
-      "Turbo AAVE" ||
-      "Daily Turbo ETH";
-    setPoolsByNetwork(poolsByNetwork);
-    console.log("data", data, isTurbo);
+    let filteredDataArr: any = [];
+    const turbo = data.includes("turbo")
+      ? appStore.poolsByNetwork.filter((item) => isTurbo.includes(item.title))
+      : [];
+    const opium = data.includes("$OPIUM products")
+      ? appStore.poolsByNetwork.filter((item) => item.title === isOpium)
+      : [];
+    const insurance = data.includes("inshurance")
+      ? appStore.poolsByNetwork.filter(
+          (item) => item.title !== isOpium && !isTurbo.includes(item.title)
+        )
+      : [];
+
+    const filteredData = filteredDataArr.concat(turbo, opium, insurance);
+    setPoolsByNetwork(filteredData);
   };
 
   const closePopup = () => {

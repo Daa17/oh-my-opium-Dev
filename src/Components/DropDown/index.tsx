@@ -9,6 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import { Button } from "@opiumteam/react-opium-components";
+import { filterSelectStyle, networkSelectStyle } from "./styleConstant";
 
 import "../../styles/main.scss";
 import "./styles.scss";
@@ -16,7 +17,7 @@ import "./styles.scss";
 export default function MuiDropDown(props: any) {
   const [data, setData] = React.useState<string[]>([]);
   const [activeNetwork, setActiveNetwork] = React.useState<any>("");
-
+  const [open, toogleOpen] = React.useState<any>(false);
   const handleChange = (event: SelectChangeEvent<typeof data>) => {
     if (props?.header === "Network" && event.target.value) {
       let activeItem = props?.data?.find(
@@ -34,7 +35,9 @@ export default function MuiDropDown(props: any) {
   };
 
   const applyDropDownFilters = () => {
-    props.applyFilter(data);
+    toogleOpen(false);
+    const modifyData = data.filter((item) => item);
+    props.applyFilter(modifyData);
   };
 
   React.useEffect(() => {
@@ -79,63 +82,11 @@ export default function MuiDropDown(props: any) {
           multiple
           value={data}
           onChange={handleChange}
+          open={open}
+          onOpen={() => toogleOpen(true)}
+          onClose={() => toogleOpen(false)}
           renderValue={() => null}
-          MenuProps={{
-            PaperProps: {
-              sx: {
-                width: "195px",
-                bgcolor: "#222234",
-                overflow: "initial",
-                borderTopLeftRadius: "10px",
-                borderBottomLeftRadius: "10px",
-                borderBottomRightRadius: "10px",
-                "& .MuiList-root": {
-                  padding: 0,
-                },
-                "& .MuiMenuItem-root": {
-                  "&.Mui-selected": {
-                    backgroundColor: "transparent",
-                    "&:hover": {
-                      backgroundColor: "transparent",
-                    },
-                  },
-                },
-                "& .Mui-selected": {
-                  backgroundColor: "transparent",
-                },
-                "&:before": {
-                  content: `" "`,
-                  width: 0,
-                  height: 0,
-                  top: 0,
-                  right: 0,
-                  transform: "translate(0, -85%)",
-                  position: "absolute",
-                  borderLeft: "10px solid transparent",
-                  borderRight: "10px solid transparent",
-                  borderBottom: "18px solid #222234",
-                  zIndex: 2,
-                },
-                "&:after": {
-                  content: `" "`,
-                  width: 0,
-                  height: 0,
-                  top: 0,
-                  right: 0,
-                  transform: "translate(0, -100%)",
-                  position: "absolute",
-                  borderLeft: "10px solid transparent",
-                  borderRight: "10px solid transparent",
-                  borderBottom: "18px solid #fff",
-                  zIndex: 1,
-                },
-              },
-            },
-            transformOrigin: {
-              vertical: -20,
-              horizontal: 130,
-            },
-          }}
+          MenuProps={filterSelectStyle}
         >
           {props.checkboxData && <h4>{props.checkboxHeader}</h4>}
           {props.checkboxData?.map(({ title, value }: any) => (
@@ -161,7 +112,6 @@ export default function MuiDropDown(props: any) {
                   padding: 0,
                   marginRight: "0.3rem",
                 }}
-                // checkedIcon={<CheckBoxOutlineBlankIcon />}
                 sx={{
                   color: "#fff",
                   "& .MuiSvgIcon-root": {
@@ -221,7 +171,7 @@ export default function MuiDropDown(props: any) {
               </RadioGroup>
             </div>
           )}
-          <MenuItem>
+          <MenuItem disableRipple>
             <Button
               variant="secondary"
               className="apply_filter"
@@ -246,66 +196,7 @@ export default function MuiDropDown(props: any) {
             fontWeight: 500,
             lineHeight: "1.25rem",
           }}
-          MenuProps={{
-            PaperProps: {
-              sx: {
-                bgcolor: "#222234",
-                overflow: "initial",
-                borderTopLeftRadius: "10px",
-                borderBottomLeftRadius: "10px",
-                borderBottomRightRadius: "10px",
-                "& .MuiList-root": {
-                  padding: 0,
-                },
-                "& .MuiMenuItem-root": {
-                  "& .Mui-selected": {
-                    backgroundColor: "transparent",
-                  },
-                  "&:not(:last-of-type)": {
-                    borderBottom: "0.5px solid rgba(255, 255, 255, 0.5)",
-                    marginBottom: "0.3rem",
-                  },
-                },
-                "& .Mui-selected": {
-                  backgroundColor: "transparent",
-                },
-                "&:before": {
-                  content: `" "`,
-                  width: 0,
-                  height: 0,
-                  top: 0,
-                  right: 0,
-                  transform: "translate(0, -90%)",
-                  position: "absolute",
-                  borderLeft: "10px solid transparent",
-                  borderRight: "10px solid transparent",
-                  borderBottom: "18px solid #222234",
-                  zIndex: 2,
-                },
-                "&:after": {
-                  content: `" "`,
-                  width: 0,
-                  height: 0,
-                  top: 0,
-                  right: 0,
-                  transform: "translate(0, -100%)",
-                  position: "absolute",
-                  borderLeft: "10px solid transparent",
-                  borderRight: "10px solid transparent",
-                  borderBottom: "18px solid #fff",
-                  zIndex: 1,
-                },
-              },
-            },
-            anchorOrigin: {
-              vertical: "bottom",
-              horizontal: "right",
-            },
-            transformOrigin: {
-              vertical: -7,
-              horizontal: 200,
-            },
-          }}
+          MenuProps={networkSelectStyle}
         >
           <h5>{props.header}</h5>
           {props?.data &&
