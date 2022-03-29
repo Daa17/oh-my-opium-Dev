@@ -1,9 +1,10 @@
 import { useState, useEffect, SyntheticEvent } from "react";
 import { observer } from "mobx-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Header from "../Header/index";
+import { MY_STAKE, ALL_POOLS, POSITIONS, WOPIUM, POOLS } from "../../constants";
 
 import "./Layout.scss";
 interface ILayout {
@@ -12,29 +13,52 @@ interface ILayout {
 
 const Layout: React.FC<ILayout> = () => {
   const navigate = useNavigate();
-  const [value, setValue] = useState<string>("all-pools");
-  const [activeLayout, setActiveLayout] = useState("pools");
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const [value, setValue] = useState<string>(ALL_POOLS);
+  const [activeLayout, setActiveLayout] = useState(POOLS);
   const [currentNetwork, setCurrentNetwork] = useState("eth");
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
-    if (newValue === "all-pools") {
-      setValue("all-pools");
-      navigate(`/${currentNetwork}/pools/all-pools`);
-      setActiveLayout("pools");
+    if (newValue === ALL_POOLS) {
+      setValue(ALL_POOLS);
+      navigate(`/${currentNetwork}/${POOLS}/${ALL_POOLS}`);
+      setActiveLayout(POOLS);
     } else {
       setValue(newValue);
       setActiveLayout(newValue);
       navigate(`/${currentNetwork}/${newValue}`);
     }
   };
+  useEffect(() => {
+    if (currentPath.includes(POSITIONS)) {
+      setActiveLayout(POSITIONS);
+      setValue(POSITIONS);
+    }
+    if (currentPath.includes(POSITIONS) && value !== ALL_POOLS) {
+      navigate(`/${currentNetwork}/${POSITIONS}`);
+    } else if (
+      !currentPath.includes(POSITIONS) &&
+      !currentPath.includes(MY_STAKE)
+    ) {
+      setValue(ALL_POOLS);
+      setActiveLayout(POOLS);
+      navigate(`/${currentNetwork}/${POOLS}/${ALL_POOLS}`);
+    } else if (currentPath.includes(MY_STAKE)) {
+      setValue(ALL_POOLS);
+      setActiveLayout(POOLS);
+      navigate(`/${currentNetwork}/${POOLS}/${MY_STAKE}`);
+    }
+  }, [currentPath]);
 
   const networkhandler = (network: string) => {
     setCurrentNetwork(network);
     navigate(`/${network}/${activeLayout}/${value}`);
   };
+
   useEffect(() => {
-    if (activeLayout === "pools") {
-      navigate(`/${currentNetwork}/pools/${value}`);
+    if (activeLayout === POOLS) {
+      navigate(`/${currentNetwork}/${POOLS}/${value}`);
     } else navigate(`/${currentNetwork}/${activeLayout}`);
     // eslint-disable-next-line
   }, []);
@@ -48,15 +72,15 @@ const Layout: React.FC<ILayout> = () => {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="pools" value="all-pools" />
-          <Tab label="positions" value="positions" />
+          <Tab label="pools" value={ALL_POOLS} />
+          <Tab label="positions" value={POSITIONS} />
         </Tabs>
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="wOpium" value="wOpium" />
+          <Tab label="wOpium" value={WOPIUM} />
         </Tabs>
       </div>
     </div>
