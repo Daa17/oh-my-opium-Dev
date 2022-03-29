@@ -57,9 +57,25 @@ const Filters: FC<IFilter> = ({ nestedPath, poolsFilterHandler }) => {
           onChange={handleChange}
           aria-label="basic tabs example"
           className="filter-tabs"
+          classes={{
+            flexContainer: "flexContainer",
+            indicator: "indicator"
+          }}
+          style = {{
+            minHeight: "25px"
+          }}
+          TabIndicatorProps={{ children: <span /> }}
         >
-          <Tab label="All Pools" value={ALL_POOLS} />
-          <Tab label="My Stake" value={MY_STAKE} />
+          <Tab label="All Pools" value="all-pools" 
+            style = {{
+              minHeight: "25px"
+            }}
+          />
+          <Tab label="My Stake" value="my-stake" 
+            style = {{
+              minHeight: "25px"
+            }}
+          />
         </Tabs>
       </div>
       <div className="dropdowns_container">

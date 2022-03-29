@@ -4,19 +4,48 @@
     align-items: center;
     padding: 0.5rem 4.5rem 1.14rem;
     .filters_tab_wrapper {
-        margin-right: 1.55rem;
+        margin-right: 2.2rem;
         .filter-tabs {
-            padding: 0 4.5rem;
-            background: #222234
-        }
-        nav {
-            padding: 0;
-            .nav-link {
-                font-size: 1.14rem !important;
+            .MuiButtonBase-root {
+                width: auto;
+                min-width: auto;
+                font-family: "Montserrat", sans-serif;
+                font-size: 1.14rem;
                 font-style: normal;
                 font-weight: 500;
                 line-height: 20px;
+                color: #fff;
+                text-transform: unset;
+                letter-spacing: 0;
                 padding: 0.85rem 0;
+                align-items: self-start;
+                justify-content: flex-start;
+                &.Mui-selected {
+                    color: #fff;
+                }
+                &:first-of-type {
+                    margin-right: 2.8rem;
+                }
+            }
+            .MuiTabs-indicator {
+                height: 3px;
+                background-color: #fff;
+                &.indicator {
+                    display: flex;
+                    justify-content: center;
+                    background-color: transparent;
+                    justify-content: flex-start;
+                    & > span {
+                     max-width: 70px;
+                     width: 100%;
+                     background-color: #fff;
+                    }
+                }
+                .flexContainer {
+                    flex-direction: row;
+                    max-width: 50%;
+                    justify-content: center;
+                }
             }
         }
     }
@@ -50,15 +79,6 @@
         display: none;
     }
 }
-
-.nav-tabs {
-    &.color-scheme-DARK {
-        .nav-item {
-            font-size: 1.14rem;
-        }
-    }
-}
-
 .opiumBtn {
     &.btn {
         &.apply_filter {
@@ -68,13 +88,20 @@
         }
     }
 }
-
-@media only screen and (max-width: 768px) {
-    .main_tabs {
-        nav {
-            padding: 0 1.14rem;
-        }
+.MuiTouchRipple-root {
+    display: none;
+}
+@media only screen and (max-width: 1024px) {
+    .filters_wrapper {
+        padding: 0.5rem 2.7rem 1.14rem;
     }
+}
+@media only screen and (max-width: 768px) {
+    .filters_wrapper {
+        padding: 1.25rem 1.14rem;
+    }
+}
+@media only screen and (max-width: 600px) {
     .filters_wrapper {
         padding: 1.25rem 1.14rem;
         .dropdowns_container {
@@ -86,31 +113,31 @@
             .filter_icon {
                 position: absolute;
             }
-            .MuiSvgIcon-root {
+            .MuiSvgIcon-root  {
                 display: none;
             }
         }
         .filters_tab_wrapper {
-            nav {
-                .nav-link {
-                    padding: 0.1rem 0;
+            .filter-tabs {
+                .MuiButtonBase-root {
+                    font-size: 0.8rem;
+                    padding: 0;
+                    &:first-of-type {
+                        margin-right: 1.7rem;
+                    }
                 }
-            }
-        }
-    }
-    .nav-tabs {
-        &.color-scheme-DARK {
-            .nav-item {
-                font-size: 0.8rem;
-            }
-        }
-        .nav-item {
-            &:not(:last-child) {
-                margin-right: 1.7rem;
+                .MuiTabs-indicator {
+                    &.indicator {
+                        & > span {
+                         max-width: 50px;
+                        }
+                    }
+                }
             }
         }
     }
     .sorting_wrapper {
         margin-top: 2rem;
     }
+   
 }
