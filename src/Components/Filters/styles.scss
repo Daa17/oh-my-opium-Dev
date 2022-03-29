@@ -88,6 +88,9 @@
         }
     }
 }
+.MuiTouchRipple-root {
+    display: none;
+}
 @media only screen and (max-width: 1024px) {
     .filters_wrapper {
         padding: 0.5rem 2.7rem 1.14rem;
