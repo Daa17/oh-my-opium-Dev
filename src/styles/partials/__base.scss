@@ -79,30 +79,41 @@
       } 
     }
   } 
+  .MuiTabs-flexContainer  {
+    .MuiButtonBase-root {
+      width: auto;
+      min-width: auto;
+      font-family: "Montserrat", sans-serif;
+      font-size: 1.14rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 20px;
+      color: #fff;
+      text-transform: unset;
+      letter-spacing: 0;
+      align-items: self-start;
+      justify-content: flex-start;
+      &.Mui-selected {
+          color: #fff;
+      }
+    }
+  }
 
-// .css-88nv5c-MuiInputBase-root-MuiInput-root-MuiSelect-root:after {
-//   content: "";
-//   width: 0;
-//   height: 0;
-//   top: 0;
-//   right: 0;
-//   transform: translate(0, -90%);
-//   position: absolute;
-//   border-left: 10px solid transparent;
-//   border-right: 10px solid transparent;
-//   border-bottom: 18px solid #222234 !important;
-//   z-index: 2;
-// }
-// .css-88nv5c-MuiInputBase-root-MuiInput-root-MuiSelect-root:before {
-//   content: "";
-//   width: 0;
-//   height: 0;
-//   top: 0;
-//   right: 0;
-//   transform: translate(0, -100%);
-//   position: absolute;
-//   border-left: 10px solid transparent;
-//   border-right: 10px solid transparent;
-//   border-bottom: 18px solid #fff !important;
-//   z-index: 1;
-// }
+.MuiTabs-indicator {
+    &.indicator {
+      height: 3px;
+        display: flex;
+        justify-content: center;
+        background-color: transparent;
+        justify-content: flex-start;
+        & > span {
+         width: 100%;
+         background-color: #fff;
+        }
+    }
+    .flexContainer {
+        flex-direction: row;
+        max-width: 50%;
+        justify-content: center;
+    }
+}

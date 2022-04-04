@@ -37,8 +37,8 @@ const Filters: FC<IFilter> = ({ nestedPath, poolsFilterHandler }) => {
     currentPath.lastIndexOf("/") + 1,
     currentPath.length
   );
-  const applyFilter = (data: any) => {
-    poolsFilterHandler(data);
+  const applyFilter = (checkedValue: any, sortedValue: any) => {
+    poolsFilterHandler(checkedValue, sortedValue);
   };
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -56,10 +56,29 @@ const Filters: FC<IFilter> = ({ nestedPath, poolsFilterHandler }) => {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
-          className="filter-tabs"
+          classes={{
+            flexContainer: "flexContainer",
+            indicator: "indicator",
+          }}
+          style={{
+            minHeight: "25px",
+          }}
+          TabIndicatorProps={{ children: <span /> }}
         >
-          <Tab label="All Pools" value={ALL_POOLS} />
-          <Tab label="My Stake" value={MY_STAKE} />
+          <Tab
+            label="All Pools"
+            value="all-pools"
+            style={{
+              minHeight: "25px",
+            }}
+          />
+          <Tab
+            label="My Stake"
+            value="my-stake"
+            style={{
+              minHeight: "25px",
+            }}
+          />
         </Tabs>
       </div>
       <div className="dropdowns_container">

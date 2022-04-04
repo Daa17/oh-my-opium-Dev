@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import PoolsList from "./Components/PoolsList";
 import AuthStore from "./Services/Stores/AuthStore";
 import Layout from "./Components/Layout/Layout";
+import { Wopium } from "./Components/Wopium/Wopium";
 
 export const AppRouts = observer(() => {
   const [currentNetworkShortName, setCurrentNetworkShortName] = useState("eth");
@@ -36,7 +37,7 @@ export const AppRouts = observer(() => {
               />
             </Route>
             <Route path="positions" element={<p>positions</p>} />
-            <Route path="wOpium" element={<p>wOpium</p>} />
+            <Route path="wOpium" element={<Wopium/>} />
             <Route
               path="*"
               element={
