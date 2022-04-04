@@ -27,6 +27,7 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
   const open = Boolean(anchorEl);
   const { address } = authStore.blockchainStore;
   const shortAddress = shortenAddress(address);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -35,21 +36,25 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
   };
 
   const handleChangeNetworkList = (data: { title: string; value: number }) => {
+    let networkName = "";
     if (data?.value === 1) {
       networkhandler("eth");
+      networkName = "mainnet";
     } else if (data?.value === 56) {
       networkhandler("bcs");
+      networkName = "binance";
     } else if (data?.value === 137) {
+      networkName = "matic";
       networkhandler("polygon");
     }
-    authStore.changeNetwork(data?.title, data?.value);
+    authStore.changeNetwork(networkName, data?.value);
   };
 
   return (
     <div className="header-wrapper">
       <div className="header-title">Oh my Opium</div>
       <div className="mobile-menu-wrapper">
-        <MobileAuthMenu shortAddress={shortAddress} />
+        <MobileAuthMenu networkhandler={networkhandler} shortAddress={shortAddress} />
       </div>
       <div className="header-buttons-wrapper">
         <div className="dropdown-wrapper">
@@ -198,7 +203,7 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
                 }}
                 label="Wallet connect"
                 onClick={() =>
-                  authStore.blockchainStore.login(AuthType.INJECTED)
+                  authStore.blockchainStore.login(AuthType.WALLET_CONNECT)
                 }
               />
               <ListItemIcon style={{ minWidth: "1.2rem" }}>
