@@ -5,14 +5,14 @@
     padding: 1rem 4.5rem 1.14rem;
     .filters_tab_wrapper {
         margin-right: 2.2rem;
-        .MuiTabs-flexContainer  {
+        .MuiTabs-flexContainer {
             .MuiButtonBase-root {
-              padding: 0.85rem 0;
-              &:first-of-type {
-                  margin-right: 2.8rem;
-              }
+                padding: 0.85rem 0;
+                &:first-of-type {
+                    margin-right: 2.8rem;
+                }
             }
-          }
+        }
     }
     .dropdowns_container {
         display: flex;
@@ -44,6 +44,7 @@
         display: none;
     }
 }
+
 .opiumBtn {
     &.btn {
         &.apply_filter {
@@ -53,22 +54,25 @@
         }
     }
 }
+
 .MuiTouchRipple-root {
     display: none;
 }
+
 @media only screen and (max-width: 1024px) {
     .filters_wrapper {
         padding: 1rem 2.7rem;
     }
 }
+
 @media only screen and (max-width: 768px) {
     .filters_wrapper {
         padding: 1.25rem 1.14rem;
     }
 }
+
 @media only screen and (max-width: 600px) {
     .filters_wrapper {
-        padding: 1.25rem 1.14rem;
         .dropdowns_container {
             display: none;
         }
@@ -78,12 +82,12 @@
             .filter_icon {
                 position: absolute;
             }
-            .MuiSvgIcon-root  {
+            .MuiSvgIcon-root {
                 display: none;
             }
         }
         .filters_tab_wrapper {
-            .MuiTabs-flexContainer  {
+            .filter-tabs {
                 .MuiButtonBase-root {
                     font-size: 0.8rem;
                     padding: 0;
@@ -93,16 +97,15 @@
                 }
                 .MuiTabs-indicator {
                     &.indicator {
-                        & > span {
+                        &>span {
                             max-width: 50px;
                         }
                     }
                 }
             }
-        }  
+        }
     }
     .sorting_wrapper {
         margin-top: 2rem;
     }
-   
 }

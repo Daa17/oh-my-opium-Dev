@@ -1965,6 +1965,12 @@
     prop-types "^15.7.2"
     react-is "^17.0.2"
 
+"@mui/icons-material@^5.5.1":
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.5.1.tgz#848a57972617411370775980cbc6990588d4aafb"
+  integrity sha512-40f68p5+Yhq3dCn3QYHqQt5RETPyR3AkDw+fma8PtcjqvZ+d+jF84kFmT6NqwA3he7TlwluEtkyAmPzUE4uPdA==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
 "@mui/base@5.0.0-alpha.73":
   version "5.0.0-alpha.73"
   resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-alpha.73.tgz#1b5bc60d31eb2b374516c4f3bae2835f94510169"
