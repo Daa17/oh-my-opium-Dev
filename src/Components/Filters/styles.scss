@@ -2,16 +2,15 @@
     width: 100%;
     display: flex;
     align-items: center;
-    padding: 0.5rem 4.5rem 1.14rem;
+    padding: 1rem 4.5rem 1.14rem;
     .filters_tab_wrapper {
-        margin-right: 1.55rem;
-        nav {
-            padding: 0;
-            .nav-link {
-                font-style: normal;
-                font-weight: 500;
-                line-height: 20px;
-                padding: 0.8rem 0;
+        margin-right: 2.2rem;
+        .MuiTabs-flexContainer {
+            .MuiButtonBase-root {
+                padding: 0.85rem 0;
+                &:first-of-type {
+                    margin-right: 2.8rem;
+                }
             }
         }
     }
@@ -35,24 +34,17 @@
     }
     .dropdown-wrapper {
         &.programs {
-            min-width: 7.5rem; 
+            min-width: 7.5rem;
         }
         &.sorting {
-            min-width: 10.6rem; 
+            min-width: 10.6rem;
         }
-        
     }
     .mobile_dropdowns {
         display: none;
     }
 }
-.nav-tabs {
-    &.color-scheme-DARK  {
-        .nav-item {
-            font-size: 1.14rem;
-        }
-    }
-}
+
 .opiumBtn {
     &.btn {
         &.apply_filter {
@@ -63,19 +55,22 @@
     }
 }
 
-@media only screen and (max-width: 768px) {
-    .main_tabs {
-        nav  {
-            padding: 0 1.14rem;
-        }
-      
+.MuiTouchRipple-root {
+    display: none;
+}
+
+@media only screen and (max-width: 1024px) {
+    .filters_wrapper {
+        padding: 1rem 2.7rem;
     }
 }
+
 @media only screen and (max-width: 768px) {
     .filters_wrapper {
         padding: 1.25rem 1.14rem;
     }
 }
+
 @media only screen and (max-width: 600px) {
     .filters_wrapper {
         .dropdowns_container {
@@ -87,7 +82,7 @@
             .filter_icon {
                 position: absolute;
             }
-            .MuiSvgIcon-root  {
+            .MuiSvgIcon-root {
                 display: none;
             }
         }
@@ -102,28 +97,15 @@
                 }
                 .MuiTabs-indicator {
                     &.indicator {
-                        & > span {
-                         max-width: 50px;
+                        &>span {
+                            max-width: 50px;
                         }
                     }
                 }
             }
         }
     }
-    .nav-tabs {
-        &.color-scheme-DARK  {
-            .nav-item {
-                font-size: 0.8rem;
-            }
-        }
-        .nav-item {
-            &:not(:last-child) {
-                margin-right: 1.7rem;
-            }
-        }
-    }
     .sorting_wrapper {
         margin-top: 2rem;
     }
-   
 }

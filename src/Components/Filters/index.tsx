@@ -1,16 +1,15 @@
-import React, { FC } from "react";
-import { Tabs, Button } from "@opiumteam/react-opium-components";
+import { FC, useState, SyntheticEvent, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import MuiDropDown from "../DropDown";
-
-import FilterIcon from "../../images/filter_icon.svg"
+import { useLocation } from "react-router";
+import FilterIcon from "../../images/filter_icon.svg";
+import { MY_STAKE, ALL_POOLS, POOLS } from "../../constants";
 
 import "../../styles/main.scss";
 import "./styles.scss";
 
-const tabItems = [
-  { title: "All pools", eventKey: "All pools", content: <span></span> },
-  { title: "My stake", eventKey: "My stake", content: <span></span> },
-];
 const programsDropdownItems = [
   { title: "turbo", value: "turbo" },
   { title: "inshurance", value: "inshurance" },
@@ -24,16 +23,63 @@ const sortDropdownItems = [
   { title: "name", value: "name" },
 ];
 
-const applyFilter = () => {};
-const Filters: FC<{}> = () => {
+interface IFilter {
+  nestedPath?: string;
+  poolsFilterHandler: any;
+}
+
+const Filters: FC<IFilter> = ({ nestedPath, poolsFilterHandler }) => {
+  let navigate = useNavigate();
+  let location = useLocation();
+  const [value, setValue] = useState<string>(ALL_POOLS);
+  const currentPath = location.pathname;
+  let currentValue = currentPath.substring(
+    currentPath.lastIndexOf("/") + 1,
+    currentPath.length
+  );
+  const applyFilter = (checkedValue: any, sortedValue: any) => {
+    poolsFilterHandler(checkedValue, sortedValue);
+  };
+  const handleChange = (event: SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+    navigate(`/${nestedPath}/${POOLS}/${newValue}`);
+  };
+
+  useEffect(() => {
+    setValue(currentValue);
+  }, [currentPath, currentValue]);
+
   return (
     <div className="filters_wrapper">
       <div className="filters_tab_wrapper">
         <Tabs
-          id="filters"
-          items={tabItems}
-          // defaultActiveKey="pools"
-        />
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          classes={{
+            flexContainer: "flexContainer",
+            indicator: "indicator",
+          }}
+          style={{
+            minHeight: "25px",
+          }}
+          TabIndicatorProps={{ children: <span /> }}
+        >
+          <Tab
+            label="All Pools"
+            value="all-pools"
+            style={{
+              minHeight: "25px",
+            }}
+          />
+          <Tab
+            label="My Stake"
+            value="my-stake"
+            style={{
+              minHeight: "25px",
+            }}
+          />
+        </Tabs>
       </div>
       <div className="dropdowns_container">
         <div className="dropdown-wrapper programs">
@@ -42,6 +88,7 @@ const Filters: FC<{}> = () => {
             checkboxHeader="Programs"
             title="Programs"
             checkboxData={programsDropdownItems}
+            applyFilter={applyFilter}
           />
         </div>
         <div className="sort_dropdown">
@@ -52,6 +99,7 @@ const Filters: FC<{}> = () => {
               radioHeader="Sort By"
               title="expiration date"
               radioData={sortDropdownItems}
+              applyFilter={applyFilter}
             />
           </div>
         </div>
@@ -59,7 +107,7 @@ const Filters: FC<{}> = () => {
 
       <div className="mobile_dropdowns">
         <div className="dropdown-wrapper">
-          <img src={FilterIcon} alt="filter_icon" className="filter_icon"/>
+          <img src={FilterIcon} alt="filter_icon" className="filter_icon" />
           <MuiDropDown
             title=" "
             radioHeader="Sort By"
@@ -68,18 +116,8 @@ const Filters: FC<{}> = () => {
             radioData={sortDropdownItems}
             className="filter_dropdown"
             mobile
-          >
-            <Button
-              variant="secondary"
-              className="apply_filter"
-              style={{
-                backgroundColor: "transparent",
-                color: "#fff",
-              }}
-              label="apply"
-              onClick={applyFilter}
-            />
-          </MuiDropDown>
+            applyFilter={applyFilter}
+          />
         </div>
       </div>
     </div>

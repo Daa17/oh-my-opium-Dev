@@ -1,6 +1,8 @@
 import React, { FC, useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import { useAlert } from "react-alert";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
 import {
   Button,
   OpiumLink,
@@ -30,9 +32,10 @@ import Arrow from "./arrow";
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+import { shortenAddress } from "../../Services/Utils/helpers";
 
-import {Tabs } from '@opiumteam/react-opium-components';
 import "rc-slider/assets/index.css";
+import "../../styles/main.scss";
 import "./styles.scss";
 
 type Props = {
@@ -67,7 +70,11 @@ const PoolsList: FC<Props> = (props: Props) => {
   const [positionsLoading, setPositionsLoading] = useState(false);
 
   const [collapseIsOpened, setCollapseIsOpened] = useState(false);
+  const [activeTab, setActiveTab] = React.useState("Stake");
 
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setActiveTab(newValue);
+  };
   const changeCollapseStatus = async (status: boolean) => {
     if (status && !appStore.requestsAreNotAllowed) {
       loadBalance();
@@ -287,9 +294,9 @@ const PoolsList: FC<Props> = (props: Props) => {
   //   },
   // ]
   const renderHeader = () => {
-    console.log("render", pool.poolAddress);
-    console.log("render", authStore.networkId);
-    console.log("ijiki", getScanLink(pool.poolAddress, authStore.networkId));
+    // console.log("render", pool.poolAddress);
+    // console.log("render", authStore.networkId);
+    // console.log("ijiki", getScanLink(pool.poolAddress, authStore.networkId));
     return (
       <div className="pools-list-item-header-wrapper">
         <div className="pools-list-item-header-info">
@@ -297,11 +304,19 @@ const PoolsList: FC<Props> = (props: Props) => {
             <img src={pool?.icon} alt="icon" />
             <span>{pool.title}</span>
           </div>
-          <div className="pools-list-item-header-address">
+          <div className="pools-list-item-header-address web">
             <OpiumLink
               theme={ETheme.DARK}
               newTab={true}
               label={pool?.poolAddress}
+              href={getScanLink(pool.poolAddress, authStore.networkId)}
+            />
+          </div>
+          <div className="pools-list-item-header-address tablet-mobile">
+            <OpiumLink
+              theme={ETheme.DARK}
+              newTab={true}
+              label={shortenAddress(pool?.poolAddress) }
               href={getScanLink(pool.poolAddress, authStore.networkId)}
             />
           </div>
@@ -419,58 +434,63 @@ const PoolsList: FC<Props> = (props: Props) => {
               )}
             </div>
             <div
-              className={`pools-list-item-phase ${"REBALANCING" === phaseInfo.currentPhaseText && "bold-text"
-                }`}
+              className={`pools-list-item-phase ${
+                "REBALANCING" === phaseInfo.currentPhaseText && "bold-text"
+              }`}
             >
               Rebalancing phase:
               {appStore.requestsAreNotAllowed
                 ? "Please check your network"
                 : phaseInfoIsLoading
-                  ? "Loading..."
-                  : phaseInfo.stakingPhase}
+                ? "Loading..."
+                : phaseInfo.stakingPhase}
             </div>
             <div
-              className={`pools-list-item-phase ${"TRADING" === phaseInfo.currentPhaseText && "bold-text"
-                }`}
+              className={`pools-list-item-phase ${
+                "TRADING" === phaseInfo.currentPhaseText && "bold-text"
+              }`}
             >
               Trading phase:
               {appStore.requestsAreNotAllowed
                 ? "Please check your network"
                 : phaseInfoIsLoading
-                  ? "Loading..."
-                  : phaseInfo.tradingPhase}
+                ? "Loading..."
+                : phaseInfo.tradingPhase}
             </div>
             {phaseInfo.stakingOnly && (
               <div
-                className={`pools-list-item-phase ${"STAKING (ONLY)" === phaseInfo.currentPhaseText &&
-                  "bold-text"
-                  }`}
+                className={`pools-list-item-phase ${
+                  "STAKING (ONLY)" === phaseInfo.currentPhaseText && "bold-text"
+                }`}
               >
                 Staking (only) phase:
                 {appStore.requestsAreNotAllowed
                   ? "Please check your network"
                   : phaseInfoIsLoading
-                    ? "Loading..."
-                    : phaseInfo.stakingOnly}
+                  ? "Loading..."
+                  : phaseInfo.stakingOnly}
               </div>
             )}
             <div
-              className={`pools-list-item-phase ${"WAITING" === phaseInfo.currentPhaseText && "bold-text"
-                }`}
+              className={`pools-list-item-phase ${
+                "WAITING" === phaseInfo.currentPhaseText && "bold-text"
+              }`}
             >
               Waiting phase:
               {appStore.requestsAreNotAllowed
                 ? "Please check your network"
                 : phaseInfoIsLoading
-                  ? "Loading..."
-                  : phaseInfo.notInitialized}
+                ? "Loading..."
+                : phaseInfo.notInitialized}
             </div>
           </div>
         )}
         <div className="pools-list-item-info">
           <div className="pools-list-info">
             <div className="pools-list-info-row">
-              <span className="pools-list-info-title">Total staked in pool:</span>
+              <span className="pools-list-info-title">
+                Total staked in pool:
+              </span>
               <span className="pools-list-info-amount">88 USDC</span>
             </div>
             <div className="pools-list-info-row">
@@ -478,11 +498,15 @@ const PoolsList: FC<Props> = (props: Props) => {
               <span className="pools-list-info-amount">88 USDC</span>
             </div>
             <div className="pools-list-info-row">
-              <span className="pools-list-info-title">Current pool's utilization:</span>
+              <span className="pools-list-info-title">
+                Current pool's utilization:
+              </span>
               <span className="pools-list-info-amount">88%</span>
             </div>
             <div className="pools-list-info-row">
-              <span className="pools-list-info-title">Return since instription:</span>
+              <span className="pools-list-info-title">
+                Return since instription:
+              </span>
               <span className="pools-list-info-amount">0%</span>
             </div>
             <div className="pools-list-info-row">
@@ -491,8 +515,8 @@ const PoolsList: FC<Props> = (props: Props) => {
                 {appStore.requestsAreNotAllowed
                   ? "Please check your network"
                   : balanceIsLoading
-                    ? "Loading..."
-                    : balance}
+                  ? "Loading..."
+                  : balance}
               </span>
             </div>
             <Button
@@ -508,7 +532,7 @@ const PoolsList: FC<Props> = (props: Props) => {
             <div className="pools-list-item-stake">
               <div className="pools-item-title-wrapper">
                 <span>Stake</span>
-                <a href="#">read more</a>
+                <a href="/">read more</a>
               </div>
               <div className="pools-list-item-input">
                 Amount to stake ({pool.marginTitle}):{" "}
@@ -536,10 +560,10 @@ const PoolsList: FC<Props> = (props: Props) => {
             <div className="pools-list-item-buy">
               <div className="pools-item-title-wrapper">
                 <span>Buy product</span>
-                <a href="#">read more</a>
+                <a href="/">read more</a>
               </div>
               <div className="pools-list-item-input">
-                Amount ({pool.marginTitle}):{" "}
+              Amount to protect: ({pool.marginTitle}):{" "}
                 <input
                   type="number"
                   onChange={(e) => setProtectValue(+e.target.value)}
@@ -549,10 +573,11 @@ const PoolsList: FC<Props> = (props: Props) => {
               <div className="buy-buttons-wrapper">
                 <div className="pools-list-item-insurance-price">
                   <span>You pay: </span>
-                  {`${insPrice === 0
+                  {`${
+                    insPrice === 0
                       ? "N/A"
                       : `${parseFloat(insPrice.toFixed(3))} ${pool.marginTitle}`
-                    }`}
+                  }`}
                 </div>
                 <Button
                   variant="secondary"
@@ -564,18 +589,95 @@ const PoolsList: FC<Props> = (props: Props) => {
             </div>
             <div className="mobile-tabs">
               <Tabs
-                     id= "buy-stack-tabs"
-                     items={tabItems}
-                     defaultActiveKey="stake"
-              />
+                value={activeTab}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+                classes={{
+                  flexContainer: "flexContainer",
+                  indicator: "indicator"
+                }}
+                style = {{
+                  minHeight: "25px"
+                }}
+                TabIndicatorProps={{ children: <span /> }}
+              >
+                <Tab label="Stake" value="Stake"
+                     style = {{
+                      minHeight: "25px"
+                    }}
+                />
+                <Tab label="Buy product" value="BuyProduct"
+                     style = {{
+                      minHeight: "25px"
+                    }}
+                />
+              </Tabs>
+              {activeTab === "Stake" ? (
+                <div className="pools-list-item-stake mobile">
+                  <div className="pools-list-item-input">
+                    Amount to stake ({pool.marginTitle}):{" "}
+                    <input
+                      type="number"
+                      onChange={(e) => setStakeValue(+e.target.value)}
+                    />
+                  </div>
+                  <div className="buttons-wrapper">
+                    <Button
+                      variant="secondary"
+                      label="stake"
+                      onClick={makeStake}
+                      disabled={
+                        appStore.requestsAreNotAllowed || pool.isSuspended
+                      }
+                    />
+                    <Button
+                      variant="secondary"
+                      label="unstake"
+                      onClick={makeUnstake}
+                      disabled={
+                        appStore.requestsAreNotAllowed || pool.isSuspended
+                      }
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="pools-list-item-buy mobile">
+                  <div className="pools-list-item-input">
+                  Amount to protect: ({pool.marginTitle}):{" "}
+                    <input
+                      type="number"
+                      onChange={(e) => setProtectValue(+e.target.value)}
+                    />
+                  </div>
+
+                  <div className="buy-buttons-wrapper">
+                    <div className="pools-list-item-insurance-price">
+                      <span>You pay: </span>
+                      {`${
+                        insPrice === 0
+                          ? "N/A"
+                          : `${parseFloat(insPrice.toFixed(3))} ${
+                              pool.marginTitle
+                            }`
+                      }`}
+                    </div>
+                    <Button
+                      variant="secondary"
+                      label="buy"
+                      onClick={makeHedging}
+                      disabled={
+                        appStore.requestsAreNotAllowed || pool.isSuspended
+                      }
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-
         </div>
       </div>
     );
   };
-  console.log("{pool.poolAddress", pool.poolAddress);
   return (
     <CollapseContainer
       isOpened={collapseIsOpened}

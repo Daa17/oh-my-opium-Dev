@@ -1,100 +1,109 @@
-.header-wrapper {
-    width: 100%;
-    height: 5rem;
-    display: flex;
-    flex-direction: row;
-    padding: 0 4.5rem;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #0A0A1E;
-    .mobile-menu-wrapper {
-        display: none;
-    }
-    .header-title {
-        font-size: 1.42rem;
-        color: white;
-    }
-    .header-buttons-wrapper {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        .dropdown-wrapper {
-            margin-right: 2.3rem;
-            .dropdown {
-                button {
-                    position: relative;
+        .header-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            padding: 1.5rem 4.5rem 0.6rem;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #0A0A1E;
+            .mobile-menu-wrapper {
+                display: none;
+            }
+            .header-title {
+                font-family: "Montserrat", sans-serif;
+                font-size: 1.42rem;
+                color: white;
+            }
+            .header-buttons-wrapper {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                .dropdown-wrapper {
+                    margin-right: 2.3rem;
+                    .dropdown {
+                        button {
+                            position: relative;
+                            font-weight: 500;
+                            font-size: 1.15rem;
+                            line-height: 1.25rem;
+                            text-transform: capitalize;
+                            letter-spacing: 0;
+                            padding: 0.42rem 1.28rem;
+                        }
+                    }
+                }
+                .login-btn {
                     font-weight: 500;
                     font-size: 1.15rem;
                     line-height: 1.25rem;
-                    text-transform: capitalize;
                     letter-spacing: 0;
-                    padding: 0.42rem 1.28rem;
+                    padding: 0.6rem 1.85rem;
+                    margin-left: 1.42rem;
+                }
+            }
+            .header-network-wrapper {
+                color: white;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+        
+        .opium-link {
+            a {
+                color: #fff;
+                font-weight: 500;
+                font-size: 1.15rem;
+                line-height: 1.25rem;
+                letter-spacing: 0;
+                &::before {
+                    display: none;
                 }
             }
         }
-        .login-btn {
-            font-weight: 500;
-            font-size: 1.15rem;
-            line-height: 1.25rem;
-            letter-spacing: 0;
-            padding: 0.5rem 1.85rem;
-            margin-left: 1.42rem;
+        
+        .MuiOutlinedInput-root {
+            background: transparent;
         }
-    }
-    .header-network-wrapper {
-        color: white;
-        display: flex;
-        flex-direction: column;
-    }
-}
-.opium-link {
-    a {
-        color: #fff;
-        font-weight: 500;
-        font-size: 1.15rem;
-        line-height: 1.25rem;
-        letter-spacing: 0;
-        &::before {
-            display: none;
+        
+        .MuiSelect-select {
+            &.MuiInputBase-input {
+                &.MuiOutlinedInput-input {
+                    min-height: auto;
+                }
+            }
         }
-    }
-}
-.MuiOutlinedInput-root {
-  background: transparent;
-
-}
-.MuiSelect-select{
-    &.MuiInputBase-input {
-        &.MuiOutlinedInput-input{
-            min-height: auto;
-          }
-    }
-}
-.MuiMenuItem-root {
-  p {
-    font-family: "Montserrat", sans-serif;
-    font-size: 0.85rem;
-    font-style: normal;
-    font-weight: 800;
-    line-height: 0.9rem;
-    color: #fff;
-    margin-bottom: 0;
-    
-  }
-  img {
-    width: 1.2rem;
-    height: 1.2rem;
-  }
-}
-@media only screen and (max-width: 768px) {
-    .header-wrapper {
-        padding: 0 1.14rem;
-        .mobile-menu-wrapper {
-            display: flex;
+        
+        .MuiMenuItem-root {
+            p {
+                font-family: "Montserrat", sans-serif;
+                font-size: 0.85rem;
+                font-style: normal;
+                font-weight: 800;
+                line-height: 0.9rem;
+                color: #fff;
+                margin-bottom: 0;
+            }
+            img {
+                width: 1.2rem;
+                height: 1rem;
+            }
         }
-        .header-buttons-wrapper {
-            flex-direction: column;
-            display: none;
+        
+        @media only screen and (max-width: 1024px) {
+            .header-wrapper {
+                padding: 1.5rem 2.7rem 0.6rem;
+            }
         }
-    }
-}
+        
+        // @media only screen and (max-width: 768px) {
+        //     .header-wrapper {
+        //         padding: 1.14rem;
+        //         .mobile-menu-wrapper {
+        //             display: flex;
+        //         }
+        //         .header-buttons-wrapper {
+        //             flex-direction: column;
+        //             display: none;
+        //         }
+        //     }
+        // }

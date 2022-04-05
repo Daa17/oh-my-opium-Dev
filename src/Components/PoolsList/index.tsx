@@ -1,95 +1,167 @@
-import React, { FC, useState } from 'react'
-import { observer } from 'mobx-react'
-import { useAlert } from 'react-alert'
-import { ETheme, Popup } from '@opiumteam/react-opium-components'
-import appStore from '../../Services/Stores/AppStore'
-import authStore from '../../Services/Stores/AuthStore'
-import {  getPurchasedProducts, isPoolMaintainable, getPurchasedProductsTheGraph } from '../../Services/Utils/methods'
-import { PoolType, PositionType } from '../../Services/Utils/types'
-import PositionsList from '../PositionsList'
-import PoolListItem from './poolListItem'
-import Wrapping from '../Wrapping'
-import Maintenance from '../Maintenance'
+import { FC, useState } from "react";
+import { observer } from "mobx-react";
+import { useAlert } from "react-alert";
+import { ETheme, Popup } from "@opiumteam/react-opium-components";
+import appStore from "../../Services/Stores/AppStore";
+import authStore from "../../Services/Stores/AuthStore";
+import {
+  getPurchasedProducts,
+  isPoolMaintainable,
+  getPurchasedProductsTheGraph,
+} from "../../Services/Utils/methods";
+import { PoolType, PositionType } from "../../Services/Utils/types";
+import PositionsList from "../PositionsList";
+import PoolListItem from "./poolListItem";
+import Wrapping from "../Wrapping";
+import Maintenance from "../Maintenance";
 
-import './styles.scss'
-import Filters from '../Filters'
+import "./styles.scss";
+import Filters from "../Filters";
 
-const PoolsList: FC<{}> = () => {
-  const [ popupIsOpened, setPopupIsOpened ] = useState(false) 
-  const [ positions, setPositions ] = useState<PositionType[]>([])
-  const [ positionProductTitle, setPositionProductTitle ] = useState<string>('')
-  
-  const [ maintenanceIsOpened, setMaintenanceIsOpened ] = useState(false) 
-  const [ poolToMaintain, setPoolToMaintain ] = useState<PoolType | null>(null) 
-  const alert = useAlert()
+const isTurbo = [
+  "Turbo ETH",
+  "ETH Dump Protection",
+  "Weekly Turbo ETH",
+  "Turbo BTC",
+  "Turbo MATIC",
+  "Turbo AAVE",
+  "Daily Turbo ETH",
+];
+const isOpium = "$OPIUM Option Call";
+interface IPoolList {
+  nestedPath?: string;
+}
 
-  const userAddress = authStore.blockchainStore.address
+const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
+  const [popupIsOpened, setPopupIsOpened] = useState(false);
+  const [positions, setPositions] = useState<PositionType[]>([]);
+  const [, setFiltredData] = useState<any>([])
+  const [positionProductTitle, setPositionProductTitle] = useState<string>("");
+  const [poolsByNetwork, setPoolsByNetwork] = useState(appStore.poolsByNetwork);
+  const [maintenanceIsOpened, setMaintenanceIsOpened] = useState(false);
+  const [poolToMaintain, setPoolToMaintain] = useState<PoolType | null>(null);
+  const alert = useAlert();
+  const userAddress = authStore.blockchainStore.address;
 
   const showPurchasedProducts = async (pool: PoolType) => {
-    let positions:  PositionType[] | undefined = []
+    let positions: PositionType[] | undefined = [];
 
     await getPurchasedProductsTheGraph(pool, userAddress)
-      .then(res => positions = res)
-      .catch(async e => {
-        await getPurchasedProducts(pool, userAddress, (e) => alert.error(e.message)).then(res => positions = res)
-      })
+      .then((res) => (positions = res))
+      .catch(async (e) => {
+        await getPurchasedProducts(pool, userAddress, (e) =>
+          alert.error(e.message)
+        ).then((res) => (positions = res));
+      });
 
     if (positions && positions.length) {
-      setPopupIsOpened(true)
-      setPositions(positions)
-      setPositionProductTitle(pool.title)
+      setPopupIsOpened(true);
+      setPositions(positions);
+      setPositionProductTitle(pool.title);
     } else {
-      alert.error('There are no purchased products')
+      alert.error("There are no purchased products");
     }
-  }
+  };
+  const poolsFilterHandler = (checkedValue: any, sortedValue: any) => {
+    console.log('sortedValue',sortedValue)
+    let filteredDataArr:any = []
+    const turbo = checkedValue.includes("turbo")
+      ? appStore.poolsByNetwork.filter((item) => isTurbo.includes(item.title))
+      : [];
+    const opium = checkedValue.includes("$OPIUM products")
+      ? appStore.poolsByNetwork.filter((item) => item.title === isOpium)
+      : [];
+    const insurance = checkedValue.includes("inshurance")
+      ? appStore.poolsByNetwork.filter(
+          (item) => item.title !== isOpium && !isTurbo.includes(item.title)
+        )
+      : [];
+    let filteredData = filteredDataArr.concat(turbo,opium,insurance)
+    filteredData?.length ? setFiltredData(filteredData) : setFiltredData(appStore.poolsByNetwork)
 
+      !filteredData?.length ?  (filteredData = appStore.poolsByNetwork)  : 
+      // .sort((a: any, b: any) => (a.title > b.title ? 1 : -1));
+      console.log('filteredData',filteredData)
+      if(sortedValue.includes("name")) {
+        console.log('sorted1')
+        filteredData = filteredData.sort((a:any, b:any) =>
+        a.title > b.title ? 1 : -1
+      );
+      setPoolsByNetwork(filteredData);
+      }
+     else if(sortedValue.includes("APR")) {
+      console.log('sorted2')
+
+      filteredData = filteredData.sort((a:any, b:any) =>
+        a.yieldToDataAnnualized > b.yieldToDataAnnualized ? 1 : -1
+      );
+      setPoolsByNetwork(filteredData);
+      }
+     else if(sortedValue.includes("liquidity")) {
+      console.log('sorted3')
+
+      filteredData = filteredData.sort((a:any, b:any) =>
+        a.poolSize > b.poolSize ? 1 : -1
+      );
+      setPoolsByNetwork(filteredData);
+      }
+     else if(sortedValue.includes("expiration date")) {
+      console.log('sorted4')
+
+      filteredData = filteredData.sort((a:any, b:any) =>
+        a.currentEpochTimeStamp > b.currentEpochTimeStamp ? 1 : -1
+      );
+      setPoolsByNetwork(filteredData);
+      }
+      else setPoolsByNetwork(filteredData)
+  };
+console.log('poolsByNetwork',poolsByNetwork)
   const closePopup = () => {
-    setPopupIsOpened(false)
-      setPositionProductTitle('')
-      setPositions([])
-  }
-
+    setPopupIsOpened(false);
+    setPositionProductTitle("");
+    setPositions([]);
+  };
 
   const showMaintenance = async (pool: PoolType) => {
     if (!pool.oracle || pool.isSuspended) {
-      alert.error('This pool is unmaintainable') 
-      return
+      alert.error("This pool is unmaintainable");
+      return;
     }
 
-    const isMaintainable = await isPoolMaintainable(pool.poolAddress)
+    const isMaintainable = await isPoolMaintainable(pool.poolAddress);
 
     if (!isMaintainable) {
-      alert.error('Current epoch has not finished yet') 
-      return
+      alert.error("Current epoch has not finished yet");
+      return;
     }
 
-    setPoolToMaintain(pool)
-    setMaintenanceIsOpened(true)
-  }
+    setPoolToMaintain(pool);
+    setMaintenanceIsOpened(true);
+  };
 
   const closeMaintenance = () => {
-    setPoolToMaintain(null)
-    setMaintenanceIsOpened(false)
-  }
-  
+    setPoolToMaintain(null);
+    setMaintenanceIsOpened(false);
+  };
+
   return (
-    <div className='pools-list-wrapper'>
+    <div className="pools-list-wrapper">
       <Popup
         theme={ETheme.DARK}
         titleSize="lg"
         title="Purchased products"
         subtitle={positionProductTitle}
-        className='positions-list-popup'
+        className="positions-list-popup"
         popupIsOpen={popupIsOpened}
         closePopup={closePopup}
-        component={<PositionsList positions={positions}/>}
+        component={<PositionsList positions={positions} />}
       />
 
       <Popup
         theme={ETheme.DARK}
-        titleSize='lg'
-        title='Wrapping'
-        className='positions-list-popup'
+        titleSize="lg"
+        title="Wrapping"
+        className="positions-list-popup"
         popupIsOpen={appStore.wrappingPopupIsOpened}
         closePopup={() => appStore.setWrappingPopupIsOpened(false)}
         component={<Wrapping />}
@@ -97,19 +169,29 @@ const PoolsList: FC<{}> = () => {
 
       <Popup
         theme={ETheme.DARK}
-        titleSize='lg'
-        title='Maintenance'
-        className='positions-list-popup'
+        titleSize="lg"
+        title="Maintenance"
+        className="positions-list-popup"
         popupIsOpen={maintenanceIsOpened}
         closePopup={closeMaintenance}
-        component={<Maintenance pool={poolToMaintain}/>}
+        component={<Maintenance pool={poolToMaintain} />}
       />
-      <Filters/>
-      {appStore.poolsByNetwork.map((pool) => {
-        return <PoolListItem pool={pool} showPurchasedProducts={() => showPurchasedProducts(pool)} showMaintenance={() => showMaintenance(pool)} key={pool.poolAddress}/>
+      <Filters
+        poolsFilterHandler={poolsFilterHandler}
+        nestedPath={nestedPath}
+      />
+      {poolsByNetwork.map((pool) => {
+        return (
+          <PoolListItem
+            pool={pool}
+            showPurchasedProducts={() => showPurchasedProducts(pool)}
+            showMaintenance={() => showMaintenance(pool)}
+            key={pool.poolAddress}
+          />
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
-export default observer(PoolsList)
+export default observer(PoolsList);

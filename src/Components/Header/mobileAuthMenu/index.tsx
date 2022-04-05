@@ -21,9 +21,9 @@ import DiamondIcon from "../../../images/diamond-purple.svg";
 import "../../../styles/main.scss";
 import "./style.scss";
 
-export const MobileAuthMenu = ({ shortAddress }: any) => {
+export const MobileAuthMenu = ({ networkhandler }: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [activeNetwork, setActiveNetwork] = useState<string>();
+  const [activeNetwork, setActiveNetwork] = useState<string|number>();
   const [activeWallet, setActiveWallet] = useState<string>();
   const open = Boolean(anchorEl);
   const { address } = authStore.blockchainStore;
@@ -34,19 +34,38 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
   const handleClose = () => {
     setAnchorEl(null);
     console.log(activeWallet);
-    console.log(shortAddress);
   };
   const changeNetworkTitle = (
     event: SelectChangeEvent<typeof activeNetwork>,
     title: string
   ) => {
+    let networkName = "";
+
     if (title === "Wallet") {
       setActiveWallet(event.target.value as string);
-    } else setActiveNetwork(event.target.value as string);
+    } else {
+      setActiveNetwork(event.target.value);
+      if (event.target.value === 1) {
+        networkhandler("eth");
+        networkName = "mainnet";
+      } else if (event.target.value === 56) {
+        networkhandler("bcs");
+        networkName = "binance";
+      } else if (event.target.value === 137) {
+        networkName = "matic";
+        networkhandler("polygon");
+      }
+    authStore.changeNetwork(networkName, event.target.value as number);
+    } 
+   
+    
   };
 
   const logInHandler = () => {
-    authStore.blockchainStore.login(AuthType.INJECTED);
+    if (activeWallet === "Wallet") {
+      authStore.blockchainStore.login(AuthType.INJECTED);
+
+    } else authStore.blockchainStore.login(AuthType.WALLET_CONNECT);
   };
 
   return (
@@ -231,7 +250,11 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
                   <div className="title_wrapper">
                     {item.title}
                     <ListItemIcon style={{ minWidth: "1.2rem" }}>
-                      <img src={item.iconUrl} alt="icon" />
+                      <img
+                        style={{ maxWidth: "15px" }}
+                        src={item.iconUrl}
+                        alt="icon"
+                      />
                     </ListItemIcon>
                   </div>
                 }
@@ -330,7 +353,11 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
                       <div className="title_wrapper">
                         {item.title}
                         <ListItemIcon style={{ minWidth: "1.2rem" }}>
-                          <img src={item.iconUrl} alt="icon" />
+                          <img
+                            style={{ maxWidth: "15px" }}
+                            src={item.iconUrl}
+                            alt="icon"
+                          />
                         </ListItemIcon>
                       </div>
                     }

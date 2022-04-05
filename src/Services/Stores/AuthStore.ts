@@ -14,7 +14,7 @@ export class AuthStore {
 
   constructor() {
     // @ts-ignore
-    this.blockchain = new Blockchain(this.networkId, 'Ethereum', 'https://cloudflare-eth.com/', '', 'wss://cloudflare-eth.com/', console, '')
+    this.blockchain = new Blockchain(this.networkId, 'mainnet', 'https://cloudflare-eth.com/', '', 'wss://cloudflare-eth.com/', console, config.rpc[this.networkId] )
     // @ts-ignore
     this.blockchainStore = new BlockchainStore(this.blockchain, console)
     this.blockchainStore.registerCallbacks(this._finalizeLogin, this._finalizeLogin, this._finalizeLogout, this._walletChangeCallback)

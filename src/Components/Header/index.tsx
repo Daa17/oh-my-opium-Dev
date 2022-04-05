@@ -1,6 +1,5 @@
 import { FC, useState } from "react";
 import { observer } from "mobx-react";
-// import { useAlert } from "react-alert";
 import { AuthType } from "@opiumteam/mobx-web3";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -8,11 +7,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import { Button, OpiumLink, ETheme } from "@opiumteam/react-opium-components";
 import authStore from "../../Services/Stores/AuthStore";
-// import appStore from "../../Services/Stores/AppStore";
 import { getScanLink } from "../../Services/Utils/transaction";
-// import { getPurchasedProductsTheGraph } from "../../Services/Utils/methods";
-// import { PositionType } from "../../Services/Utils/types";
 import { shortenAddress } from "../../Services/Utils/helpers";
+import { MobileAuthMenu } from "./mobileAuthMenu";
 import MuiDropDown from "../DropDown";
 import { dropdownItems } from "./constants";
 import CircleIcone from "../../images/ellipse.svg";
@@ -20,18 +17,17 @@ import MetamaskIcon from "../../images/metamask_icon.svg";
 
 import "../../styles/main.scss";
 import "./styles.scss";
-import { MobileAuthMenu } from "./mobileAuthMenu";
 
-const Header: FC<{}> = () => {
-  // const [dropDownTitle, setDropDownTitle] = useState(dropdownItems[0].title);
-  // const [popupIsOpened, setPopupIsOpened] = useState(false);
-  // const [positions, setPositions] = useState<PositionType[]>([]);
-  // const [positionProductTitle, setPositionProductTitle] = useState<string>("");
+interface IHeader {
+  networkhandler: (network: string) => void;
+}
+
+const Header: FC<IHeader> = ({ networkhandler }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-
   const { address } = authStore.blockchainStore;
   const shortAddress = shortenAddress(address);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -40,24 +36,25 @@ const Header: FC<{}> = () => {
   };
 
   const handleChangeNetworkList = (data: { title: string; value: number }) => {
-    // console.log(index);
-    // console.log(dropdownItems[+index]);
-    authStore.changeNetwork(data?.title, data?.value);
+    let networkName = "";
+    if (data?.value === 1) {
+      networkhandler("eth");
+      networkName = "mainnet";
+    } else if (data?.value === 56) {
+      networkhandler("bcs");
+      networkName = "binance";
+    } else if (data?.value === 137) {
+      networkName = "matic";
+      networkhandler("polygon");
+    }
+    authStore.changeNetwork(networkName, data?.value);
   };
-  // const closePopup = () => {
-  //   setPopupIsOpened(false);
-  //   setPositionProductTitle("");
-  //   setPositions([]);
-  // };
-  // const handleMobileMenu = () => {
-  //   console.log('You clicked button.');
-  // }
 
   return (
     <div className="header-wrapper">
       <div className="header-title">Oh my Opium</div>
       <div className="mobile-menu-wrapper">
-        <MobileAuthMenu shortAddress={shortAddress} />
+        <MobileAuthMenu networkhandler={networkhandler} shortAddress={shortAddress} />
       </div>
       <div className="header-buttons-wrapper">
         <div className="dropdown-wrapper">
@@ -206,7 +203,7 @@ const Header: FC<{}> = () => {
                 }}
                 label="Wallet connect"
                 onClick={() =>
-                  authStore.blockchainStore.login(AuthType.INJECTED)
+                  authStore.blockchainStore.login(AuthType.WALLET_CONNECT)
                 }
               />
               <ListItemIcon style={{ minWidth: "1.2rem" }}>
