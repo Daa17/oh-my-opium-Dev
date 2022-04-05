@@ -55,6 +55,9 @@
                 }
             }
         }
+        .tablet-mobile {
+            display: none;
+        }
     }
 }
 
@@ -81,7 +84,6 @@
             text-decoration: underline;
             cursor: pointer;
         }
-  
     }
     button {
         font-style: normal;
@@ -98,39 +100,39 @@
         font-family: "Montserrat", sans-serif;
         padding: 2.8rem 0 2.18rem;
         .pools-list-info {
-           min-width: 26.495vw;
-           margin-right: 10.014vw;
-           .pools-list-info-row {
-               width: 100%;
-               display: flex;
-               align-items: center;
-               justify-content: space-between;
-               border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
-               padding: 0.5rem 0;
-               &:first-of-type {
-                   padding-top: 0;
-               }
-               &:last-of-type {
-                   padding-bottom: 0;
-                   border-bottom: 0;
-               }
-               .pools-list-info-title {
+            min-width: 26.495vw;
+            margin-right: 10.014vw;
+            .pools-list-info-row {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
+                padding: 0.5rem 0;
+                &:first-of-type {
+                    padding-top: 0;
+                }
+                &:last-of-type {
+                    padding-bottom: 0;
+                    border-bottom: 0;
+                }
+                .pools-list-info-title {
                     font-style: normal;
                     font-weight: 400;
                     font-size: 12px;
                     line-height: 0.93rem;
-               }
-               .pools-list-info-amount {
+                }
+                .pools-list-info-amount {
                     font-style: normal;
                     font-weight: 800;
                     font-size: 1.1rem;
-                    line-height: 1.25rem; 
+                    line-height: 1.25rem;
                     &.blue {
                         color: #187CD8;
                     }
                 }
-           }
-           button {
+            }
+            button {
                 width: 100%;
                 margin-top: 1.7rem;
             }
@@ -140,50 +142,49 @@
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
-        .pools-list-item-stake {
-            min-width: 20.862vw;
-            .pools-item-title-wrapper {
-                width: 100%;
-            }
-            .buttons-wrapper {
-                button {
-                    min-width: 8.345vw;
-                    &:first-of-type {
-                        margin-right: 1.25rem;
+            .pools-list-item-stake {
+                min-width: 20.862vw;
+                .pools-item-title-wrapper {
+                    width: 100%;
+                }
+                .buttons-wrapper {
+                    button {
+                        min-width: 8.345vw;
+                        &:first-of-type {
+                            margin-right: 1.25rem;
+                        }
                     }
                 }
             }
-        }
-        .pools-list-item-buy {
-            min-width: 20.862vw;
-            .pools-item-title-wrapper {
-                width: 100%;
-            }
-            .buy-buttons-wrapper {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                .pools-list-item-insurance-price {
-                    font-size: 1rem;
-                    line-height: 1.25rem;
-                    span {
-                        display: inline-block;
-                        font-size: 0.75rem;
+            .pools-list-item-buy {
+                min-width: 20.862vw;
+                .pools-item-title-wrapper {
+                    width: 100%;
+                }
+                .buy-buttons-wrapper {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    .pools-list-item-insurance-price {
+                        font-size: 1rem;
                         line-height: 1.25rem;
-                        margin-right: 1.11vw;
+                        span {
+                            display: inline-block;
+                            font-size: 0.75rem;
+                            line-height: 1.25rem;
+                            margin-right: 1.11vw;
+                        }
+                    }
+                    button {
+                        min-width: 8.345vw;
                     }
                 }
-                button {
-                    min-width: 8.345vw;
-                }
+            }
+            .mobile-tabs {
+                display: none;
             }
         }
-        .mobile-tabs {
-            display: none;
-        }
-    
-    }
         .pools-list-item-input {
             display: flex;
             flex-direction: column;
@@ -277,6 +278,9 @@
                     font-size: 1rem;
                 }
             }
+            .web {
+                display: block;
+            }
         }
     }
     .pools-list-item-body-wrapper {
@@ -302,6 +306,12 @@
                 width: 100%;
                 margin: 2.15rem 0 1.85rem;
             }
+            .web {
+                display: none;
+            }
+            .tablet-mobile {
+                display: block;
+            }
         }
     }
     .pools-list-item-body-wrapper {
@@ -326,15 +336,15 @@
                             &:first-of-type {
                                 margin-right: 2rem;
                             }
-                        } 
+                        }
                     }
                 }
                 .pools-list-item-buy {
                     min-width: 100%;
-                    .buy-buttons-wrapper  {
+                    .buy-buttons-wrapper {
                         button {
                             min-width: 19vw;
-                        } 
+                        }
                     }
                 }
             }
@@ -394,7 +404,7 @@
             flex-direction: column;
             .pools-list-item-input {
                 padding: 2rem 0 1rem;
-            } 
+            }
             .pools-list-info {
                 min-width: 100%;
                 margin-right: 0;
@@ -407,23 +417,23 @@
                 .pools-list-item-stake {
                     margin-bottom: 0;
                     &.mobile {
-                     .buttons-wrapper {
-                         width: 100%;
-                         display: flex;
-                         align-items: center;
-                         justify-content: space-between;
-                         button {
-                             flex: 1;
-                             &:first-of-type {
-                                 margin-right: 1rem;
-                             }
-                         }
-                     }
+                        .buttons-wrapper {
+                            width: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            button {
+                                flex: 1;
+                                &:first-of-type {
+                                    margin-right: 1rem;
+                                }
+                            }
+                        }
                     }
                     &:not(.mobile) {
                         display: none;
                     }
-                } 
+                }
                 .pools-list-item-buy {
                     &.mobile {
                         .buy-buttons-wrapper {
@@ -453,4 +463,4 @@
             }
         }
     }
-}       
+}

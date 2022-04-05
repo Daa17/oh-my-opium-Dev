@@ -110,8 +110,7 @@ export default function MuiDropDown(props: any) {
                 style={{
                   height: "auto",
                   minHeight: "auto",
-                  padding: "0.37rem 0",
-                  marginBottom: "0.38rem",
+                  paddingBottom:0
                 }}
                 sx={{
                   "&:not(:last-of-type)": {

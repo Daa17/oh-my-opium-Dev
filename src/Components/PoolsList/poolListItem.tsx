@@ -28,6 +28,7 @@ import {
 import { PoolType } from "../../Services/Utils/types";
 import { getScanLink } from "../../Services/Utils/transaction";
 import Arrow from "./arrow";
+import { shortenAddress } from "../../Services/Utils/helpers";
 
 import "rc-slider/assets/index.css";
 import "../../styles/main.scss";
@@ -271,11 +272,19 @@ const PoolsList: FC<Props> = (props: Props) => {
             <img src={pool?.icon} alt="icon" />
             <span>{pool.title}</span>
           </div>
-          <div className="pools-list-item-header-address">
+          <div className="pools-list-item-header-address web">
             <OpiumLink
               theme={ETheme.DARK}
               newTab={true}
               label={pool?.poolAddress}
+              href={getScanLink(pool.poolAddress, authStore.networkId)}
+            />
+          </div>
+          <div className="pools-list-item-header-address tablet-mobile">
+            <OpiumLink
+              theme={ETheme.DARK}
+              newTab={true}
+              label={shortenAddress(pool?.poolAddress) }
               href={getScanLink(pool.poolAddress, authStore.networkId)}
             />
           </div>

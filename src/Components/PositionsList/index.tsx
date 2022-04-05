@@ -16,7 +16,7 @@ type Props = {
   positions: PositionType[]
 }
 
-const PositionsList: FC<Props> = (props: Props) => {
+const PositionsList: FC<any> = (props: Props) => {
 
   const { address } = authStore.blockchainStore
   const { positions } = props

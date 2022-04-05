@@ -35,6 +35,7 @@ interface IPoolList {
 const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
   const [popupIsOpened, setPopupIsOpened] = useState(false);
   const [positions, setPositions] = useState<PositionType[]>([]);
+  const [, setFiltredData] = useState<any>([])
   const [positionProductTitle, setPositionProductTitle] = useState<string>("");
   const [poolsByNetwork, setPoolsByNetwork] = useState(appStore.poolsByNetwork);
   const [maintenanceIsOpened, setMaintenanceIsOpened] = useState(false);
@@ -62,7 +63,8 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
     }
   };
   const poolsFilterHandler = (checkedValue: any, sortedValue: any) => {
-    let filteredDataArr: any = [];
+    console.log('sortedValue',sortedValue)
+    let filteredDataArr:any = []
     const turbo = checkedValue.includes("turbo")
       ? appStore.poolsByNetwork.filter((item) => isTurbo.includes(item.title))
       : [];
@@ -74,17 +76,46 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
           (item) => item.title !== isOpium && !isTurbo.includes(item.title)
         )
       : [];
-    const filteredData = filteredDataArr
-      .concat(turbo, opium, insurance)
-      .sort((a: any, b: any) => (a.title > b.title ? 1 : -1));
-    if (!checkedValue?.length) {
-      const filteredData = appStore.poolsByNetwork.sort((a, b) =>
+    let filteredData = filteredDataArr.concat(turbo,opium,insurance)
+    filteredData?.length ? setFiltredData(filteredData) : setFiltredData(appStore.poolsByNetwork)
+
+      !filteredData?.length ?  (filteredData = appStore.poolsByNetwork)  : 
+      // .sort((a: any, b: any) => (a.title > b.title ? 1 : -1));
+      console.log('filteredData',filteredData)
+      if(sortedValue.includes("name")) {
+        console.log('sorted1')
+        filteredData = filteredData.sort((a:any, b:any) =>
         a.title > b.title ? 1 : -1
       );
       setPoolsByNetwork(filteredData);
-    } else setPoolsByNetwork(filteredData);
-  };
+      }
+     else if(sortedValue.includes("APR")) {
+      console.log('sorted2')
 
+      filteredData = filteredData.sort((a:any, b:any) =>
+        a.yieldToDataAnnualized > b.yieldToDataAnnualized ? 1 : -1
+      );
+      setPoolsByNetwork(filteredData);
+      }
+     else if(sortedValue.includes("liquidity")) {
+      console.log('sorted3')
+
+      filteredData = filteredData.sort((a:any, b:any) =>
+        a.poolSize > b.poolSize ? 1 : -1
+      );
+      setPoolsByNetwork(filteredData);
+      }
+     else if(sortedValue.includes("expiration date")) {
+      console.log('sorted4')
+
+      filteredData = filteredData.sort((a:any, b:any) =>
+        a.currentEpochTimeStamp > b.currentEpochTimeStamp ? 1 : -1
+      );
+      setPoolsByNetwork(filteredData);
+      }
+      else setPoolsByNetwork(filteredData)
+  };
+console.log('poolsByNetwork',poolsByNetwork)
   const closePopup = () => {
     setPopupIsOpened(false);
     setPositionProductTitle("");

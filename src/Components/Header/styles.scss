@@ -72,27 +72,29 @@
                 }
             }
         }
-    .MuiMenuItem-root {
-        p {
-            font-family: "Montserrat", sans-serif;
-            font-size: 0.85rem;
-            font-style: normal;
-            font-weight: 800;
-            line-height: 0.9rem;
-            color: #fff;
-            margin-bottom: 0;
+        
+        .MuiMenuItem-root {
+            p {
+                font-family: "Montserrat", sans-serif;
+                font-size: 0.85rem;
+                font-style: normal;
+                font-weight: 800;
+                line-height: 0.9rem;
+                color: #fff;
+                margin-bottom: 0;
+            }
+            img {
+                width: 1.2rem;
+                height: 1rem;
+            }
         }
-        img {
-            width: 1.2rem;
-            height: 1rem;
-        }
-    }
         
         @media only screen and (max-width: 1024px) {
             .header-wrapper {
                 padding: 1.5rem 2.7rem 0.6rem;
             }
         }
+        
         @media only screen and (max-width: 768px) {
             .header-wrapper {
                 padding: 1.14rem;

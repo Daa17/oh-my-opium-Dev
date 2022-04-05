@@ -35,6 +35,9 @@ export const ethPools = [
     marginTitle: "USDC",
     positions: usdtProtection,
     icon: usdtInsuranceFarming,
+    yieldToDataAnnualized:'1321654.215',
+    poolSize:'2554.649',
+    currentEpochTimeStamp:'2145646546546',
     oracle: {
       address: "0x89c9c6731817ce9d3f52dc96e1481086bc1b328c",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -47,6 +50,9 @@ export const ethPools = [
     icon: spaceXInsurance,
     isSuspended: true,
     marginTitle: "USDC",
+    yieldToDataAnnualized:'2321654.215',
+    poolSize:'5554.649',
+    currentEpochTimeStamp:'6145646546546',
   },
   {
     title: "$OPIUM Option Call",
@@ -56,6 +62,9 @@ export const ethPools = [
     marginTitle: "OPIUM",
     positions: opiumOptionCall,
     icon: opiumOption,
+    yieldToDataAnnualized:'21321654.215',
+    poolSize:'62554454.649',
+    currentEpochTimeStamp:'86548646546546',
     oracle: {
       address: "0x64dcb00e36a6238dad28e59c71c5214500539ef7",
       type: OracleTypeEnum.OPTIMISTIC,
@@ -69,6 +78,9 @@ export const ethPools = [
     icon: EthDumpProtection,
     isSuspended: true,
     marginTitle: "USDC",
+    yieldToDataAnnualized:'651321654.215',
+    poolSize:'32554.649',
+    currentEpochTimeStamp:'82145646546546',
   },
   // {
   //   title: "(OLD) USDT Protection 13 MAR",
@@ -123,6 +135,9 @@ export const bscPools = [
     marginTitle: "ETH",
     positions: turboETH,
     icon: turboEth,
+    yieldToDataAnnualized:'1321654.215',
+    poolSize:'2554.649',
+    currentEpochTimeStamp:'2145646546546',
     oracle: {
       address: "0xf5D690c9D61092112660FEAf62e542a670Fa886D",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -196,6 +211,9 @@ export const polygonPools = [
     marginTitle: "USDC",
     positions: ETHDumpProtection,
     icon: EthDumpProtection,
+    yieldToDataAnnualized:'1355421654.215',
+    poolSize:'782554.649',
+    currentEpochTimeStamp:'61565559595',
     oracle: {
       address: "0x0D876632F321fdcAbC540eEA5867c4799A627ed8",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -209,6 +227,9 @@ export const polygonPools = [
     marginTitle: "WETH",
     positions: turboWeeklyETH,
     icon: turboEth,
+    yieldToDataAnnualized:'8321654.215',
+    poolSize:'3554.649',
+    currentEpochTimeStamp:'4145646546546',
     oracle: {
       address: "0x0D876632F321fdcAbC540eEA5867c4799A627ed8",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -222,6 +243,9 @@ export const polygonPools = [
     marginTitle: "WBTC",
     icon: turboBtc,
     positions: turboBTC,
+    yieldToDataAnnualized:'4321654.215',
+    poolSize:'9554.649',
+    currentEpochTimeStamp:'8145646546546',
     oracle: {
       address: "0xf5cb774e890edf3979bf9ae7a1c098ee89429ce5",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -235,6 +259,9 @@ export const polygonPools = [
     marginTitle: "WMATIC",
     positions: turboMATIC,
     icon: turboMatic,
+    yieldToDataAnnualized:'8321654.215',
+    poolSize:'72554.649',
+    currentEpochTimeStamp:'5145646546546',
     oracle: {
       address: "0x2e9ac4d0882165dce317f23925060ca3551782a9",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -248,6 +275,9 @@ export const polygonPools = [
     marginTitle: "amAAVE",
     positions: turboAAVE,
     icon: turboAave,
+    yieldToDataAnnualized:'3321654.215',
+    poolSize:'4554.649',
+    currentEpochTimeStamp:'6145646546546',
     oracle: {
       address: "0xbE457663218C3527A82d4021b1DCE5802997063b",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -261,6 +291,9 @@ export const polygonPools = [
     marginTitle: "WETH",
     positions: turboDailyETH,
     icon: turboEth,
+    yieldToDataAnnualized:'3321654.215',
+    poolSize:'4554.649',
+    currentEpochTimeStamp:'6145646546546',
     oracle: {
       address: "0x0D876632F321fdcAbC540eEA5867c4799A627ed8",
       type: OracleTypeEnum.WITH_TIMESTAMP,
