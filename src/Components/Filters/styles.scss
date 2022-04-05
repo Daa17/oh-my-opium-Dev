@@ -70,8 +70,14 @@
         }
       
     }
+}
+@media only screen and (max-width: 768px) {
     .filters_wrapper {
         padding: 1.25rem 1.14rem;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .filters_wrapper {
         .dropdowns_container {
             display: none;
         }
@@ -86,9 +92,20 @@
             }
         }
         .filters_tab_wrapper {
-            nav {
-                .nav-link {
-                    padding: 0.1rem 0;
+            .filter-tabs {
+                .MuiButtonBase-root {
+                    font-size: 0.8rem;
+                    padding: 0;
+                    &:first-of-type {
+                        margin-right: 1.7rem;
+                    }
+                }
+                .MuiTabs-indicator {
+                    &.indicator {
+                        & > span {
+                         max-width: 50px;
+                        }
+                    }
                 }
             }
         }

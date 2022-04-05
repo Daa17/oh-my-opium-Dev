@@ -82,6 +82,144 @@
         }
   
     }
+    .pools-item-title {
+        display: flex;
+        align-items: center;
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 20px;
+        h4 {
+            font-size: 20px;
+            margin-right: 60px;
+            margin-bottom: 5px;
+        }
+    }
+    .pools-list-subttitle {
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 20px;
+    }
+    .pools-list-item-phase-wrapper {
+        margin-top: 60px;
+        .MuiStepConnector-root {
+            top: 7px;
+            left: -100%;
+            right: 100%;
+            &.Mui-active {
+                .MuiStepConnector-line {
+                    border-color: #187CD8;
+                }
+            }
+            &.Mui-completed {
+                .MuiStepConnector-line {
+                    border-color: #187CD8;
+                }
+            }
+        }
+        .MuiStep-root {
+            padding: 0;
+        }
+        .MuiStepLabel-root {
+            align-items: flex-start;
+        }
+        .MuiStepConnector-line {
+            border-color: #84848E;
+        }
+        .MuiStepLabel-label {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 20px;
+            color: #fff;
+            &.MuiStepLabel-alternativeLabel {
+                text-align: left;
+            }
+        }
+        .MuiStepIcon-root {
+            width: 14px;
+            height: 14px;
+            color:  #84848E;
+            &.Mui-completed {
+                color: #187CD8;
+            }
+            &.Mui-active {
+                width: 8px;
+                height: 14px;
+                color: #187CD8;
+                z-index: 2;
+            }
+        }
+        .MuiStepIcon-text {
+            display: none;
+        }
+        .MuiStep-root {
+            &.Mui-completed {
+                .MuiStepLabel-iconContainer {
+                    width: 14px;
+                    height: 14px;
+                    border-radius: 50%;
+                    background-color: #187CD8;
+                    .MuiSvgIcon-root {
+                        display: none;
+                    }
+                }
+            }
+            &:last-of-type {
+                &::before {
+                    content: '';
+                    width: 100%;
+                    height: 1px;
+                    position: absolute;
+                    top: 7px;
+                    right: 0;
+                    background: #84848E;
+                }
+            }
+        }
+        .phase_name {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(0, -30px);
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+        }
+
+        // ########SLIDER##############//
+        // .MuiSlider-mark {
+        //     width: 14px;
+        //     height: 14px;
+        //     border-radius: 50%;
+        //     opacity: 1;
+        //     background: #84848E;
+        // }
+        // .MuiSlider-thumb {
+        //     width: 8px;
+        //     height: 8px;
+        //     background: #187CD8;
+        // }
+        // .MuiSlider-markLabel {
+        //     font-family: 'Montserrat';
+        //     font-style: normal;
+        //     font-weight: 400;
+        //     font-size: 12px;
+        //     line-height: 20px;
+        //     letter-spacing: 0;
+        //     color: #fff;
+        // } 
+        // .MuiSlider-track {
+        //     background-color: #187CD8;
+        //     border: 1px solid #187CD8;
+        // }
+    }
     button {
         font-style: normal;
         font-weight: 500;
@@ -289,13 +427,16 @@
     }
 }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1024px) {
+    .CollapseContainer {
+        padding: 0 2.7rem;
+    }
     .pools-list-item-header-wrapper {
-        flex-direction: column;
+        // align-items: flex-start;
         .pools-list-item-header-info {
-            width: 100%;
-            justify-content: flex-start;
-            flex-wrap: wrap;
+            // width: 100%;
+            // justify-content: flex-start;
+            // flex-wrap: wrap;
             .pools-list-item-header-address {
                 width: 100%;
                 margin: 2.15rem 0 1.85rem;
@@ -339,9 +480,14 @@
     .collapse-item {
         margin-bottom: 2.28rem;
     }
+    
     .pools-list-item-header-wrapper {
         padding: 1.14rem;
+        align-items: flex-start;
         .pools-list-item-header-info {
+            width: 100%;
+            justify-content: flex-start;
+            flex-wrap: wrap;
             &::before {
                 margin-right: 3rem;
             }
