@@ -88,7 +88,7 @@
     .pools-item-title {
         display: flex;
         align-items: center;
-        font-family: 'Montserrat';
+        font-family: "Montserrat", sans-serif;
         font-style: normal;
         font-weight: 500;
         font-size: 12px;
@@ -100,7 +100,7 @@
         }
     }
     .pools-list-subttitle {
-        font-family: 'Montserrat';
+        font-family: "Montserrat", sans-serif;
         font-style: normal;
         font-weight: 500;
         font-size: 12px;
@@ -438,11 +438,7 @@
         padding: 0 2.7rem;
     }
     .pools-list-item-header-wrapper {
-        // align-items: flex-start;
         .pools-list-item-header-info {
-            // width: 100%;
-            // justify-content: flex-start;
-            // flex-wrap: wrap;
             .pools-list-item-header-address {
                 width: 100%;
                 margin: 2.15rem 0 1.85rem;
