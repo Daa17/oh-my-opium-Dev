@@ -12,11 +12,12 @@ import { shortenAddress } from "../../Services/Utils/helpers";
 import { MobileAuthMenu } from "./mobileAuthMenu";
 import MuiDropDown from "../DropDown";
 import { dropdownItems } from "./constants";
-import CircleIcone from "../../images/ellipse.svg";
 import MetamaskIcon from "../../images/metamask_icon.svg";
+import WalletConnect  from "../../images/walletConnectLogo.png";
 
 import "../../styles/main.scss";
 import "./styles.scss";
+import { height } from "@mui/system";
 
 interface IHeader {
   networkhandler: (network: string) => void;
@@ -206,8 +207,8 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
                   authStore.blockchainStore.login(AuthType.WALLET_CONNECT)
                 }
               />
-              <ListItemIcon style={{ minWidth: "1.2rem" }}>
-                <img src={CircleIcone} alt="icon" />
+              <ListItemIcon style={{ minWidth: "1.2rem", height: "1.2rem"}}>
+                <img src={WalletConnect} alt="icon" style={{ minWidth: "1.2rem", height: "1.2rem"}}/>
               </ListItemIcon>
             </MenuItem>
           </Menu>

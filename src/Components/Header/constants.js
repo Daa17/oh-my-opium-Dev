@@ -1,7 +1,7 @@
 import DimondIcon from "../../images/diamond-purple.svg";
 import EllipseIcon from "../../images/circle.svg";
 import PolygonIcon from "../../images/polygonIcon.svg";
-import CircleIcone from "../../images/ellipse.svg";
+import WalletConnect  from "../../images/walletConnectLogo.png";
 import MetamaskIcon from "../../images/metamask_icon.svg";
 
 export const dropdownItems = [
@@ -12,5 +12,5 @@ export const dropdownItems = [
 
 export const walletConnect = [
   { title: "MetaMask", value: "MetaMask", iconUrl: MetamaskIcon },
-  { title: "Wallet connect", value: "Wallet connect", iconUrl: CircleIcone },
+  { title: "Wallet connect", value: "Wallet connect", iconUrl: WalletConnect },
 ];
