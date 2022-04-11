@@ -23,7 +23,7 @@ import "./style.scss";
 
 export const MobileAuthMenu = ({ networkhandler }: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [activeNetwork, setActiveNetwork] = useState<string|number>();
+  const [activeNetwork, setActiveNetwork] = useState<string | number>();
   const [activeWallet, setActiveWallet] = useState<string>();
   const open = Boolean(anchorEl);
   const { address } = authStore.blockchainStore;
@@ -33,7 +33,6 @@ export const MobileAuthMenu = ({ networkhandler }: any) => {
   };
   const handleClose = () => {
     setAnchorEl(null);
-    console.log(activeWallet);
   };
   const changeNetworkTitle = (
     event: SelectChangeEvent<typeof activeNetwork>,
@@ -55,16 +54,13 @@ export const MobileAuthMenu = ({ networkhandler }: any) => {
         networkName = "matic";
         networkhandler("polygon");
       }
-    authStore.changeNetwork(networkName, event.target.value as number);
-    } 
-   
-    
+      authStore.changeNetwork(networkName, event.target.value as number);
+    }
   };
 
   const logInHandler = () => {
     if (activeWallet === "Wallet") {
       authStore.blockchainStore.login(AuthType.INJECTED);
-
     } else authStore.blockchainStore.login(AuthType.WALLET_CONNECT);
   };
 

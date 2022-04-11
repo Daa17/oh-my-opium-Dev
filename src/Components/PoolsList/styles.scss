@@ -64,6 +64,10 @@
 //********** OPEN PHASE ***********//
 .pools-list-item-body-wrapper {
     padding: 0 2.4vw;
+    .prev-btn,
+    .next-btn {
+        display: none;
+    }
     .pools-item-title-wrapper {
         display: flex;
         align-items: center;
@@ -498,7 +502,7 @@
 
 @media only screen and (max-width: 600px) {
     .pools-list-item-header-wrapper {
-         align-items: flex-start;
+        align-items: flex-start;
         .pools-list-item-header-info {
             width: 100%;
             flex-direction: column;
@@ -581,5 +585,18 @@
     }
     .arrow-button {
         margin-top: 1rem;
-    } 
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .pools-list-item-body-wrapper {
+        overflow: hidden;
+        .prev-btn,
+        .next-btn {
+            display: block;
+        }
+    }
+    .pools-list-item-phase-wrapper {
+        width: 1000px;
+    }
 }

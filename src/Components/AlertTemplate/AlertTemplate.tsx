@@ -1,4 +1,4 @@
-export const AlertTemplate = ({ options, message, close }: any) => (
+export const AlertTemplate = ({ options, message }: any) => (
   <div
     style={{
       margin: 20,

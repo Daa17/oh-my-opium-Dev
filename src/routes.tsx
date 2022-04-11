@@ -7,17 +7,20 @@ import Layout from "./Components/Layout/Layout";
 import { Wopium } from "./Components/Wopium/Wopium";
 import PositionsList from "./Components//PositionsList/index";
 
-const testPos = [{
-  endTime:'2131313211321',
-  address:'0x5afFE41805a9E57fEd3657d0e64D96aeA0B77885',
-  balance:'42',
-  long:true,
-},{
-  endTime:'1431313211321',
-  address:'0x5afFE41805a9E57fEd3657d0e64D96aeA0B77885',
-  balance:'42',
-  long:false,
-}]
+const testPos = [
+  {
+    endTime: "2131313211321",
+    address: "0x5afFE41805a9E57fEd3657d0e64D96aeA0B77885",
+    balance: "42",
+    long: true,
+  },
+  {
+    endTime: "1431313211321",
+    address: "0x5afFE41805a9E57fEd3657d0e64D96aeA0B77885",
+    balance: "42",
+    long: false,
+  },
+];
 
 export const AppRouts = observer(() => {
   const [currentNetworkShortName, setCurrentNetworkShortName] = useState("eth");
@@ -49,8 +52,11 @@ export const AppRouts = observer(() => {
                 element={<div className="no_pools">No pools found according to chosen filters</div>}
               />
             </Route>
-            <Route path="positions" element={<PositionsList positions={testPos}/>} />
-            <Route path="wOpium" element={<Wopium/>} />
+            <Route
+              path="positions"
+              element={<PositionsList positions={testPos} />}
+            />
+            <Route path="wOpium" element={<Wopium />} />
             <Route
               path="*"
               element={

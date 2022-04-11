@@ -5,7 +5,7 @@ import Tab from "@mui/material/Tab";
 import MuiDropDown from "../DropDown";
 import { useLocation } from "react-router";
 import FilterIcon from "../../images/filter_icon.svg";
-import { MY_STAKE, ALL_POOLS, POOLS } from "../../constants";
+import { ALL_POOLS, POOLS } from "../../constants";
 
 import "../../styles/main.scss";
 import "./styles.scss";
@@ -26,19 +26,30 @@ const sortDropdownItems = [
 interface IFilter {
   nestedPath?: string;
   poolsFilterHandler: any;
+  poolsSortedValue: any;
 }
 
-const Filters: FC<IFilter> = ({ nestedPath, poolsFilterHandler }) => {
+const Filters: FC<IFilter> = ({
+  nestedPath,
+  poolsFilterHandler,
+  poolsSortedValue,
+}) => {
   let navigate = useNavigate();
   let location = useLocation();
   const [value, setValue] = useState<string>(ALL_POOLS);
+  const [sortTitle, setSortTitle] = useState(["expiration date"]);
   const currentPath = location.pathname;
   let currentValue = currentPath.substring(
     currentPath.lastIndexOf("/") + 1,
     currentPath.length
   );
-  const applyFilter = (checkedValue: any, sortedValue: any) => {
-    poolsFilterHandler(checkedValue, sortedValue);
+  const applyFilter = (checkedValue: any) => {
+    poolsFilterHandler(checkedValue);
+  };
+
+  const applaySort = (sortedValue: any) => {
+    setSortTitle(sortedValue);
+    poolsSortedValue(sortedValue);
   };
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -97,9 +108,9 @@ const Filters: FC<IFilter> = ({ nestedPath, poolsFilterHandler }) => {
             <MuiDropDown
               isRadio
               radioHeader="Sort By"
-              title="expiration date"
+              title={sortTitle[0]}
               radioData={sortDropdownItems}
-              applyFilter={applyFilter}
+              applySort={applaySort}
             />
           </div>
         </div>
@@ -117,6 +128,7 @@ const Filters: FC<IFilter> = ({ nestedPath, poolsFilterHandler }) => {
             className="filter_dropdown"
             mobile
             applyFilter={applyFilter}
+            applySort={applaySort}
           />
         </div>
       </div>

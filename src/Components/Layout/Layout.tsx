@@ -34,7 +34,6 @@ const Layout: React.FC<ILayout> = () => {
       navigate(`/${currentNetwork}/${newValue}`);
     }
   };
-
   useEffect(() => {
     if (currentPath.includes(POSITIONS)) {
       setActiveLayout(POSITIONS);
@@ -62,6 +61,7 @@ const Layout: React.FC<ILayout> = () => {
       setActiveLayout(POOLS);
       navigate(`/${currentNetwork}/${POOLS}/${MY_STAKE}`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPath]);
 
   const networkhandler = (network: string) => {
@@ -88,22 +88,27 @@ const Layout: React.FC<ILayout> = () => {
           aria-label="basic tabs example"
           classes={{
             flexContainer: "flexContainer",
-            indicator: "indicator"
+            indicator: "indicator",
           }}
-          style = {{
-            minHeight: "25px"
+          style={{
+            minHeight: "25px",
           }}
           TabIndicatorProps={{ children: <span /> }}
         >
-          <Tab label="pools" value={ALL_POOLS} className="pools_btn"
-              style = {{
-                minHeight: "25px"
-              }}
+          <Tab
+            label="pools"
+            value={ALL_POOLS}
+            className="pools_btn"
+            style={{
+              minHeight: "25px",
+            }}
           />
-          <Tab label="positions" value={POSITIONS} 
-              style = {{
-                minHeight: "25px"
-              }}
+          <Tab
+            label="positions"
+            value={POSITIONS}
+            style={{
+              minHeight: "25px",
+            }}
           />
         </Tabs>
         <Tabs
@@ -112,17 +117,19 @@ const Layout: React.FC<ILayout> = () => {
           aria-label="basic tabs example"
           classes={{
             flexContainer: "flexContainer",
-            indicator: "indicator"
+            indicator: "indicator",
           }}
-          style = {{
-            minHeight: "25px"
+          style={{
+            minHeight: "25px",
           }}
           TabIndicatorProps={{ children: <span /> }}
         >
-          <Tab label="wOPIUM" value={WOPIUM} 
-              style = {{
-                minHeight: "25px"
-              }}
+          <Tab
+            label="wOPIUM"
+            value={WOPIUM}
+            style={{
+              minHeight: "25px",
+            }}
           />
         </Tabs>
       </div>
