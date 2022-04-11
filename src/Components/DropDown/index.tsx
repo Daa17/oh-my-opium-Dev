@@ -15,6 +15,7 @@ import { filterSelectStyle, networkSelectStyle } from "./styleConstant";
 
 import "../../styles/main.scss";
 import "./styles.scss";
+import { positions } from "react-alert";
 
 export default function MuiDropDown(props: any) {
   const [checkedValue, setCheckedValue] = React.useState<any>([]);
@@ -110,7 +111,8 @@ export default function MuiDropDown(props: any) {
                 style={{
                   height: "auto",
                   minHeight: "auto",
-                  paddingBottom:0
+                  paddingBottom:0,
+                  marginBottom: "6px",
                 }}
                 sx={{
                   "&:not(:last-of-type)": {
@@ -125,18 +127,11 @@ export default function MuiDropDown(props: any) {
                       checked={checkedValue.indexOf(title) > -1}
                       style={{
                         padding: 0,
-                        marginRight: "0.3rem",
                       }}
                       sx={{
                         color: "#fff",
                         "& .MuiSvgIcon-root": {
-                          width: "1rem",
-                          height: "1rem",
-                        },
-                        "&.Mui-checked": {
-                          "& .MuiSvgIcon-root": {
-                            fill: "#fff",
-                          },
+                          display: "none"
                         },
                       }}
                       size="small"

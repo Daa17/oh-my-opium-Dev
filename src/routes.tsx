@@ -46,7 +46,7 @@ export const AppRouts = observer(() => {
               />
               <Route
                 path="my-stake"
-                element={<PoolsList nestedPath={currentNetworkShortName} />}
+                element={<div className="no_pools">No pools found according to chosen filters</div>}
               />
             </Route>
             <Route path="positions" element={<PositionsList positions={testPos}/>} />

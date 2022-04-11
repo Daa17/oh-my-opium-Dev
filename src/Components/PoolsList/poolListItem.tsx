@@ -271,28 +271,6 @@ const PoolsList: FC<Props> = (props: Props) => {
     '25 Nov 2021',
     '12 Dec 2021',
   ];
-  // const marks = [
-  //   {
-  //     value: 0,
-  //     label: "15 Oct 2021",
-  //   },
-  //   {
-  //     value: 20,
-  //     label: "6 Nov 2021"
-  //   },
-  //   {
-  //     value: 70,
-  //     label: "20 Nov 2021"
-  //   },
-  //   {
-  //     value: 90,
-  //     label: "25 Nov 2021"
-  //   },
-  //   {
-  //     value: 100,
-  //     label: "12 Dec 2021"
-  //   },
-  // ]
   const renderHeader = () => {
     // console.log("render", pool.poolAddress);
     // console.log("render", authStore.networkId);
