@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
 import { useAlert } from "react-alert";
 import Tab from "@mui/material/Tab";
@@ -69,13 +69,13 @@ const PoolsList: FC<Props> = (props: Props) => {
   const [phaseInfoIsLoading, setPhaseInfoIsLoading] = useState(false);
   const [isMaintainable, setIsMaintainable] = useState(false);
   const [positionsLoading, setPositionsLoading] = useState(false);
-  const [stepperTransitionValue, setStepperTransitionValue] = useState(0);
   const [collapseIsOpened, setCollapseIsOpened] = useState(false);
   const [activeTab, setActiveTab] = React.useState("Stake");
-
+  const ref = useRef<any>(null);
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
+
   const changeCollapseStatus = async (status: boolean) => {
     if (status && !appStore.requestsAreNotAllowed) {
       loadBalance();
@@ -266,12 +266,8 @@ const PoolsList: FC<Props> = (props: Props) => {
     setPositionsLoading(false);
   };
 
-  const stepperTransitionHandler = (val: string) => {
-    if (val === "dec" && stepperTransitionValue < 0) {
-      setStepperTransitionValue((prev) => prev + 5);
-    } else if (val === "inc" && stepperTransitionValue > -70) {
-      setStepperTransitionValue((prev) => prev - 5);
-    } else setStepperTransitionValue(0);
+  const stepperScrollHandler = (scrollOffset: any) => {
+    ref.current.scrollLeft += scrollOffset;
   };
 
   const renderHeader = () => {
@@ -369,7 +365,7 @@ const PoolsList: FC<Props> = (props: Props) => {
   //     ),
   //   },
   // ];
-  
+
   let options: any = {
     // weekday: "long",
     // year: "numeric",
@@ -421,50 +417,59 @@ const PoolsList: FC<Props> = (props: Props) => {
         <Button
           className="prev-btn"
           label="<"
-          onClick={() => stepperTransitionHandler("dec")}
+          onClick={() => stepperScrollHandler(-30)}
         />
         <div
-          style={{ transform: `translateX(${stepperTransitionValue}%)` }}
-          className="pools-list-item-phase-wrapper"
+          className="stepper-scroll-wrapper"
+          style={{ width: "100%", overflowX: "scroll" }}
+          ref={ref}
         >
-          <Stepper activeStep={currentPhaseNumber} alternativeLabel>
-            <Step key={"phaseInfo.stakingPhase"}>
-              <span className="phase_name">Rebalansing phase</span>
-              <StepLabel>{phaseInfo.stakingPhase?.substring(0, 6)}</StepLabel>
-            </Step>
-            {currentPhaseNumber === 1 && (
-              <Step key={"phaseInfo.stakingPhase1"}>
-                <StepLabel>{currentDate}</StepLabel>
+          <div
+            // style={{ transform: `translateX(${stepperTransitionValue}%)` }}
+            className="pools-list-item-phase-wrapper"
+          >
+            <Stepper activeStep={currentPhaseNumber} alternativeLabel>
+              <Step key={"phaseInfo.stakingPhase"}>
+                <span className="phase_name">Rebalansing phase</span>
+                <StepLabel>{phaseInfo.stakingPhase?.substring(0, 6)}</StepLabel>
               </Step>
-            )}
-            <Step key={"phaseInfo.tradingPhase"}>
-              <span className="phase_name">Trading phase</span>
-              <StepLabel>{phaseInfo.tradingPhase?.substring(0, 6)}</StepLabel>
-            </Step>
-            {currentPhaseNumber === 2 && (
-              <Step key={"phaseInfo.stakingPhase1"}>
-                <StepLabel>{currentDate}</StepLabel>
+              {currentPhaseNumber === 1 && (
+                <Step key={"phaseInfo.stakingPhase1"}>
+                  <StepLabel>{currentDate}</StepLabel>
+                </Step>
+              )}
+              <Step key={"phaseInfo.tradingPhase"}>
+                <span className="phase_name">Trading phase</span>
+                <StepLabel>{phaseInfo.tradingPhase?.substring(0, 6)}</StepLabel>
               </Step>
-            )}
-            <Step key={"phaseInfo.stakingOnly"}>
-              <span className="phase_name">Staking (only) phase</span>
-              <StepLabel>{phaseInfo.stakingOnly?.substring(0, 6)}</StepLabel>
-            </Step>
-            {currentPhaseNumber === 3 && (
-              <Step key={"phaseInfo.stakingPhase1"}>
-                <StepLabel>{currentDate}</StepLabel>
+              {currentPhaseNumber === 2 && (
+                <Step key={"phaseInfo.stakingPhase1"}>
+                  <StepLabel>{currentDate}</StepLabel>
+                </Step>
+              )}
+              <Step key={"phaseInfo.stakingOnly"}>
+                <span className="phase_name">Staking (only) phase</span>
+                <StepLabel>{phaseInfo.stakingOnly?.substring(0, 6)}</StepLabel>
               </Step>
-            )}
-            <Step key={"phaseInfo.notInitialized"}>
-              <span className="phase_name">Waiting phase</span>
-              <StepLabel>{phaseInfo.notInitialized?.substring(0, 6)}</StepLabel>
-            </Step>
-          </Stepper>
+              {currentPhaseNumber === 3 && (
+                <Step key={"phaseInfo.stakingPhase1"}>
+                  <StepLabel>{currentDate}</StepLabel>
+                </Step>
+              )}
+              <Step key={"phaseInfo.notInitialized"}>
+                <span className="phase_name">Waiting phase</span>
+                <StepLabel>
+                  {phaseInfo.notInitialized?.substring(0, 6)}
+                </StepLabel>
+              </Step>
+            </Stepper>
+          </div>
         </div>
+
         <Button
           className="next-btn"
           label=">"
-          onClick={() => stepperTransitionHandler("inc")}
+          onClick={() => stepperScrollHandler(30)}
         />
         {pool.isSuspended ? (
           <div>Pool is suspended</div>
