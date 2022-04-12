@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
 import { useAlert } from "react-alert";
 import Tab from "@mui/material/Tab";
@@ -29,10 +29,11 @@ import { PoolType } from "../../Services/Utils/types";
 import { getScanLink } from "../../Services/Utils/transaction";
 import Arrow from "./arrow";
 
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
 import { shortenAddress } from "../../Services/Utils/helpers";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import "rc-slider/assets/index.css";
 import "../../styles/main.scss";
@@ -68,13 +69,13 @@ const PoolsList: FC<Props> = (props: Props) => {
   const [phaseInfoIsLoading, setPhaseInfoIsLoading] = useState(false);
   const [isMaintainable, setIsMaintainable] = useState(false);
   const [positionsLoading, setPositionsLoading] = useState(false);
-
   const [collapseIsOpened, setCollapseIsOpened] = useState(false);
   const [activeTab, setActiveTab] = React.useState("Stake");
-
+  const ref = useRef<any>(null);
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
+
   const changeCollapseStatus = async (status: boolean) => {
     if (status && !appStore.requestsAreNotAllowed) {
       loadBalance();
@@ -95,7 +96,7 @@ const PoolsList: FC<Props> = (props: Props) => {
     });
   }, [protectValue, pool]);
 
-  const alert = useAlert();
+  const alert: any = useAlert();
 
   const userAddress = authStore.blockchainStore.address;
 
@@ -264,17 +265,12 @@ const PoolsList: FC<Props> = (props: Props) => {
     await showPurchasedProducts();
     setPositionsLoading(false);
   };
-  const steps = [
-    '15 Oct 2021',
-    '6 Nov 2021',
-    '20 Nov 2021',
-    '25 Nov 2021',
-    '12 Dec 2021',
-  ];
+
+  const stepperScrollHandler = (scrollOffset: any) => {
+    ref.current.scrollLeft += scrollOffset;
+  };
+
   const renderHeader = () => {
-    // console.log("render", pool.poolAddress);
-    // console.log("render", authStore.networkId);
-    // console.log("ijiki", getScanLink(pool.poolAddress, authStore.networkId));
     return (
       <div className="pools-list-item-header-wrapper">
         <div className="pools-list-item-header-info">
@@ -294,7 +290,7 @@ const PoolsList: FC<Props> = (props: Props) => {
             <OpiumLink
               theme={ETheme.DARK}
               newTab={true}
-              label={shortenAddress(pool?.poolAddress) }
+              label={shortenAddress(pool?.poolAddress)}
               href={getScanLink(pool.poolAddress, authStore.networkId)}
             />
           </div>
@@ -306,81 +302,175 @@ const PoolsList: FC<Props> = (props: Props) => {
     );
   };
 
-  const tabItems = [
-    {title: "Stake", eventKey: "stake", content: 
-    <div className="pools-list-item-stake mobile">
-    <div className="pools-list-item-input">
-      Amount to stake ({pool.marginTitle}):{" "}
-      <input
-        type="number"
-        onChange={(e) => setStakeValue(+e.target.value)}
-      />
-    </div>
-    <div className="buttons-wrapper">
-      <Button
-        variant="secondary"
-        label="stake"
-        onClick={makeStake}
-        disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
-      />
-      <Button
-        variant="secondary"
-        label="unstake"
-        onClick={makeUnstake}
-        disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
-      />
-    </div>
-  </div>},
-    {title: "Buy product", eventKey: "buy", content: 
+  // const tabItems = [
+  //   {
+  //     title: "Stake",
+  //     eventKey: "stake",
+  //     content: (
+  //       <div className="pools-list-item-stake mobile">
+  //         <div className="pools-list-item-input">
+  //           Amount to stake ({pool.marginTitle}):{" "}
+  //           <input
+  //             type="number"
+  //             onChange={(e) => setStakeValue(+e.target.value)}
+  //           />
+  //         </div>
+  //         <div className="buttons-wrapper">
+  //           <Button
+  //             variant="secondary"
+  //             label="stake"
+  //             onClick={makeStake}
+  //             disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
+  //           />
+  //           <Button
+  //             variant="secondary"
+  //             label="unstake"
+  //             onClick={makeUnstake}
+  //             disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
+  //           />
+  //         </div>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     title: "Buy product",
+  //     eventKey: "buy",
+  //     content: (
+  //       <div className="pools-list-item-buy mobile">
+  //         <div className="pools-list-item-input">
+  //           Amount ({pool.marginTitle}):{" "}
+  //           <input
+  //             type="number"
+  //             onChange={(e) => setProtectValue(+e.target.value)}
+  //           />
+  //         </div>
 
-    <div className="pools-list-item-buy mobile">
-    <div className="pools-list-item-input">
-      Amount ({pool.marginTitle}):{" "}
-      <input
-        type="number"
-        onChange={(e) => setProtectValue(+e.target.value)}
-      />
-    </div>
+  //         <div className="buy-buttons-wrapper">
+  //           <div className="pools-list-item-insurance-price">
+  //             <span>You pay: </span>
+  //             {`${
+  //               insPrice === 0
+  //                 ? "N/A"
+  //                 : `${parseFloat(insPrice.toFixed(3))} ${pool.marginTitle}`
+  //             }`}
+  //           </div>
+  //           <Button
+  //             variant="secondary"
+  //             label="buy"
+  //             onClick={makeHedging}
+  //             disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
+  //           />
+  //         </div>
+  //       </div>
+  //     ),
+  //   },
+  // ];
 
-    <div className="buy-buttons-wrapper">
-      <div className="pools-list-item-insurance-price">
-        <span>You pay: </span>
-        {`${insPrice === 0
-            ? "N/A"
-            : `${parseFloat(insPrice.toFixed(3))} ${pool.marginTitle}`
-          }`}
-      </div>
-      <Button
-        variant="secondary"
-        label="buy"
-        onClick={makeHedging}
-        disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
-      />
-    </div>
-  </div>
-  },
-]
+  let options: any = {
+    // weekday: "long",
+    // year: "numeric",
+    month: "short",
+    day: "numeric",
+    // hour: "2-digit",
+    // minute: "2-digit",
+  };
+  let currentPhaseNumber = 0;
+  switch (phaseInfo.currentPhaseText) {
+    case "REBALANCING":
+      currentPhaseNumber = 1;
+      break;
+    case "TRADING":
+      currentPhaseNumber = 2;
+      break;
+    case "STAKING (ONLY)":
+      currentPhaseNumber = 3;
+      break;
+    case "WAITING":
+      currentPhaseNumber = 4;
+      break;
+    default:
+      break;
+  }
+  if (phaseInfo.currentPhaseText === "REBALANCING") {
+    currentPhaseNumber = 1;
+  }
+  let date: any = new Date();
+  const currentDate: any = date.toLocaleString("en-us", options);
   const renderBody = () => {
     return (
       <div className="pools-list-item-body-wrapper">
         <div className="pools-item-title">
-          <h4> Phase name</h4>
+          <div className="pools-list-item-phase-current">
+            {appStore.requestsAreNotAllowed ? (
+              "Please check your network"
+            ) : phaseInfoIsLoading ? (
+              "Loading..."
+            ) : (
+              <h4 className="current-phase-text">
+                {phaseInfo.currentPhaseText}
+              </h4>
+            )}
+          </div>
           <span>Now you can do this and this</span>
         </div>
         <div className="pools-list-subttitle">{phaseInfo.tradingPhase}</div>
-        <div className="pools-list-item-phase-wrapper">
-        <Stepper activeStep={2} alternativeLabel>
-            {steps.map((label) => (
-              <Step key={label}>
+        <Button
+          className="prev-btn"
+          label="<"
+          onClick={() => stepperScrollHandler(-30)}
+        />
+        <div
+          className="stepper-scroll-wrapper"
+          style={{ width: "100%", overflowX: "scroll" }}
+          ref={ref}
+        >
+          <div
+            // style={{ transform: `translateX(${stepperTransitionValue}%)` }}
+            className="pools-list-item-phase-wrapper"
+          >
+            <Stepper activeStep={currentPhaseNumber} alternativeLabel>
+              <Step key={"phaseInfo.stakingPhase"}>
                 <span className="phase_name">Rebalansing phase</span>
-                <StepLabel>{label}</StepLabel>
+                <StepLabel>{phaseInfo.stakingPhase?.substring(0, 6)}</StepLabel>
               </Step>
-            ))}
-        </Stepper>
-        
-        {/* <h1>Slider</h1>
-        <Slider aria-label="Custom marks" defaultValue={35} marks={marks} disabled/> */}
+              {currentPhaseNumber === 1 && (
+                <Step key={"phaseInfo.stakingPhase1"}>
+                  <StepLabel>{currentDate}</StepLabel>
+                </Step>
+              )}
+              <Step key={"phaseInfo.tradingPhase"}>
+                <span className="phase_name">Trading phase</span>
+                <StepLabel>{phaseInfo.tradingPhase?.substring(0, 6)}</StepLabel>
+              </Step>
+              {currentPhaseNumber === 2 && (
+                <Step key={"phaseInfo.stakingPhase1"}>
+                  <StepLabel>{currentDate}</StepLabel>
+                </Step>
+              )}
+              <Step key={"phaseInfo.stakingOnly"}>
+                <span className="phase_name">Staking (only) phase</span>
+                <StepLabel>{phaseInfo.stakingOnly?.substring(0, 6)}</StepLabel>
+              </Step>
+              {currentPhaseNumber === 3 && (
+                <Step key={"phaseInfo.stakingPhase1"}>
+                  <StepLabel>{currentDate}</StepLabel>
+                </Step>
+              )}
+              <Step key={"phaseInfo.notInitialized"}>
+                <span className="phase_name">Waiting phase</span>
+                <StepLabel>
+                  {phaseInfo.notInitialized?.substring(0, 6)}
+                </StepLabel>
+              </Step>
+            </Stepper>
+          </div>
         </div>
+
+        <Button
+          className="next-btn"
+          label=">"
+          onClick={() => stepperScrollHandler(30)}
+        />
         {pool.isSuspended ? (
           <div>Pool is suspended</div>
         ) : isMaintainable ? (
@@ -541,7 +631,7 @@ const PoolsList: FC<Props> = (props: Props) => {
                 <a href="/">read more</a>
               </div>
               <div className="pools-list-item-input">
-              Amount to protect: ({pool.marginTitle}):{" "}
+                Amount to protect: ({pool.marginTitle}):{" "}
                 <input
                   type="number"
                   onChange={(e) => setProtectValue(+e.target.value)}
@@ -572,22 +662,26 @@ const PoolsList: FC<Props> = (props: Props) => {
                 aria-label="basic tabs example"
                 classes={{
                   flexContainer: "flexContainer",
-                  indicator: "indicator"
+                  indicator: "indicator",
                 }}
-                style = {{
-                  minHeight: "25px"
+                style={{
+                  minHeight: "25px",
                 }}
                 TabIndicatorProps={{ children: <span /> }}
               >
-                <Tab label="Stake" value="Stake"
-                     style = {{
-                      minHeight: "25px"
-                    }}
+                <Tab
+                  label="Stake"
+                  value="Stake"
+                  style={{
+                    minHeight: "25px",
+                  }}
                 />
-                <Tab label="Buy product" value="BuyProduct"
-                     style = {{
-                      minHeight: "25px"
-                    }}
+                <Tab
+                  label="Buy product"
+                  value="BuyProduct"
+                  style={{
+                    minHeight: "25px",
+                  }}
                 />
               </Tabs>
               {activeTab === "Stake" ? (
@@ -621,7 +715,7 @@ const PoolsList: FC<Props> = (props: Props) => {
               ) : (
                 <div className="pools-list-item-buy mobile">
                   <div className="pools-list-item-input">
-                  Amount to protect: ({pool.marginTitle}):{" "}
+                    Amount to protect: ({pool.marginTitle}):{" "}
                     <input
                       type="number"
                       onChange={(e) => setProtectValue(+e.target.value)}

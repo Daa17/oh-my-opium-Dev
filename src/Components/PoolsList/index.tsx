@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { useAlert } from "react-alert";
 import { ETheme, Popup } from "@opiumteam/react-opium-components";
@@ -35,7 +35,7 @@ interface IPoolList {
 const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
   const [popupIsOpened, setPopupIsOpened] = useState(false);
   const [positions, setPositions] = useState<PositionType[]>([]);
-  const [, setFiltredData] = useState<any>([])
+  const [sortedValue, setSortedValue] = useState<string>("expiration date");
   const [positionProductTitle, setPositionProductTitle] = useState<string>("");
   const [poolsByNetwork, setPoolsByNetwork] = useState(appStore.poolsByNetwork);
   const [maintenanceIsOpened, setMaintenanceIsOpened] = useState(false);
@@ -62,9 +62,9 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
       alert.error("There are no purchased products");
     }
   };
-  const poolsFilterHandler = (checkedValue: any, sortedValue: any) => {
-    console.log('sortedValue',sortedValue)
-    let filteredDataArr:any = []
+  const poolsFilterHandler = (checkedValue: any) => {
+    let filteredDataArr: any = [];
+
     const turbo = checkedValue.includes("turbo")
       ? appStore.poolsByNetwork.filter((item) => isTurbo.includes(item.title))
       : [];
@@ -76,46 +76,36 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
           (item) => item.title !== isOpium && !isTurbo.includes(item.title)
         )
       : [];
-    let filteredData = filteredDataArr.concat(turbo,opium,insurance)
-    filteredData?.length ? setFiltredData(filteredData) : setFiltredData(appStore.poolsByNetwork)
+    let filteredData = filteredDataArr.concat(turbo, opium, insurance);
+    !checkedValue.length && (filteredData = appStore.poolsByNetwork);
 
-      !filteredData?.length ?  (filteredData = appStore.poolsByNetwork)  : 
-      // .sort((a: any, b: any) => (a.title > b.title ? 1 : -1));
-      console.log('filteredData',filteredData)
-      if(sortedValue.includes("name")) {
-        console.log('sorted1')
-        filteredData = filteredData.sort((a:any, b:any) =>
-        a.title > b.title ? 1 : -1
-      );
-      setPoolsByNetwork(filteredData);
-      }
-     else if(sortedValue.includes("APR")) {
-      console.log('sorted2')
-
-      filteredData = filteredData.sort((a:any, b:any) =>
-        a.yieldToDataAnnualized > b.yieldToDataAnnualized ? 1 : -1
-      );
-      setPoolsByNetwork(filteredData);
-      }
-     else if(sortedValue.includes("liquidity")) {
-      console.log('sorted3')
-
-      filteredData = filteredData.sort((a:any, b:any) =>
-        a.poolSize > b.poolSize ? 1 : -1
-      );
-      setPoolsByNetwork(filteredData);
-      }
-     else if(sortedValue.includes("expiration date")) {
-      console.log('sorted4')
-
-      filteredData = filteredData.sort((a:any, b:any) =>
-        a.currentEpochTimeStamp > b.currentEpochTimeStamp ? 1 : -1
-      );
-      setPoolsByNetwork(filteredData);
-      }
-      else setPoolsByNetwork(filteredData)
+    setPoolsByNetwork(filteredData);
   };
-console.log('poolsByNetwork',poolsByNetwork)
+
+  useEffect(() => {
+    if (sortedValue[0] === "name") {
+      setPoolsByNetwork((prev) =>
+        prev.sort((a: any, b: any) => (a.title > b.title ? 1 : -1))
+      );
+    } else if (sortedValue[0] === "APR") {
+      setPoolsByNetwork((prev) =>
+        prev.sort((a: any, b: any) =>
+          a.yieldToDataAnnualized > b.yieldToDataAnnualized ? 1 : -1
+        )
+      );
+    } else if (sortedValue[0] === "liquidity") {
+      setPoolsByNetwork((prev) =>
+        prev.sort((a: any, b: any) => (a.poolSize > b.poolSize ? 1 : -1))
+      );
+    } else if (sortedValue.includes("expiration date")) {
+      setPoolsByNetwork((prev) =>
+        prev.sort((a: any, b: any) =>
+          a.currentEpochTimeStamp > b.currentEpochTimeStamp ? 1 : -1
+        )
+      );
+    } else setPoolsByNetwork(appStore.poolsByNetwork);
+  }, [sortedValue, poolsByNetwork]);
+
   const closePopup = () => {
     setPopupIsOpened(false);
     setPositionProductTitle("");
@@ -178,18 +168,17 @@ console.log('poolsByNetwork',poolsByNetwork)
       />
       <Filters
         poolsFilterHandler={poolsFilterHandler}
+        poolsSortedValue={setSortedValue}
         nestedPath={nestedPath}
       />
-      {poolsByNetwork.map((pool) => {
-        return (
-          <PoolListItem
-            pool={pool}
-            showPurchasedProducts={() => showPurchasedProducts(pool)}
-            showMaintenance={() => showMaintenance(pool)}
-            key={pool.poolAddress}
-          />
-        );
-      })}
+      {poolsByNetwork.map((pool) => (
+        <PoolListItem
+          pool={pool}
+          showPurchasedProducts={() => showPurchasedProducts(pool)}
+          showMaintenance={() => showMaintenance(pool)}
+          key={pool.poolAddress}
+        />
+      ))}
     </div>
   );
 };

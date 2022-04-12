@@ -13,11 +13,10 @@ import { MobileAuthMenu } from "./mobileAuthMenu";
 import MuiDropDown from "../DropDown";
 import { dropdownItems } from "./constants";
 import MetamaskIcon from "../../images/metamask_icon.svg";
-import WalletConnect  from "../../images/walletConnectLogo.png";
+import WalletConnect from "../../images/walletConnectLogo.png";
 
 import "../../styles/main.scss";
 import "./styles.scss";
-import { height } from "@mui/system";
 
 interface IHeader {
   networkhandler: (network: string) => void;
@@ -55,7 +54,10 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
     <div className="header-wrapper">
       <div className="header-title">Oh my Opium</div>
       <div className="mobile-menu-wrapper">
-        <MobileAuthMenu networkhandler={networkhandler} shortAddress={shortAddress} />
+        <MobileAuthMenu
+          networkhandler={networkhandler}
+          shortAddress={shortAddress}
+        />
       </div>
       <div className="header-buttons-wrapper">
         <div className="dropdown-wrapper">
@@ -207,8 +209,12 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
                   authStore.blockchainStore.login(AuthType.WALLET_CONNECT)
                 }
               />
-              <ListItemIcon style={{ minWidth: "1.2rem", height: "1.2rem"}}>
-                <img src={WalletConnect} alt="icon" style={{ minWidth: "1.2rem", height: "1.2rem"}}/>
+              <ListItemIcon style={{ minWidth: "1.2rem", height: "1.2rem" }}>
+                <img
+                  src={WalletConnect}
+                  alt="icon"
+                  style={{ minWidth: "1.2rem", height: "1.2rem" }}
+                />
               </ListItemIcon>
             </MenuItem>
           </Menu>
