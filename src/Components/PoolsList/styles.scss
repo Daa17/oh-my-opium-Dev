@@ -591,6 +591,13 @@
 @media only screen and (max-width: 500px) {
     .pools-list-item-body-wrapper {
         overflow: hidden;
+        .stepper-scroll-wrapper {
+            width: 100%;
+            overflow-x: scroll;
+        }
+        .stepper-scroll-wrapper::-webkit-scrollbar {
+            display: none;
+        }
         .prev-btn,
         .next-btn {
             display: block;
