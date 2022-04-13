@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react";
 import { useAlert } from "react-alert";
 import Tab from "@mui/material/Tab";
@@ -69,9 +69,14 @@ const PoolsList: FC<Props> = (props: Props) => {
   const [phaseInfoIsLoading, setPhaseInfoIsLoading] = useState(false);
   const [isMaintainable, setIsMaintainable] = useState(false);
   const [positionsLoading, setPositionsLoading] = useState(false);
-  const [stepperTransitionValue, setStepperTransitionValue] = useState(0);
   const [collapseIsOpened, setCollapseIsOpened] = useState(false);
   const [activeTab, setActiveTab] = React.useState("Stake");
+  const ref = useRef<any>(null);
+
+  const stepperScrollHandler = (scrollOffset: any) => {
+    ref.current.scrollLeft += scrollOffset;
+    console.log(ref.current);
+  };
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
@@ -266,14 +271,6 @@ const PoolsList: FC<Props> = (props: Props) => {
     setPositionsLoading(false);
   };
 
-  const stepperTransitionHandler = (val: string) => {
-    if (val === "dec" && stepperTransitionValue < 0) {
-      setStepperTransitionValue((prev) => prev + 20);
-    } else if (val === "inc" && stepperTransitionValue > -70) {
-      setStepperTransitionValue((prev) => prev - 20);
-    } else setStepperTransitionValue(0);
-  };
-
   const renderHeader = () => {
     return (
       <div className="pools-list-item-header-wrapper">
@@ -369,7 +366,7 @@ const PoolsList: FC<Props> = (props: Props) => {
   //     ),
   //   },
   // ];
-  
+
   let options: any = {
     // weekday: "long",
     // year: "numeric",
@@ -419,53 +416,62 @@ const PoolsList: FC<Props> = (props: Props) => {
         </div>
         <div className="pools-list-subttitle">{phaseInfo.tradingPhase}</div>
         <div className="mobile_stepper_wrapper">
-        <Button
-          className="stepper_btn prev-btn"
-          label=""
-          onClick={() => stepperTransitionHandler("dec")}
-          style ={{backgroundColor: "transparent"}}
-        />
-        <div className="pools-list-item-phase-wrapper">
-          <Stepper activeStep={currentPhaseNumber} alternativeLabel style={{ transform: `translateX(${stepperTransitionValue}%)`}}>
-            <Step key={"phaseInfo.stakingPhase"}>
-              <span className="phase_name">Rebalansing phase</span>
-              <StepLabel>{phaseInfo.stakingPhase?.substring(0, 6)}</StepLabel>
-            </Step>
-            {currentPhaseNumber === 1 && (
-              <Step key={"phaseInfo.stakingPhase1"}>
-                <StepLabel>{currentDate}</StepLabel>
-              </Step>
-            )}
-            <Step key={"phaseInfo.tradingPhase"}>
-              <span className="phase_name">Trading phase</span>
-              <StepLabel>{phaseInfo.tradingPhase?.substring(0, 6)}</StepLabel>
-            </Step>
-            {currentPhaseNumber === 2 && (
-              <Step key={"phaseInfo.stakingPhase1"}>
-                <StepLabel>{currentDate}</StepLabel>
-              </Step>
-            )}
-            <Step key={"phaseInfo.stakingOnly"}>
-              <span className="phase_name">Staking only</span>
-              <StepLabel>{phaseInfo.stakingOnly?.substring(0, 6)}</StepLabel>
-            </Step>
-            {currentPhaseNumber === 3 && (
-              <Step key={"phaseInfo.stakingPhase1"}>
-                <StepLabel>{currentDate}</StepLabel>
-              </Step>
-            )}
-            <Step key={"phaseInfo.notInitialized"}>
-              <span className="phase_name">Waiting phase</span>
-              <StepLabel>{phaseInfo.notInitialized?.substring(0, 6)}</StepLabel>
-            </Step>
-          </Stepper>
-        </div>
-        <Button
-          className="stepper_btn next-btn"
-          label=""
-          onClick={() => stepperTransitionHandler("inc")}
-          style ={{backgroundColor: "transparent"}}
-        />
+          <Button
+            className="stepper_btn prev-btn"
+            label=""
+            onClick={() => stepperScrollHandler(-30)}
+            style={{ backgroundColor: "transparent" }}
+          />
+            <div ref={ref} className="pools-list-item-phase-wrapper">
+              <Stepper className="mobile-step" activeStep={currentPhaseNumber} alternativeLabel>
+                <Step key={"phaseInfo.stakingPhase"}>
+                  <span className="phase_name">Rebalansing phase</span>
+                  <StepLabel>
+                    {phaseInfo.stakingPhase?.substring(0, 6)}
+                  </StepLabel>
+                </Step>
+                {currentPhaseNumber === 1 && (
+                  <Step key={"phaseInfo.stakingPhase1"}>
+                    <StepLabel>{currentDate}</StepLabel>
+                  </Step>
+                )}
+                <Step key={"phaseInfo.tradingPhase"}>
+                  <span className="phase_name">Trading phase</span>
+                  <StepLabel>
+                    {phaseInfo.tradingPhase?.substring(0, 6)}
+                  </StepLabel>
+                </Step>
+                {currentPhaseNumber === 2 && (
+                  <Step key={"phaseInfo.stakingPhase1"}>
+                    <StepLabel>{currentDate}</StepLabel>
+                  </Step>
+                )}
+                <Step key={"phaseInfo.stakingOnly"}>
+                  <span className="phase_name">Staking only</span>
+                  <StepLabel>
+                    {phaseInfo.stakingOnly?.substring(0, 6)}
+                  </StepLabel>
+                </Step>
+                {currentPhaseNumber === 3 && (
+                  <Step key={"phaseInfo.stakingPhase1"}>
+                    <StepLabel>{currentDate}</StepLabel>
+                  </Step>
+                )}
+                <Step key={"phaseInfo.notInitialized"}>
+                  <span className="phase_name">Waiting phase</span>
+                  <StepLabel>
+                    {phaseInfo.notInitialized?.substring(0, 6)}
+                  </StepLabel>
+                </Step>
+              </Stepper>
+          </div>
+
+          <Button
+            className="stepper_btn next-btn"
+            label=""
+            onClick={() => stepperScrollHandler(30)}
+            style={{ backgroundColor: "transparent" }}
+          />
         </div>
         <div className="mobile_hint">
           During the trading phase you can do this and this

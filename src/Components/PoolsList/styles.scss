@@ -58,7 +58,6 @@
                 display: none;
             }
         }
-      
     }
 }
 
@@ -431,14 +430,12 @@
                     display: none;
                 }
             }
-            
-         
         }
     }
     .pools-list-item-body-wrapper {
         padding: 0 3.7vw;
         .pools-item-title {
-            h4  {
+            h4 {
                 margin-right: 7rem;
             }
         }
@@ -476,7 +473,7 @@
             }
         }
         .pools-list-item-phase-wrapper {
-            .phase_name  {
+            .phase_name {
                 font-size: 0.82rem;
             }
         }
@@ -563,14 +560,24 @@
             margin-top: 2.1rem;
         }
         .pools-list-item-phase-wrapper {
+            width: 100%;
+            overflow-x: scroll;
+            .pools-list-item-phase-wrapper::-webkit-scrollbar {
+                display: none;
+            }
+            .mobile-step {
+                width: 1000px;
+                overflow: hidden;
+            }
             .phase_name {
                 font-size: 1.1rem;
             }
         }
         .mobile_stepper_wrapper {
             display: flex;
-            align-items: baseline;
+            align-items: center;
             margin-top: 2.1rem;
+            overflow: hidden;
         }
         .stepper_btn {
             width: 1.75rem;
@@ -612,8 +619,9 @@
             }
         }
         .pools-list-item-phase-wrapper {
-            overflow-x: clip;
             margin-top: 0;
+            width: 1000px;
+            overflow: hidden;
             .MuiStepLabel-label {
                 line-height: 0;
             }
@@ -683,13 +691,10 @@
         .MuiStepLabel-label {
             &.MuiStepLabel-alternativeLabel {
                 margin-top: 0.9rem;
-
             }
         }
-       
     }
     .arrow-button {
         margin-top: 1rem;
     }
- 
 }
