@@ -54,10 +54,11 @@
                     display: none;
                 }
             }
+            &.tablet {
+                display: none;
+            }
         }
-        .tablet-mobile {
-            display: none;
-        }
+      
     }
 }
 
@@ -73,7 +74,7 @@
         align-items: center;
         justify-content: space-between;
         span {
-            font-size: 22px;
+            font-size: 1.57rem;
             font-style: normal;
             font-weight: 500;
             line-height: 1.25rem;
@@ -95,23 +96,23 @@
         font-family: "Montserrat", sans-serif;
         font-style: normal;
         font-weight: 500;
-        font-size: 12px;
-        line-height: 20px;
+        font-size: 0.85rem;
+        line-height: 1.43rem;
         h4 {
-            font-size: 20px;
-            margin-right: 60px;
-            margin-bottom: 5px;
+            font-size: 1.43rem;
+            margin-right: 2.8rem;
+            margin-bottom: 0.35rem;
         }
     }
     .pools-list-subttitle {
         font-family: "Montserrat", sans-serif;
         font-style: normal;
         font-weight: 500;
-        font-size: 12px;
-        line-height: 20px;
+        font-size: 0.85rem;
+        line-height: 1.43em;
     }
     .pools-list-item-phase-wrapper {
-        margin-top: 60px;
+        margin-top: 4.28rem;
         .MuiStepConnector-root {
             top: 7px;
             left: -100%;
@@ -140,23 +141,23 @@
             font-family: 'Montserrat';
             font-style: normal;
             font-weight: 400;
-            font-size: 12px;
-            line-height: 20px;
+            font-size: 0.85rem;
+            line-height: 1.43rem;
             color: #fff;
             &.MuiStepLabel-alternativeLabel {
                 text-align: left;
             }
         }
         .MuiStepIcon-root {
-            width: 14px;
-            height: 14px;
+            width: 1rem;
+            height: 1rem;
             color: #84848E;
             &.Mui-completed {
                 color: #187CD8;
             }
             &.Mui-active {
-                width: 8px;
-                height: 14px;
+                width: 0.57rem;
+                height: 1rem;
                 color: #187CD8;
                 z-index: 2;
             }
@@ -167,8 +168,8 @@
         .MuiStep-root {
             &.Mui-completed {
                 .MuiStepLabel-iconContainer {
-                    width: 14px;
-                    height: 14px;
+                    width: 1rem;
+                    height: 1rem;
                     border-radius: 50%;
                     background-color: #187CD8;
                     .MuiSvgIcon-root {
@@ -196,8 +197,8 @@
             font-family: 'Montserrat';
             font-style: normal;
             font-weight: 500;
-            font-size: 16px;
-            line-height: 20px;
+            font-size: 1.1rem;
+            line-height: 1.43rem;
         }
     }
     button {
@@ -205,6 +206,9 @@
         font-weight: 500;
         font-size: 0.8rem;
         line-height: 0.93rem;
+    }
+    .mobile_hint {
+        display: none;
     }
     .pools-list-item-info {
         width: 100%;
@@ -234,7 +238,7 @@
                 .pools-list-info-title {
                     font-style: normal;
                     font-weight: 400;
-                    font-size: 12px;
+                    font-size: 0.85rem;
                     line-height: 0.93rem;
                 }
                 .pools-list-info-amount {
@@ -420,17 +424,24 @@
             .pools-list-item-header-address {
                 width: 35%;
                 margin: 2.15rem 0 1.85rem;
+                &.tablet {
+                    display: block;
+                }
+                &.web-mobile {
+                    display: none;
+                }
             }
-            .web {
-                display: none;
-            }
-            .tablet-mobile {
-                display: block;
-            }
+            
+         
         }
     }
     .pools-list-item-body-wrapper {
         padding: 0 3.7vw;
+        .pools-item-title {
+            h4  {
+                margin-right: 7rem;
+            }
+        }
         .pools-list-item-info {
             .pools-list-info {
                 min-width: auto;
@@ -462,6 +473,11 @@
                         }
                     }
                 }
+            }
+        }
+        .pools-list-item-phase-wrapper {
+            .phase_name  {
+                font-size: 0.82rem;
             }
         }
     }
@@ -512,14 +528,96 @@
                 font-size: 1.14rem;
             }
             .pools-list-item-header-address {
+                width: 100%;
                 a {
                     font-size: 0.85rem;
+                }
+                &.tablet {
+                    display: none;
+                }
+                &.web-mobile {
+                    display: block;
                 }
             }
         }
     }
+    .MuiStepper-root {
+        width: 62.8rem;
+    }
     .pools-list-item-body-wrapper {
         padding: 0 1rem;
+        overflow: hidden;
+        .pools-item-title {
+            display: none;
+        }
+        .pools-list-subttitle {
+            display: none;
+        }
+        .mobile_hint {
+            display: block;
+            font-family: "Montserrat", sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 0.85rem;
+            line-height: 15px;
+            margin-top: 2.1rem;
+        }
+        .pools-list-item-phase-wrapper {
+            .phase_name {
+                font-size: 1.1rem;
+            }
+        }
+        .mobile_stepper_wrapper {
+            display: flex;
+            align-items: baseline;
+            margin-top: 2.1rem;
+        }
+        .stepper_btn {
+            width: 1.75rem;
+            height: 1.75rem;
+            min-width: 1.75rem;
+            min-height: 1.75rem;
+            position: relative;
+            display: block;
+            padding: 0;
+            &.next-btn {
+                margin-left: 1.5rem;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 33%;
+                    left: 50%;
+                    border: solid #fff;
+                    border-width: 0 1px 1px 0;
+                    display: inline-block;
+                    padding: 3px;
+                    transform: rotate(-45deg) translate(-50%, -50%);
+                    -webkit-transform: rotate(-45deg) translate(-50%, -50%);
+                }
+            }
+            &.prev-btn {
+                margin-right: 1.5rem;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 33%;
+                    right: 50%;
+                    border: solid #fff;
+                    border-width: 0 1px 1px 0;
+                    display: inline-block;
+                    padding: 3px;
+                    transform: rotate(135deg) translate(-50%, -50%);
+                    -webkit-transform: rotate(135deg) translate(-50%, -50%);
+                }
+            }
+        }
+        .pools-list-item-phase-wrapper {
+            overflow-x: clip;
+            margin-top: 0;
+            .MuiStepLabel-label {
+                line-height: 0;
+            }
+        }
         .pools-list-item-info {
             flex-direction: column;
             .pools-list-item-input {
@@ -582,21 +680,16 @@
                 }
             }
         }
+        .MuiStepLabel-label {
+            &.MuiStepLabel-alternativeLabel {
+                margin-top: 0.9rem;
+
+            }
+        }
+       
     }
     .arrow-button {
         margin-top: 1rem;
     }
-}
-
-@media only screen and (max-width: 500px) {
-    .pools-list-item-body-wrapper {
-        overflow: hidden;
-        .prev-btn,
-        .next-btn {
-            display: block;
-        }
-    }
-    .pools-list-item-phase-wrapper {
-        width: 1000px;
-    }
+ 
 }
