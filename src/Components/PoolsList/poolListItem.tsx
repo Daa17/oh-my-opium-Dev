@@ -268,9 +268,9 @@ const PoolsList: FC<Props> = (props: Props) => {
 
   const stepperTransitionHandler = (val: string) => {
     if (val === "dec" && stepperTransitionValue < 0) {
-      setStepperTransitionValue((prev) => prev + 5);
+      setStepperTransitionValue((prev) => prev + 20);
     } else if (val === "inc" && stepperTransitionValue > -70) {
-      setStepperTransitionValue((prev) => prev - 5);
+      setStepperTransitionValue((prev) => prev - 20);
     } else setStepperTransitionValue(0);
   };
 
@@ -282,7 +282,7 @@ const PoolsList: FC<Props> = (props: Props) => {
             <img src={pool?.icon} alt="icon" />
             <span>{pool.title}</span>
           </div>
-          <div className="pools-list-item-header-address web">
+          <div className="pools-list-item-header-address web-mobile">
             <OpiumLink
               theme={ETheme.DARK}
               newTab={true}
@@ -290,7 +290,7 @@ const PoolsList: FC<Props> = (props: Props) => {
               href={getScanLink(pool.poolAddress, authStore.networkId)}
             />
           </div>
-          <div className="pools-list-item-header-address tablet-mobile">
+          <div className="pools-list-item-header-address tablet">
             <OpiumLink
               theme={ETheme.DARK}
               newTab={true}
@@ -418,16 +418,15 @@ const PoolsList: FC<Props> = (props: Props) => {
           <span>Now you can do this and this</span>
         </div>
         <div className="pools-list-subttitle">{phaseInfo.tradingPhase}</div>
+        <div className="mobile_stepper_wrapper">
         <Button
-          className="prev-btn"
-          label="<"
+          className="stepper_btn prev-btn"
+          label=""
           onClick={() => stepperTransitionHandler("dec")}
+          style ={{backgroundColor: "transparent"}}
         />
-        <div
-          style={{ transform: `translateX(${stepperTransitionValue}%)` }}
-          className="pools-list-item-phase-wrapper"
-        >
-          <Stepper activeStep={currentPhaseNumber} alternativeLabel>
+        <div className="pools-list-item-phase-wrapper">
+          <Stepper activeStep={currentPhaseNumber} alternativeLabel style={{ transform: `translateX(${stepperTransitionValue}%)`}}>
             <Step key={"phaseInfo.stakingPhase"}>
               <span className="phase_name">Rebalansing phase</span>
               <StepLabel>{phaseInfo.stakingPhase?.substring(0, 6)}</StepLabel>
@@ -447,7 +446,7 @@ const PoolsList: FC<Props> = (props: Props) => {
               </Step>
             )}
             <Step key={"phaseInfo.stakingOnly"}>
-              <span className="phase_name">Staking (only) phase</span>
+              <span className="phase_name">Staking only</span>
               <StepLabel>{phaseInfo.stakingOnly?.substring(0, 6)}</StepLabel>
             </Step>
             {currentPhaseNumber === 3 && (
@@ -462,92 +461,15 @@ const PoolsList: FC<Props> = (props: Props) => {
           </Stepper>
         </div>
         <Button
-          className="next-btn"
-          label=">"
+          className="stepper_btn next-btn"
+          label=""
           onClick={() => stepperTransitionHandler("inc")}
+          style ={{backgroundColor: "transparent"}}
         />
-        {pool.isSuspended ? (
-          <div>Pool is suspended</div>
-        ) : isMaintainable ? (
-          <div>
-            <div className="pool-list-item-no-epoch">
-              Epoch is not initialized
-            </div>
-            <Button
-              variant="secondary"
-              className="blue"
-              size="sm"
-              label="open maintenance"
-              onClick={showMaintenance}
-              disabled={appStore.requestsAreNotAllowed}
-            />
-          </div>
-        ) : (
-          <div className="pools-list-item-phase-wrapper">
-            <div className="pools-list-item-phase-current">
-              Current phase:
-              {appStore.requestsAreNotAllowed ? (
-                "Please check your network"
-              ) : phaseInfoIsLoading ? (
-                "Loading..."
-              ) : (
-                <div className="current-phase-text">
-                  {phaseInfo.currentPhaseText}
-                </div>
-              )}
-            </div>
-            <div
-              className={`pools-list-item-phase ${
-                "REBALANCING" === phaseInfo.currentPhaseText && "bold-text"
-              }`}
-            >
-              Rebalancing phase:
-              {appStore.requestsAreNotAllowed
-                ? "Please check your network"
-                : phaseInfoIsLoading
-                ? "Loading..."
-                : phaseInfo.stakingPhase}
-            </div>
-            <div
-              className={`pools-list-item-phase ${
-                "TRADING" === phaseInfo.currentPhaseText && "bold-text"
-              }`}
-            >
-              Trading phase:
-              {appStore.requestsAreNotAllowed
-                ? "Please check your network"
-                : phaseInfoIsLoading
-                ? "Loading..."
-                : phaseInfo.tradingPhase}
-            </div>
-            {phaseInfo.stakingOnly && (
-              <div
-                className={`pools-list-item-phase ${
-                  "STAKING (ONLY)" === phaseInfo.currentPhaseText && "bold-text"
-                }`}
-              >
-                Staking (only) phase:
-                {appStore.requestsAreNotAllowed
-                  ? "Please check your network"
-                  : phaseInfoIsLoading
-                  ? "Loading..."
-                  : phaseInfo.stakingOnly}
-              </div>
-            )}
-            <div
-              className={`pools-list-item-phase ${
-                "WAITING" === phaseInfo.currentPhaseText && "bold-text"
-              }`}
-            >
-              Waiting phase:
-              {appStore.requestsAreNotAllowed
-                ? "Please check your network"
-                : phaseInfoIsLoading
-                ? "Loading..."
-                : phaseInfo.notInitialized}
-            </div>
-          </div>
-        )}
+        </div>
+        <div className="mobile_hint">
+          During the trading phase you can do this and this
+        </div>
         <div className="pools-list-item-info">
           <div className="pools-list-info">
             <div className="pools-list-info-row">
