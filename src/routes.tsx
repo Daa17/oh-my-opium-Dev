@@ -6,6 +6,7 @@ import AuthStore from "./Services/Stores/AuthStore";
 import Layout from "./Components/Layout/Layout";
 import { Wopium } from "./Components/Wopium/Wopium";
 import PositionsList from "./Components//PositionsList/index";
+// import Wrapping from "./Components/Wrapping";
 
 const testPos = [
   {
@@ -49,7 +50,7 @@ export const AppRouts = observer(() => {
               />
               <Route
                 path="my-stake"
-                element={<div className="no_pools">No pools found according to chosen filters</div>}
+                element={<PoolsList nestedPath={currentNetworkShortName}/>}
               />
             </Route>
             <Route

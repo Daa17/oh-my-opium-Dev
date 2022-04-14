@@ -14,7 +14,7 @@ import PositionsList from "../PositionsList";
 import PoolListItem from "./poolListItem";
 import Wrapping from "../Wrapping";
 import Maintenance from "../Maintenance";
-
+import { useLocation } from "react-router-dom";
 import "./styles.scss";
 import Filters from "../Filters";
 
@@ -33,6 +33,7 @@ interface IPoolList {
 }
 
 const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
+  let { pathname } = useLocation();
   const [popupIsOpened, setPopupIsOpened] = useState(false);
   const [positions, setPositions] = useState<PositionType[]>([]);
   const [sortedValue, setSortedValue] = useState<string>("expiration date");
@@ -42,7 +43,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
   const [poolToMaintain, setPoolToMaintain] = useState<PoolType | null>(null);
   const alert = useAlert();
   const userAddress = authStore.blockchainStore.address;
-
+  const isPoolsPage = pathname.includes("all-pools");
   const showPurchasedProducts = async (pool: PoolType) => {
     let positions: PositionType[] | undefined = [];
 
@@ -53,6 +54,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
           alert.error(e.message)
         ).then((res) => (positions = res));
       });
+    setPositions(positions);
 
     if (positions && positions.length) {
       setPopupIsOpened(true);
@@ -171,14 +173,21 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
         poolsSortedValue={setSortedValue}
         nestedPath={nestedPath}
       />
-      {poolsByNetwork.map((pool) => (
-        <PoolListItem
-          pool={pool}
-          showPurchasedProducts={() => showPurchasedProducts(pool)}
-          showMaintenance={() => showMaintenance(pool)}
-          key={pool.poolAddress}
-        />
-      ))}
+      {isPoolsPage ? (
+        poolsByNetwork.map((pool) => (
+          <PoolListItem
+            pool={pool}
+            showPurchasedProducts={() => showPurchasedProducts(pool)}
+            showMaintenance={() => showMaintenance(pool)}
+            key={pool.poolAddress}
+          />
+        ))
+      ) : (
+        <div className="no_pools">
+          No pools found according to chosen filters
+        </div>
+      )}
+      {/* <Wrapping /> */}
     </div>
   );
 };
