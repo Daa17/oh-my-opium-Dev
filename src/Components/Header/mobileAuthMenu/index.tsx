@@ -24,7 +24,7 @@ import "./style.scss";
 export const MobileAuthMenu = ({ networkhandler }: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [activeNetwork, setActiveNetwork] = useState<string | number>();
-  const [activeWallet, setActiveWallet] = useState<string>('MetaMask');
+  const [activeWallet, setActiveWallet] = useState<string>("MetaMask");
   const open = Boolean(anchorEl);
   const { address } = authStore.blockchainStore;
 
@@ -75,7 +75,7 @@ export const MobileAuthMenu = ({ networkhandler }: any) => {
           left: "0.93rem",
         }}
       >
-        <img src={DiamondIcon} alt="icon" />
+        <img width="17" height="14" src={DiamondIcon} alt="icon" />
       </ListItemIcon>
       <Button
         variant="primary"
@@ -247,6 +247,8 @@ export const MobileAuthMenu = ({ networkhandler }: any) => {
                     {item.title}
                     <ListItemIcon style={{ minWidth: "1.2rem" }}>
                       <img
+                        width="17"
+                        height="14"
                         style={{ maxWidth: "15px" }}
                         src={item.iconUrl}
                         alt="icon"
@@ -350,7 +352,9 @@ export const MobileAuthMenu = ({ networkhandler }: any) => {
                         {item.title}
                         <ListItemIcon style={{ minWidth: "1.2rem" }}>
                           <img
-                            style={{ maxWidth: "15px" }}
+                            width="17"
+                            height="14"
+                            // style={{ maxWidth: "15px" }}
                             src={item.iconUrl}
                             alt="icon"
                           />

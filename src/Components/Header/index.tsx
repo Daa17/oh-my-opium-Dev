@@ -67,14 +67,16 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
             handleNetworkList={handleChangeNetworkList}
           />
         </div>
-        {authStore.loggedIn && authStore.blockchainStore.address && (
-          <OpiumLink
-            theme={ETheme.DARK}
-            newTab={true}
-            label={shortenAddress(address)}
-            href={getScanLink(address, authStore.networkId)}
-          />
-        )}
+        <div className="opium-link-wrapper">
+          {authStore.loggedIn && authStore.blockchainStore.address && (
+            <OpiumLink
+              theme={ETheme.DARK}
+              newTab={true}
+              label={shortenAddress(address)}
+              href={getScanLink(address, authStore.networkId)}
+            />
+          )}
+        </div>
         <>
           {!(authStore.loggedIn && address) ? (
             <Button
@@ -179,7 +181,7 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
                 }
               />
               <ListItemIcon style={{ minWidth: "1.2rem" }}>
-                <img src={MetamaskIcon} alt="icon" />
+                <img width="17" height="14" src={MetamaskIcon} alt="icon" />
               </ListItemIcon>
             </MenuItem>
             <Divider
@@ -211,6 +213,8 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
               />
               <ListItemIcon style={{ minWidth: "1.2rem", height: "1.2rem" }}>
                 <img
+                  width="17"
+                  height="14"
                   src={WalletConnect}
                   alt="icon"
                   style={{ minWidth: "1.2rem", height: "1.2rem" }}

@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import { useAlert } from "react-alert";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
+import moment from "moment";
 import {
   Button,
   OpiumLink,
@@ -33,9 +34,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { shortenAddress } from "../../Services/Utils/helpers";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-import "rc-slider/assets/index.css";
 import "../../styles/main.scss";
 import "./styles.scss";
 
@@ -72,6 +71,7 @@ const PoolsList: FC<Props> = (props: Props) => {
   const [collapseIsOpened, setCollapseIsOpened] = useState(false);
   const [activeTab, setActiveTab] = React.useState("Stake");
   const ref = useRef<any>(null);
+  const currentYear = moment().year();
 
   const stepperScrollHandler = (scrollOffset: any) => {
     ref.current.scrollLeft += scrollOffset;
@@ -277,7 +277,7 @@ const PoolsList: FC<Props> = (props: Props) => {
       <div className="pools-list-item-header-wrapper">
         <div className="pools-list-item-header-info">
           <div className="pools-list-item-header-title">
-            <img src={pool?.icon} alt="icon" />
+            <img width="17" height="14" src={pool?.icon} alt="icon" />
             <span>{pool.title}</span>
           </div>
           <div className="pools-list-item-header-address web-mobile">
@@ -415,7 +415,7 @@ const PoolsList: FC<Props> = (props: Props) => {
           </div>
           <span>Now you can do this and this</span>
         </div>
-        <div className="pools-list-subttitle">{phaseInfo.tradingPhase}</div>
+        <div className="pools-list-subttitle">{`${phaseInfo.tradingPhase}`}</div>
         <div className="mobile_stepper_wrapper">
           <Button
             className="stepper_btn prev-btn"
@@ -431,35 +431,42 @@ const PoolsList: FC<Props> = (props: Props) => {
             >
               <Step key={"phaseInfo.stakingPhase"}>
                 <span className="phase_name">Rebalansing phase</span>
-                <StepLabel>{phaseInfo.stakingPhase?.substring(0, 6)}</StepLabel>
+                <StepLabel>{`${phaseInfo.stakingPhase?.substring(0, 6)}
+                  ${currentYear}`}</StepLabel>
               </Step>
               {currentPhaseNumber === 1 && (
                 <Step key={"phaseInfo.stakingPhase1"}>
-                  <StepLabel>{currentDate}</StepLabel>
+                  <StepLabel>{`${currentDate}
+                  ${currentYear}`}</StepLabel>
                 </Step>
               )}
               <Step key={"phaseInfo.tradingPhase"}>
                 <span className="phase_name">Trading phase</span>
-                <StepLabel>{phaseInfo.tradingPhase?.substring(0, 6)}</StepLabel>
+                <StepLabel>{`${phaseInfo.tradingPhase?.substring(0, 6)}
+                  ${currentYear}`}</StepLabel>
               </Step>
               {currentPhaseNumber === 2 && (
                 <Step key={"phaseInfo.stakingPhase1"}>
-                  <StepLabel>{currentDate}</StepLabel>
+                  <StepLabel>{`${currentDate}
+                  ${currentYear}`}</StepLabel>
                 </Step>
               )}
               <Step key={"phaseInfo.stakingOnly"}>
                 <span className="phase_name">Staking only</span>
-                <StepLabel>{phaseInfo.stakingOnly?.substring(0, 6)}</StepLabel>
+                {/* <StepLabel>{`${phaseInfo.stakingOnly?.substring(0, 6)}
+                  ${currentYear}`}</StepLabel> */}
               </Step>
               {currentPhaseNumber === 3 && (
                 <Step key={"phaseInfo.stakingPhase1"}>
-                  <StepLabel>{currentDate}</StepLabel>
+                  <StepLabel>{`${currentDate}
+                  ${currentYear}`}</StepLabel>
                 </Step>
               )}
               <Step key={"phaseInfo.notInitialized"}>
                 <span className="phase_name">Waiting phase</span>
                 <StepLabel>
-                  {phaseInfo.notInitialized?.substring(0, 6)}
+                  {`${phaseInfo.notInitialized?.substring(0, 6)}
+                  ${currentYear}`}
                 </StepLabel>
               </Step>
             </Stepper>

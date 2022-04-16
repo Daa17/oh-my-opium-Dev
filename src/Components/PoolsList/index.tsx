@@ -1,6 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, lazy } from "react";
 import { observer } from "mobx-react";
 import { useAlert } from "react-alert";
+import { useLocation } from "react-router-dom";
 import { ETheme, Popup } from "@opiumteam/react-opium-components";
 import appStore from "../../Services/Stores/AppStore";
 import authStore from "../../Services/Stores/AuthStore";
@@ -10,13 +11,18 @@ import {
   getPurchasedProductsTheGraph,
 } from "../../Services/Utils/methods";
 import { PoolType, PositionType } from "../../Services/Utils/types";
-import PositionsList from "../PositionsList";
-import PoolListItem from "./poolListItem";
-import Wrapping from "../Wrapping";
-import Maintenance from "../Maintenance";
-import { useLocation } from "react-router-dom";
+// import Filters from "../Filters";
+// import PositionsList from "../PositionsList";
+// import PoolListItem from "./poolListItem";
+// import Wrapping from "../Wrapping";
+// import Maintenance from "../Maintenance";
 import "./styles.scss";
-import Filters from "../Filters";
+
+const PoolListItem = lazy(() => import("./poolListItem"));
+const PositionsList = lazy(() => import("../PositionsList"));
+const Wrapping = lazy(() => import("../Wrapping"));
+const Maintenance = lazy(() => import("../Maintenance"));
+const Filters = lazy(() => import("../Filters"));
 
 const isTurbo = [
   "Turbo ETH",
@@ -173,7 +179,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
         poolsSortedValue={setSortedValue}
         nestedPath={nestedPath}
       />
-      {isPoolsPage ? (
+      {isPoolsPage && poolsByNetwork.length ? (
         poolsByNetwork.map((pool) => (
           <PoolListItem
             pool={pool}
