@@ -106,12 +106,8 @@ export const networkSelectStyle = {
       },
     },
   },
-//   anchorOrigin: {
-//     vertical: "bottom",
-//     horizontal: "right",
-//   },
   transformOrigin: {
     vertical: -7,
-    horizontal: 200,
+    horizontal: 140,
   },
 };
