@@ -6,7 +6,7 @@ import Layout from "./Components/Layout/Layout";
 
 const PoolsList = lazy(() => import("./Components/PoolsList/index"));
 const PositionsList = lazy(() => import("./Components/PositionsList/index"));
-const Wrapping = lazy(() => import("./Components/wrapping/index"));
+const Wrapping = lazy(() => import("./Components/Wrapping/index"));
 
 const testPos = [
   {
