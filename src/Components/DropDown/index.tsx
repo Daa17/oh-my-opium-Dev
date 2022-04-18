@@ -230,7 +230,7 @@ export default function MuiDropDown(props: any) {
                 }}
               >
                 <p>{title}</p>
-                <img src={iconUrl} alt="icon" />
+                <img width="17" height="14" src={iconUrl} alt="icon" />
               </MenuItem>
             ))}
         </Select>

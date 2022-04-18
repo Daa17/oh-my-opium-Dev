@@ -1,6 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, lazy } from "react";
 import { observer } from "mobx-react";
 import { useAlert } from "react-alert";
+import { useLocation } from "react-router-dom";
 import { ETheme, Popup } from "@opiumteam/react-opium-components";
 import appStore from "../../Services/Stores/AppStore";
 import authStore from "../../Services/Stores/AuthStore";
@@ -10,13 +11,18 @@ import {
   getPurchasedProductsTheGraph,
 } from "../../Services/Utils/methods";
 import { PoolType, PositionType } from "../../Services/Utils/types";
-import PositionsList from "../PositionsList";
-import PoolListItem from "./poolListItem";
-import Wrapping from "../Wrapping";
-import Maintenance from "../Maintenance";
-
+// import Filters from "../Filters";
+// import PositionsList from "../PositionsList";
+// import PoolListItem from "./poolListItem";
+// import Wrapping from "../Wrapping";
+// import Maintenance from "../Maintenance";
 import "./styles.scss";
-import Filters from "../Filters";
+
+const PoolListItem = lazy(() => import("./poolListItem"));
+const PositionsList = lazy(() => import("../PositionsList"));
+const Wrapping = lazy(() => import("../Wrapping"));
+const Maintenance = lazy(() => import("../Maintenance"));
+const Filters = lazy(() => import("../Filters"));
 
 const isTurbo = [
   "Turbo ETH",
@@ -33,6 +39,7 @@ interface IPoolList {
 }
 
 const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
+  let { pathname } = useLocation();
   const [popupIsOpened, setPopupIsOpened] = useState(false);
   const [positions, setPositions] = useState<PositionType[]>([]);
   const [sortedValue, setSortedValue] = useState<string>("expiration date");
@@ -42,7 +49,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
   const [poolToMaintain, setPoolToMaintain] = useState<PoolType | null>(null);
   const alert = useAlert();
   const userAddress = authStore.blockchainStore.address;
-
+  const isPoolsPage = pathname.includes("all-pools");
   const showPurchasedProducts = async (pool: PoolType) => {
     let positions: PositionType[] | undefined = [];
 
@@ -53,6 +60,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
           alert.error(e.message)
         ).then((res) => (positions = res));
       });
+    setPositions(positions);
 
     if (positions && positions.length) {
       setPopupIsOpened(true);
@@ -171,14 +179,21 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
         poolsSortedValue={setSortedValue}
         nestedPath={nestedPath}
       />
-      {poolsByNetwork.map((pool) => (
-        <PoolListItem
-          pool={pool}
-          showPurchasedProducts={() => showPurchasedProducts(pool)}
-          showMaintenance={() => showMaintenance(pool)}
-          key={pool.poolAddress}
-        />
-      ))}
+      {isPoolsPage && poolsByNetwork.length ? (
+        poolsByNetwork.map((pool) => (
+          <PoolListItem
+            pool={pool}
+            showPurchasedProducts={() => showPurchasedProducts(pool)}
+            showMaintenance={() => showMaintenance(pool)}
+            key={pool.poolAddress}
+          />
+        ))
+      ) : (
+        <div className="no_pools">
+          No pools found according to chosen filters
+        </div>
+      )}
+      {/* <Wrapping /> */}
     </div>
   );
 };

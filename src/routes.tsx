@@ -1,11 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { observer } from "mobx-react";
-import PoolsList from "./Components/PoolsList";
+// import PoolsList from "./Components/PoolsList";
 import AuthStore from "./Services/Stores/AuthStore";
 import Layout from "./Components/Layout/Layout";
 import { Wopium } from "./Components/Wopium/Wopium";
-import PositionsList from "./Components//PositionsList/index";
+// import PositionsList from "./Components/PositionsList/index";
+// import Wrapping from "./Components/Wrapping";
+
+const PoolsList = lazy(() => import("./Components/PoolsList/index"));
+const PositionsList = lazy(() => import("./Components/PositionsList/index"));
+const Wrapping = lazy(() => import("./Components/Wrapping"));
 
 const testPos = [
   {
@@ -39,36 +44,38 @@ export const AppRouts = observer(() => {
   return (
     <>
       <Layout />
-      <Routes>
-        <Route path="/">
-          <Route path={currentNetworkShortName}>
-            <Route path="pools">
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/">
+            <Route path={currentNetworkShortName}>
+              <Route path="pools">
+                <Route
+                  path="all-pools"
+                  element={<PoolsList nestedPath={currentNetworkShortName} />}
+                />
+                <Route
+                  path="my-stake"
+                  element={<PoolsList nestedPath={currentNetworkShortName} />}
+                />
+              </Route>
               <Route
-                path="all-pools"
-                element={<PoolsList nestedPath={currentNetworkShortName} />}
+                path="positions"
+                element={<PositionsList positions={testPos} />}
               />
+              <Route path="wOpium" element={<Wrapping />} />
               <Route
-                path="my-stake"
-                element={<div className="no_pools">No pools found according to chosen filters</div>}
+                path="*"
+                element={
+                  <Navigate
+                    to={`/${currentNetworkShortName}/pools/all-pools`}
+                    replace
+                  />
+                }
               />
             </Route>
-            <Route
-              path="positions"
-              element={<PositionsList positions={testPos} />}
-            />
-            <Route path="wOpium" element={<Wopium />} />
-            <Route
-              path="*"
-              element={
-                <Navigate
-                  to={`/${currentNetworkShortName}/pools/all-pools`}
-                  replace
-                />
-              }
-            />
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      </Suspense>
     </>
   );
 });

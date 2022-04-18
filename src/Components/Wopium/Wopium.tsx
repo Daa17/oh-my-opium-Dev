@@ -14,7 +14,7 @@ export const Wopium = () => {
         <div className="wopium_row">
             <div className="wopium_item">
                 <div className="wopium_item_title">
-                    <img src={WopiumIcon} alt="wopiom_icon"/>
+                    <img  src={WopiumIcon} alt="wopiom_icon"/>
                     <span>OPIUM</span>
                 </div>
                 <div className="balance_info">

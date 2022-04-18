@@ -118,7 +118,13 @@ const Filters: FC<IFilter> = ({
 
       <div className="mobile_dropdowns">
         <div className="dropdown-wrapper">
-          <img src={FilterIcon} alt="filter_icon" className="filter_icon" />
+          <img
+            width="24"
+            height="24"
+            src={FilterIcon}
+            alt="filter_icon"
+            className="filter_icon"
+          />
           <MuiDropDown
             title=" "
             radioHeader="Sort By"
