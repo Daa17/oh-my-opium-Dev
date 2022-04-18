@@ -164,6 +164,9 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
                 justifyContent: "space-between",
                 padding: "0.3rem 0",
               }}
+              onClick={() =>
+                authStore.blockchainStore.login(AuthType.INJECTED)
+              }
             >
               <Button
                 variant="primary"
@@ -176,9 +179,7 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
                   padding: "0",
                 }}
                 label="MetaMask"
-                onClick={() =>
-                  authStore.blockchainStore.login(AuthType.INJECTED)
-                }
+                onClick={()=>{}}
               />
               <ListItemIcon style={{ minWidth: "1.2rem" }}>
                 <img width="17" height="14" src={MetamaskIcon} alt="icon" />
@@ -195,6 +196,7 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
                 justifyContent: "space-between",
                 padding: "0.3rem 0",
               }}
+              onClick={()=>authStore.blockchainStore.login(AuthType.WALLET_CONNECT)}
             >
               <Button
                 variant="primary"
@@ -207,9 +209,7 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
                   padding: "0",
                 }}
                 label="Wallet connect"
-                onClick={() =>
-                  authStore.blockchainStore.login(AuthType.WALLET_CONNECT)
-                }
+                onClick={()=>{}}
               />
               <ListItemIcon style={{ minWidth: "1.2rem", height: "1.2rem" }}>
                 <img

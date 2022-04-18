@@ -1,25 +1,59 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { useAlert } from "react-alert";
 import { Button, OpiumLink, ETheme } from "@opiumteam/react-opium-components";
 import authStore from "../../Services/Stores/AuthStore";
 import appStore from "../../Services/Stores/AppStore";
-import { withdrawPosition } from "../../Services/Utils/methods";
-import { PositionType } from "../../Services/Utils/types";
+import {
+  getPurchasedProductsTheGraph,
+  withdrawPosition,
+} from "../../Services/Utils/methods";
 import { convertDateFromTimestamp } from "../../Services/Utils/date";
 import { getScanLink } from "../../Services/Utils/transaction";
 import { shortenAddress } from "../../Services/Utils/helpers";
+import { PositionType } from "../../Services/Utils/types";
+
 import "./styles.scss";
 
-type Props = {
-  positions: PositionType[];
-};
-
-const PositionsList: FC<any> = (props: Props) => {
+const PositionsList: FC<any> = ({ currentPositions, fromPopup }) => {
   const { address } = authStore.blockchainStore;
-  const { positions } = props;
+  const [positions, setPositions] = useState<PositionType[]>([]);
+
   const alert = useAlert();
 
+  const getAllPurchasedProducts = async () => {
+    let positions: PositionType[] | undefined = [];
+    const pools = appStore.poolsByNetwork.filter((pool) => !pool.isSuspended);
+    await Promise.all(
+      pools.map(async (pool) => {
+        await getPurchasedProductsTheGraph(pool, address).then(
+          (res) => (positions = res)
+        );
+      })
+    )
+      .then(() => {
+        if (positions && positions.length) {
+          setPositions(positions);
+        } else {
+          alert.error("There are no purchased products");
+        }
+      })
+      .catch((e) => {
+        alert.error(
+          "Something wen wrong, please try to show products in the pool"
+        );
+      });
+  };
+
+  useEffect(() => {
+    if (fromPopup) {
+      currentPositions?.length
+        ? setPositions(currentPositions)
+        : setPositions([]);
+    } else getAllPurchasedProducts();
+  }, []);
+
+  console.log("positions", positions);
   const makeWithdrawal = async (position: PositionType) => {
     withdrawPosition(
       position,
