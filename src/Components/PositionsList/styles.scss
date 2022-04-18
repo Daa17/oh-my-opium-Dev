@@ -98,6 +98,12 @@
         }
         .position-item-address {
             a {
+                max-width: 20.83vw;
+                word-break: break-all;
+                font-size: 1.14rem;
+                font-style: normal;
+                font-weight: 800;
+                line-height: 1.25rem;
                 color: white;
             }
         }
@@ -118,6 +124,17 @@
     }
 }
 
+@media only screen and (max-width: 1440px) {
+    .positions-wrapper {
+        .position-item-wrapper {
+            .amount_expire_wrapper {
+                .amount_wrapper {
+                    margin-right: 3.8vw;
+                }
+            }
+        }
+    }
+}
 @media only screen and (max-width: 1024px) {
     .positions-wrapper {
         padding: 0 2.7rem;
