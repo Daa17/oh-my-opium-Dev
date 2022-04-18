@@ -16,7 +16,7 @@ import WopiumIcon from "../../images/wopium_icon.svg";
 
 import "./styles.scss";
 
-const Wrapping: FC<{}> = () => {
+const Wrapping: FC<any> = () => {
   const alert = useAlert();
   const [opiumValue, setOpiumValue] = useState(0);
   const [wopiumValue, setWopiumValue] = useState(0);
