@@ -401,21 +401,23 @@ const PoolsList: FC<Props> = (props: Props) => {
   const renderBody = () => {
     return (
       <div className="pools-list-item-body-wrapper">
-        <div className="pools-item-title">
-          <div className="pools-list-item-phase-current">
-            {appStore.requestsAreNotAllowed ? (
-              "Please check your network"
-            ) : phaseInfoIsLoading ? (
-              "Loading..."
-            ) : (
-              <h4 className="current-phase-text">
-                {phaseInfo.currentPhaseText}
-              </h4>
-            )}
+        <div className="pools-item-title-container" >
+          <div className="pools-item-title">
+            <div className="pools-list-item-phase-current">
+              {appStore.requestsAreNotAllowed ? (
+                "Please check your network"
+              ) : phaseInfoIsLoading ? (
+                "Loading..."
+              ) : (
+                <h4 className="current-phase-text">
+                  {phaseInfo.currentPhaseText}
+                </h4>
+              )}
+            </div>
+            <span>Now you can do this and this</span>
           </div>
-          <span>Now you can do this and this</span>
+          <div className="pools-list-subttitle">{`${phaseInfo.tradingPhase}`}</div>
         </div>
-        <div className="pools-list-subttitle">{`${phaseInfo.tradingPhase}`}</div>
         <div className="mobile_stepper_wrapper">
           <Button
             className="stepper_btn prev-btn"
@@ -512,8 +514,8 @@ const PoolsList: FC<Props> = (props: Props) => {
                 {appStore.requestsAreNotAllowed
                   ? "Please check your network"
                   : balanceIsLoading
-                  ? "Loading..."
-                  : balance}
+                    ? "Loading..."
+                    : balance}
               </span>
             </div>
             <Button
@@ -570,11 +572,10 @@ const PoolsList: FC<Props> = (props: Props) => {
               <div className="buy-buttons-wrapper">
                 <div className="pools-list-item-insurance-price">
                   <span>You pay: </span>
-                  {`${
-                    insPrice === 0
+                  {`${insPrice === 0
                       ? "N/A"
                       : `${parseFloat(insPrice.toFixed(3))} ${pool.marginTitle}`
-                  }`}
+                    }`}
                 </div>
                 <Button
                   variant="secondary"
@@ -654,13 +655,11 @@ const PoolsList: FC<Props> = (props: Props) => {
                   <div className="buy-buttons-wrapper">
                     <div className="pools-list-item-insurance-price">
                       <span>You pay: </span>
-                      {`${
-                        insPrice === 0
+                      {`${insPrice === 0
                           ? "N/A"
-                          : `${parseFloat(insPrice.toFixed(3))} ${
-                              pool.marginTitle
-                            }`
-                      }`}
+                          : `${parseFloat(insPrice.toFixed(3))} ${pool.marginTitle
+                          }`
+                        }`}
                     </div>
                     <Button
                       variant="secondary"
