@@ -40,7 +40,20 @@ export const AppRouts = observer(() => {
   return (
     <>
       <Layout />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <div
+            style={{
+              color: "#fff",
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+            }}
+          >
+            Loading...
+          </div>
+        }
+      >
         <Routes>
           <Route path="/">
             <Route path={currentNetworkShortName}>

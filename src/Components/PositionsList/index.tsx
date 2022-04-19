@@ -67,70 +67,78 @@ const PositionsList: FC<any> = ({ currentPositions, fromPopup }) => {
   };
   return (
     <div className="positions-wrapper">
-      {positions.map((position, i) => {
-        const isExpired = Date.now() / 1000 > position.endTime;
-        const date = convertDateFromTimestamp(position.endTime, "DD-MMM-YY");
-        return (
-          <div className="position-item-wrapper" key={i}>
-            <div className="img_name_wrapper">
-              <span className="position_icon"></span>
-              <div className="position-item-name">
-                <span className="pool-name">Pool name</span>
-                <span className="position short">Short position</span>
+      {positions.length ? (
+        positions.map((position, i) => {
+          const isExpired = Date.now() / 1000 > position.endTime;
+          const date = convertDateFromTimestamp(position.endTime, "DD-MMM-YY");
+          return (
+            <div className="position-item-wrapper" key={i}>
+              <div className="img_name_wrapper">
+                <span className="position_icon"></span>
+                <div className="position-item-name">
+                  <span className="pool-name">Pool name</span>
+                  <span className="position short">Short position</span>
+                </div>
+              </div>
+              <div className="amount_expire_wrapper">
+                <div className="amount_wrapper">
+                  <span>Staked amount: </span>
+                  <span className="balance_amount">
+                    {position.balance} USDT
+                  </span>
+                </div>
+                <div className={`${isExpired ? "red-date" : "green-date"}`}>
+                  {isExpired ? (
+                    <div className="expire_date expired">
+                      <span>Expired at </span>
+                      <span className="date">{date}</span>
+                    </div>
+                  ) : (
+                    <div className="expire_date">
+                      <span>Will expire at</span>{" "}
+                      <span className="date">{date}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="position-item-address web">
+                <OpiumLink
+                  theme={ETheme.DARK}
+                  newTab={true}
+                  label={position.address}
+                  href={getScanLink(position.address, authStore.networkId)}
+                />
+              </div>
+              <div className="position-item-address tablet-mobile">
+                <OpiumLink
+                  theme={ETheme.DARK}
+                  newTab={true}
+                  label={shortenAddress(position.address)}
+                  href={getScanLink(position.address, authStore.networkId)}
+                />
+              </div>
+              <div className="buttons_wrapper">
+                <Button
+                  variant="secondary"
+                  label="go to pool"
+                  onClick={() => goToPool()}
+                />
+                <Button
+                  className="withdraw"
+                  variant="secondary"
+                  label="withdraw"
+                  onClick={() => makeWithdrawal(position)}
+                  disabled={appStore.requestsAreNotAllowed || !isExpired}
+                />
               </div>
             </div>
-            <div className="amount_expire_wrapper">
-              <div className="amount_wrapper">
-                <span>Staked amount: </span>
-                <span className="balance_amount">{position.balance} USDT</span>
-              </div>
-              <div className={`${isExpired ? "red-date" : "green-date"}`}>
-                {isExpired ? (
-                  <div className="expire_date expired">
-                    <span>Expired at </span>
-                    <span className="date">{date}</span>
-                  </div>
-                ) : (
-                  <div className="expire_date">
-                    <span>Will expire at</span>{" "}
-                    <span className="date">{date}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="position-item-address web">
-              <OpiumLink
-                theme={ETheme.DARK}
-                newTab={true}
-                label={position.address}
-                href={getScanLink(position.address, authStore.networkId)}
-              />
-            </div>
-            <div className="position-item-address tablet-mobile">
-              <OpiumLink
-                theme={ETheme.DARK}
-                newTab={true}
-                label={shortenAddress(position.address)}
-                href={getScanLink(position.address, authStore.networkId)}
-              />
-            </div>
-            <div className="buttons_wrapper">
-              <Button
-                variant="secondary"
-                label="go to pool"
-                onClick={() => goToPool()}
-              />
-              <Button
-                className="withdraw"
-                variant="secondary"
-                label="withdraw"
-                onClick={() => makeWithdrawal(position)}
-                disabled={appStore.requestsAreNotAllowed || !isExpired}
-              />
-            </div>
-          </div>
-        );
-      })}
+          );
+        })
+      ) : (
+        <div className="no_pools">
+          No pools found according to chosen filters
+        </div>
+      )}
     </div>
   );
 };

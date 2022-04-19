@@ -38,6 +38,8 @@ export const ethPools = [
     yieldToDataAnnualized: "1321654.215",
     poolSize: "2554.649",
     currentEpochTimeStamp: "2145646546546",
+    readMoreLink:
+      "https://medium.com/opium-network/decentralized-insurance-upgrade-continuous-staking-and-unstaking-c329ce27ad4b",
     oracle: {
       address: "0x89c9c6731817ce9d3f52dc96e1481086bc1b328c",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -53,6 +55,8 @@ export const ethPools = [
     yieldToDataAnnualized: "2321654.215",
     poolSize: "5554.649",
     currentEpochTimeStamp: "6145646546546",
+    readMoreLink:
+      "https://opium.finance/blog/spacex-protection/LaunchSpaceXProtection/",
   },
   {
     title: "$OPIUM Option Call",
@@ -65,6 +69,8 @@ export const ethPools = [
     yieldToDataAnnualized: "21321654.215",
     poolSize: "62554454.649",
     currentEpochTimeStamp: "86548646546546",
+    readMoreLink:
+      "https://medium.com/opium-network/call-options-on-opium-an-alternative-to-liquidity-mining-32febcbda4a2",
     oracle: {
       address: "0x64dcb00e36a6238dad28e59c71c5214500539ef7",
       type: OracleTypeEnum.OPTIMISTIC,
@@ -81,6 +87,8 @@ export const ethPools = [
     yieldToDataAnnualized: "651321654.215",
     poolSize: "32554.649",
     currentEpochTimeStamp: "82145646546546",
+    readMoreLink:
+      "https://opium.finance/blog/eth-dump-protection/ETHDumpProtection/",
   },
   // {
   //   title: "(OLD) USDT Protection 13 MAR",
@@ -138,6 +146,8 @@ export const bscPools = [
     yieldToDataAnnualized: "1321654.215",
     poolSize: "2554.649",
     currentEpochTimeStamp: "2145646546546",
+    readMoreLink:
+      "https://medium.com/opium-network/introducing-opium-turbos-581a647654d7",
     oracle: {
       address: "0xf5D690c9D61092112660FEAf62e542a670Fa886D",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -214,6 +224,8 @@ export const polygonPools = [
     yieldToDataAnnualized: "1355421654.215",
     poolSize: "782554.649",
     currentEpochTimeStamp: "61565559595",
+    readMoreLink:
+      "https://opium.finance/blog/eth-dump-protection/ETHDumpProtection/",
     oracle: {
       address: "0x0D876632F321fdcAbC540eEA5867c4799A627ed8",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -230,6 +242,8 @@ export const polygonPools = [
     yieldToDataAnnualized: "8321654.215",
     poolSize: "3554.649",
     currentEpochTimeStamp: "4145646546546",
+    readMoreLink:
+      "https://medium.com/opium-network/introducing-opium-turbos-581a647654d",
     oracle: {
       address: "0x0D876632F321fdcAbC540eEA5867c4799A627ed8",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -246,6 +260,8 @@ export const polygonPools = [
     yieldToDataAnnualized: "4321654.215",
     poolSize: "9554.649",
     currentEpochTimeStamp: "8145646546546",
+    readMoreLink:
+      "https://medium.com/opium-network/opium-turbo-aave-b69a23ab1048",
     oracle: {
       address: "0xf5cb774e890edf3979bf9ae7a1c098ee89429ce5",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -262,6 +278,8 @@ export const polygonPools = [
     yieldToDataAnnualized: "8321654.215",
     poolSize: "72554.649",
     currentEpochTimeStamp: "5145646546546",
+    readMoreLink:
+      "https://medium.com/opium-network/opium-turbo-aave-b69a23ab1048",
     oracle: {
       address: "0x2e9ac4d0882165dce317f23925060ca3551782a9",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -278,6 +296,8 @@ export const polygonPools = [
     yieldToDataAnnualized: "3321654.215",
     poolSize: "4554.649",
     currentEpochTimeStamp: "6145646546546",
+    readMoreLink:
+      "https://medium.com/opium-network/opium-turbo-aave-b69a23ab1048",
     oracle: {
       address: "0xbE457663218C3527A82d4021b1DCE5802997063b",
       type: OracleTypeEnum.WITH_TIMESTAMP,
@@ -294,6 +314,8 @@ export const polygonPools = [
     yieldToDataAnnualized: "3321654.215",
     poolSize: "4554.649",
     currentEpochTimeStamp: "6145646546546",
+    readMoreLink:
+      "https://medium.com/opium-network/opium-turbo-aave-b69a23ab1048",
     oracle: {
       address: "0x0D876632F321fdcAbC540eEA5867c4799A627ed8",
       type: OracleTypeEnum.WITH_TIMESTAMP,

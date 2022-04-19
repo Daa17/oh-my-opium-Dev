@@ -21,7 +21,7 @@ import DiamondIcon from "../../../images/diamond-purple.svg";
 import "../../../styles/main.scss";
 import "./style.scss";
 
-export const MobileAuthMenu = ({ networkhandler }: any) => {
+export const MobileAuthMenu = ({ networkhandler, isWalletConnect }: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [activeNetwork, setActiveNetwork] = useState<string | number>();
   const [activeWallet, setActiveWallet] = useState<string>("MetaMask");
@@ -230,6 +230,7 @@ export const MobileAuthMenu = ({ networkhandler }: any) => {
           >
             {dropdownItems?.map((item) => (
               <FormControlLabel
+                className={`${isWalletConnect ? "disabled" : ""}`}
                 key={item.title}
                 value={item.value}
                 control={
@@ -267,6 +268,7 @@ export const MobileAuthMenu = ({ networkhandler }: any) => {
               style={{
                 borderTop: "0.5px solid rgba(255, 255, 255, 0.5)",
                 margin: "0",
+                opacity: isWalletConnect ? "0.3" : "1",
               }}
             />
           </RadioGroup>

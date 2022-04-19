@@ -300,30 +300,38 @@ const PoolsList: FC<Props> = (props: Props) => {
     );
   };
 
-  let options: any = {
-    month: "short",
-    day: "numeric",
-  };
   let currentPhaseNumber = 0;
+  let currentPhaseTodo = "";
   switch (phaseInfo.currentPhaseText) {
     case "REBALANCING":
       currentPhaseNumber = 1;
+      currentPhaseTodo =
+        "During the rebelancing phase you can stake and unstake your funds";
       break;
     case "TRADING":
       currentPhaseNumber = 2;
+      currentPhaseTodo =
+        "During the active phase you can stake into the poll and buy the product";
       break;
     case "STAKING (ONLY)":
       currentPhaseNumber = 3;
+      currentPhaseTodo =
+        "During the staking only phase you can only stake into pool";
       break;
     case "WAITING":
       currentPhaseNumber = 4;
+      currentPhaseTodo = "Now you need to wait untill pool is reinitalized";
       break;
-    default:
-      break;
+    // default:
+    //   currentPhaseNumber = 1;
+    //   currentPhaseTodo = ''
+    //   break;
   }
-  if (phaseInfo.currentPhaseText === "REBALANCING") {
-    currentPhaseNumber = 1;
-  }
+
+  let options = {
+    month: "short",
+    day: "numeric",
+  };
   let date: any = new Date();
   const currentDate: any = date.toLocaleString("en-us", options);
   const renderBody = () => {
@@ -341,7 +349,7 @@ const PoolsList: FC<Props> = (props: Props) => {
               </h4>
             )}
           </div>
-          <span>Now you can do this and this</span>
+          <span>{currentPhaseTodo}</span>
         </div>
         <div className="pools-list-subttitle">{`${phaseInfo.tradingPhase}`}</div>
         <div className="mobile_stepper_wrapper">
@@ -457,7 +465,9 @@ const PoolsList: FC<Props> = (props: Props) => {
             <div className="pools-list-item-stake">
               <div className="pools-item-title-wrapper">
                 <span>Stake</span>
-                <a href="/">read more</a>
+                <a href={pool?.readMoreLink} target="_blank">
+                  read more
+                </a>
               </div>
               <div className="pools-list-item-input">
                 Amount to stake ({pool.marginTitle}):

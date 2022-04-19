@@ -198,6 +198,7 @@ export default function MuiDropDown(props: any) {
           value={activeNetwork}
           onChange={(e: any) => handleChange(e.target.value, e.target.type)}
           renderValue={(selected: any) => selected}
+          disabled={props.disabled}
           style={{
             minHeight: "auto",
             color: "#fff",
