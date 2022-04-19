@@ -1,16 +1,12 @@
 import { useState, useEffect, Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { observer } from "mobx-react";
-// import PoolsList from "./Components/PoolsList";
 import AuthStore from "./Services/Stores/AuthStore";
 import Layout from "./Components/Layout/Layout";
-import { Wopium } from "./Components/Wopium/Wopium";
-// import PositionsList from "./Components/PositionsList/index";
-// import Wrapping from "./Components/Wrapping";
 
 const PoolsList = lazy(() => import("./Components/PoolsList/index"));
 const PositionsList = lazy(() => import("./Components/PositionsList/index"));
-const Wrapping = lazy(() => import("./Components/Wrapping"));
+const Wrapping = lazy(() => import("./Components/Wrapping/index"));
 
 const testPos = [
   {
@@ -44,7 +40,20 @@ export const AppRouts = observer(() => {
   return (
     <>
       <Layout />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <div
+            style={{
+              color: "#fff",
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+            }}
+          >
+            Loading...
+          </div>
+        }
+      >
         <Routes>
           <Route path="/">
             <Route path={currentNetworkShortName}>
