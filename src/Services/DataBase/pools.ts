@@ -221,7 +221,7 @@ export const polygonPools = [
   },
   {
     title: "Weekly Turbo ETH",
-    poolAddress: "0x020B49AE5C5f805895d4Cb0ed91236BE4345c825",
+    poolAddress: "0x75252ad806E8d6191272d9099684607CAB13b25F",
     nominal: 0.01,
     isSuspended: false,
     marginTitle: "WETH",
