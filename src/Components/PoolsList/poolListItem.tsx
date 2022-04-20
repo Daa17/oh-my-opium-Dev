@@ -24,7 +24,6 @@ import {
   getStakedBalance,
   checkPhase,
   getInsurancePrice,
-  isPoolMaintainable,
 } from "../../Services/Utils/methods";
 import { PoolType } from "../../Services/Utils/types";
 import { getScanLink } from "../../Services/Utils/transaction";
@@ -45,7 +44,7 @@ type Props = {
 };
 
 const PoolsList: FC<Props> = (props: Props) => {
-  const { pool, showPurchasedProducts, showMaintenance } = props;
+  const { pool, showPurchasedProducts } = props;
 
   const [stakeValue, setStakeValue] = useState(0);
   const [protectValue, setProtectValue] = useState(0);
@@ -66,7 +65,6 @@ const PoolsList: FC<Props> = (props: Props) => {
     stakingOnly: "",
   });
   const [phaseInfoIsLoading, setPhaseInfoIsLoading] = useState(false);
-  const [isMaintainable, setIsMaintainable] = useState(false);
   const [positionsLoading, setPositionsLoading] = useState(false);
   const [collapseIsOpened, setCollapseIsOpened] = useState(false);
   const [activeTab, setActiveTab] = React.useState("Stake");
@@ -86,8 +84,6 @@ const PoolsList: FC<Props> = (props: Props) => {
     if (status && !appStore.requestsAreNotAllowed) {
       loadBalance();
       loadPhase();
-      const maintainable = await isPoolMaintainable(pool.poolAddress);
-      setIsMaintainable(maintainable);
     }
     setCollapseIsOpened(status);
   };
@@ -304,98 +300,34 @@ const PoolsList: FC<Props> = (props: Props) => {
     );
   };
 
-  // const tabItems = [
-  //   {
-  //     title: "Stake",
-  //     eventKey: "stake",
-  //     content: (
-  //       <div className="pools-list-item-stake mobile">
-  //         <div className="pools-list-item-input">
-  //           Amount to stake ({pool.marginTitle}):{" "}
-  //           <input
-  //             type="number"
-  //             onChange={(e) => setStakeValue(+e.target.value)}
-  //           />
-  //         </div>
-  //         <div className="buttons-wrapper">
-  //           <Button
-  //             variant="secondary"
-  //             label="stake"
-  //             onClick={makeStake}
-  //             disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
-  //           />
-  //           <Button
-  //             variant="secondary"
-  //             label="unstake"
-  //             onClick={makeUnstake}
-  //             disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
-  //           />
-  //         </div>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     title: "Buy product",
-  //     eventKey: "buy",
-  //     content: (
-  //       <div className="pools-list-item-buy mobile">
-  //         <div className="pools-list-item-input">
-  //           Amount ({pool.marginTitle}):{" "}
-  //           <input
-  //             type="number"
-  //             onChange={(e) => setProtectValue(+e.target.value)}
-  //           />
-  //         </div>
-
-  //         <div className="buy-buttons-wrapper">
-  //           <div className="pools-list-item-insurance-price">
-  //             <span>You pay: </span>
-  //             {`${
-  //               insPrice === 0
-  //                 ? "N/A"
-  //                 : `${parseFloat(insPrice.toFixed(3))} ${pool.marginTitle}`
-  //             }`}
-  //           </div>
-  //           <Button
-  //             variant="secondary"
-  //             label="buy"
-  //             onClick={makeHedging}
-  //             disabled={appStore.requestsAreNotAllowed || pool.isSuspended}
-  //           />
-  //         </div>
-  //       </div>
-  //     ),
-  //   },
-  // ];
-
-  let options: any = {
-    // weekday: "long",
-    // year: "numeric",
-    month: "short",
-    day: "numeric",
-    // hour: "2-digit",
-    // minute: "2-digit",
-  };
   let currentPhaseNumber = 0;
+  let currentPhaseTodo = "";
   switch (phaseInfo.currentPhaseText) {
     case "REBALANCING":
       currentPhaseNumber = 1;
+      currentPhaseTodo =
+        "During the rebelancing phase you can stake and unstake your funds";
       break;
     case "TRADING":
       currentPhaseNumber = 2;
+      currentPhaseTodo =
+        "During the active phase you can stake into the poll and buy the product";
       break;
     case "STAKING (ONLY)":
       currentPhaseNumber = 3;
+      currentPhaseTodo =
+        "During the staking only phase you can only stake into pool";
       break;
     case "WAITING":
       currentPhaseNumber = 4;
-      break;
-    default:
+      currentPhaseTodo = "Now you need to wait untill pool is reinitalized";
       break;
   }
-  if (phaseInfo.currentPhaseText === "REBALANCING") {
-    currentPhaseNumber = 1;
-  }
+
+  let options = {
+    month: "short",
+    day: "numeric",
+  };
   let date: any = new Date();
   const currentDate: any = date.toLocaleString("en-us", options);
   const renderBody = () => {
@@ -416,6 +348,7 @@ const PoolsList: FC<Props> = (props: Props) => {
             </div>
             <span>Now you can do this and this</span>
           </div>
+          <span>{currentPhaseTodo}</span>
           <div className="pools-list-subttitle">{`${phaseInfo.tradingPhase}`}</div>
         </div>
         <div className="mobile_stepper_wrapper">
@@ -455,8 +388,8 @@ const PoolsList: FC<Props> = (props: Props) => {
               )}
               <Step key={"phaseInfo.stakingOnly"}>
                 <span className="phase_name">Staking only</span>
-                {/* <StepLabel>{`${phaseInfo.stakingOnly?.substring(0, 6)}
-                  ${currentYear}`}</StepLabel> */}
+                <StepLabel>{`${phaseInfo.stakingOnly?.substring(0, 6)}
+                  ${currentYear}`}</StepLabel>
               </Step>
               {currentPhaseNumber === 3 && (
                 <Step key={"phaseInfo.stakingPhase1"}>
@@ -531,10 +464,12 @@ const PoolsList: FC<Props> = (props: Props) => {
             <div className="pools-list-item-stake">
               <div className="pools-item-title-wrapper">
                 <span>Stake</span>
-                <a href="/">read more</a>
+                <a href={pool?.readMoreLink} target="_blank">
+                  read more
+                </a>
               </div>
               <div className="pools-list-item-input">
-                Amount to stake ({pool.marginTitle}):{" "}
+                Amount to stake ({pool.marginTitle}):
                 <input
                   type="number"
                   onChange={(e) => setStakeValue(+e.target.value)}

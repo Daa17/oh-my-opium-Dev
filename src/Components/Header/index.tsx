@@ -27,7 +27,10 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
   const open = Boolean(anchorEl);
   const { address } = authStore.blockchainStore;
   const shortAddress = shortenAddress(address);
-
+  const isWalletConnect =
+    authStore.blockchain.providerName === "WalletConnect" &&
+    authStore.loggedIn &&
+    address;
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -57,6 +60,7 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
         <MobileAuthMenu
           networkhandler={networkhandler}
           shortAddress={shortAddress}
+          isWalletConnect={isWalletConnect}
         />
       </div>
       <div className="header-buttons-wrapper">
@@ -65,6 +69,7 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
             data={dropdownItems}
             header="Network"
             handleNetworkList={handleChangeNetworkList}
+            disabled={isWalletConnect}
           />
         </div>
         <div className="opium-link-wrapper">
@@ -164,6 +169,7 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
                 justifyContent: "space-between",
                 padding: "0.3rem 0",
               }}
+              onClick={() => authStore.blockchainStore.login(AuthType.INJECTED)}
             >
               <Button
                 variant="primary"
@@ -176,9 +182,7 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
                   padding: "0",
                 }}
                 label="MetaMask"
-                onClick={() =>
-                  authStore.blockchainStore.login(AuthType.INJECTED)
-                }
+                onClick={() => {}}
               />
               <ListItemIcon style={{ minWidth: "1.2rem" }}>
                 <img width="17" height="14" src={MetamaskIcon} alt="icon" />
@@ -195,6 +199,9 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
                 justifyContent: "space-between",
                 padding: "0.3rem 0",
               }}
+              onClick={() =>
+                authStore.blockchainStore.login(AuthType.WALLET_CONNECT)
+              }
             >
               <Button
                 variant="primary"
@@ -207,9 +214,7 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
                   padding: "0",
                 }}
                 label="Wallet connect"
-                onClick={() =>
-                  authStore.blockchainStore.login(AuthType.WALLET_CONNECT)
-                }
+                onClick={() => {}}
               />
               <ListItemIcon style={{ minWidth: "1.2rem", height: "1.2rem" }}>
                 <img
