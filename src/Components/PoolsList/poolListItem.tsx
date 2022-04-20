@@ -346,9 +346,8 @@ const PoolsList: FC<Props> = (props: Props) => {
                 </h4>
               )}
             </div>
-            <span>Now you can do this and this</span>
+            <span>{currentPhaseTodo}</span>
           </div>
-          <span>{currentPhaseTodo}</span>
           <div className="pools-list-subttitle">{`${phaseInfo.tradingPhase}`}</div>
         </div>
         <div className="mobile_stepper_wrapper">
