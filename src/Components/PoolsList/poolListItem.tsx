@@ -322,10 +322,6 @@ const PoolsList: FC<Props> = (props: Props) => {
       currentPhaseNumber = 4;
       currentPhaseTodo = "Now you need to wait untill pool is reinitalized";
       break;
-    // default:
-    //   currentPhaseNumber = 1;
-    //   currentPhaseTodo = ''
-    //   break;
   }
 
   let options = {
