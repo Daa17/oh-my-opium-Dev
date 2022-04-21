@@ -1,9 +1,8 @@
-import React, { FC, useState, useEffect, useRef } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import { useAlert } from "react-alert";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import moment from "moment";
 import {
   Button,
   OpiumLink,
@@ -34,7 +33,9 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { shortenAddress } from "../../Services/Utils/helpers";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
+import "rc-slider/assets/index.css";
 import "../../styles/main.scss";
 import "./styles.scss";
 
@@ -68,20 +69,13 @@ const PoolsList: FC<Props> = (props: Props) => {
   const [phaseInfoIsLoading, setPhaseInfoIsLoading] = useState(false);
   const [isMaintainable, setIsMaintainable] = useState(false);
   const [positionsLoading, setPositionsLoading] = useState(false);
+  const [stepperTransitionValue, setStepperTransitionValue] = useState(0);
   const [collapseIsOpened, setCollapseIsOpened] = useState(false);
   const [activeTab, setActiveTab] = React.useState("Stake");
-  const ref = useRef<any>(null);
-  const currentYear = moment().year();
-
-  const stepperScrollHandler = (scrollOffset: any) => {
-    ref.current.scrollLeft += scrollOffset;
-    console.log(ref.current);
-  };
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
-
   const changeCollapseStatus = async (status: boolean) => {
     if (status && !appStore.requestsAreNotAllowed) {
       loadBalance();
@@ -272,12 +266,20 @@ const PoolsList: FC<Props> = (props: Props) => {
     setPositionsLoading(false);
   };
 
+  const stepperTransitionHandler = (val: string) => {
+    if (val === "dec" && stepperTransitionValue < 0) {
+      setStepperTransitionValue((prev) => prev + 20);
+    } else if (val === "inc" && stepperTransitionValue > -70) {
+      setStepperTransitionValue((prev) => prev - 20);
+    } else setStepperTransitionValue(0);
+  };
+
   const renderHeader = () => {
     return (
       <div className="pools-list-item-header-wrapper">
         <div className="pools-list-item-header-info">
           <div className="pools-list-item-header-title">
-            <img width="17" height="14" src={pool?.icon} alt="icon" />
+            <img src={pool?.icon} alt="icon" />
             <span>{pool.title}</span>
           </div>
           <div className="pools-list-item-header-address web-mobile">
@@ -401,83 +403,73 @@ const PoolsList: FC<Props> = (props: Props) => {
   const renderBody = () => {
     return (
       <div className="pools-list-item-body-wrapper">
-        <div className="pools-item-title-container" >
-          <div className="pools-item-title">
-            <div className="pools-list-item-phase-current">
-              {appStore.requestsAreNotAllowed ? (
-                "Please check your network"
-              ) : phaseInfoIsLoading ? (
-                "Loading..."
-              ) : (
-                <h4 className="current-phase-text">
-                  {phaseInfo.currentPhaseText}
-                </h4>
-              )}
-            </div>
-            <span>Now you can do this and this</span>
+        <div className="pools-item-title">
+          <div className="pools-list-item-phase-current">
+            {appStore.requestsAreNotAllowed ? (
+              "Please check your network"
+            ) : phaseInfoIsLoading ? (
+              "Loading..."
+            ) : (
+              <h4 className="current-phase-text">
+                {phaseInfo.currentPhaseText}
+              </h4>
+            )}
           </div>
-          <div className="pools-list-subttitle">{`${phaseInfo.tradingPhase}`}</div>
+          <span>Now you can do this and this</span>
         </div>
+        <div className="pools-list-subttitle">{phaseInfo.tradingPhase}</div>
         <div className="mobile_stepper_wrapper">
           <Button
             className="stepper_btn prev-btn"
             label=""
-            onClick={() => stepperScrollHandler(-30)}
+            onClick={() => stepperTransitionHandler("dec")}
             style={{ backgroundColor: "transparent" }}
           />
-          <div ref={ref} className="pools-list-item-phase-wrapper">
+          <div className="pools-list-item-phase-wrapper">
             <Stepper
-              className="mobile-step"
               activeStep={currentPhaseNumber}
               alternativeLabel
+              style={{ transform: `translateX(${stepperTransitionValue}%)` }}
             >
               <Step key={"phaseInfo.stakingPhase"}>
                 <span className="phase_name">Rebalansing phase</span>
-                <StepLabel>{`${phaseInfo.stakingPhase?.substring(0, 6)}
-                  ${currentYear}`}</StepLabel>
+                <StepLabel>{phaseInfo.stakingPhase?.substring(0, 6)}</StepLabel>
               </Step>
               {currentPhaseNumber === 1 && (
                 <Step key={"phaseInfo.stakingPhase1"}>
-                  <StepLabel>{`${currentDate}
-                  ${currentYear}`}</StepLabel>
+                  <StepLabel>{currentDate}</StepLabel>
                 </Step>
               )}
               <Step key={"phaseInfo.tradingPhase"}>
                 <span className="phase_name">Trading phase</span>
-                <StepLabel>{`${phaseInfo.tradingPhase?.substring(0, 6)}
-                  ${currentYear}`}</StepLabel>
+                <StepLabel>{phaseInfo.tradingPhase?.substring(0, 6)}</StepLabel>
               </Step>
               {currentPhaseNumber === 2 && (
                 <Step key={"phaseInfo.stakingPhase1"}>
-                  <StepLabel>{`${currentDate}
-                  ${currentYear}`}</StepLabel>
+                  <StepLabel>{currentDate}</StepLabel>
                 </Step>
               )}
               <Step key={"phaseInfo.stakingOnly"}>
                 <span className="phase_name">Staking only</span>
-                {/* <StepLabel>{`${phaseInfo.stakingOnly?.substring(0, 6)}
-                  ${currentYear}`}</StepLabel> */}
+                <StepLabel>{phaseInfo.stakingOnly?.substring(0, 6)}</StepLabel>
               </Step>
               {currentPhaseNumber === 3 && (
                 <Step key={"phaseInfo.stakingPhase1"}>
-                  <StepLabel>{`${currentDate}
-                  ${currentYear}`}</StepLabel>
+                  <StepLabel>{currentDate}</StepLabel>
                 </Step>
               )}
               <Step key={"phaseInfo.notInitialized"}>
                 <span className="phase_name">Waiting phase</span>
                 <StepLabel>
-                  {`${phaseInfo.notInitialized?.substring(0, 6)}
-                  ${currentYear}`}
+                  {phaseInfo.notInitialized?.substring(0, 6)}
                 </StepLabel>
               </Step>
             </Stepper>
           </div>
-
           <Button
             className="stepper_btn next-btn"
             label=""
-            onClick={() => stepperScrollHandler(30)}
+            onClick={() => stepperTransitionHandler("inc")}
             style={{ backgroundColor: "transparent" }}
           />
         </div>
@@ -514,8 +506,8 @@ const PoolsList: FC<Props> = (props: Props) => {
                 {appStore.requestsAreNotAllowed
                   ? "Please check your network"
                   : balanceIsLoading
-                    ? "Loading..."
-                    : balance}
+                  ? "Loading..."
+                  : balance}
               </span>
             </div>
             <Button
@@ -572,10 +564,11 @@ const PoolsList: FC<Props> = (props: Props) => {
               <div className="buy-buttons-wrapper">
                 <div className="pools-list-item-insurance-price">
                   <span>You pay: </span>
-                  {`${insPrice === 0
+                  {`${
+                    insPrice === 0
                       ? "N/A"
                       : `${parseFloat(insPrice.toFixed(3))} ${pool.marginTitle}`
-                    }`}
+                  }`}
                 </div>
                 <Button
                   variant="secondary"
@@ -655,11 +648,13 @@ const PoolsList: FC<Props> = (props: Props) => {
                   <div className="buy-buttons-wrapper">
                     <div className="pools-list-item-insurance-price">
                       <span>You pay: </span>
-                      {`${insPrice === 0
+                      {`${
+                        insPrice === 0
                           ? "N/A"
-                          : `${parseFloat(insPrice.toFixed(3))} ${pool.marginTitle
-                          }`
-                        }`}
+                          : `${parseFloat(insPrice.toFixed(3))} ${
+                              pool.marginTitle
+                            }`
+                      }`}
                     </div>
                     <Button
                       variant="secondary"
