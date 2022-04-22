@@ -11,16 +11,11 @@ import {
   getPurchasedProductsTheGraph,
 } from "../../Services/Utils/methods";
 import { PoolType, PositionType } from "../../Services/Utils/types";
-// import Filters from "../Filters";
-// import PositionsList from "../PositionsList";
-// import PoolListItem from "./poolListItem";
-// import Wrapping from "../Wrapping";
-// import Maintenance from "../Maintenance";
 import "./styles.scss";
 
 const PoolListItem = lazy(() => import("./poolListItem"));
 const PositionsList = lazy(() => import("../PositionsList"));
-const Wrapping = lazy(() => import("../Wrapping"));
+
 const Maintenance = lazy(() => import("../Maintenance"));
 const Filters = lazy(() => import("../Filters"));
 
@@ -48,15 +43,16 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
   const [maintenanceIsOpened, setMaintenanceIsOpened] = useState(false);
   const [poolToMaintain, setPoolToMaintain] = useState<PoolType | null>(null);
   const alert = useAlert();
-  const userAddress = authStore.blockchainStore.address;
+  const { address } = authStore.blockchainStore;
   const isPoolsPage = pathname.includes("all-pools");
+
   const showPurchasedProducts = async (pool: PoolType) => {
     let positions: PositionType[] | undefined = [];
 
-    await getPurchasedProductsTheGraph(pool, userAddress)
+    await getPurchasedProductsTheGraph(pool, address)
       .then((res) => (positions = res))
       .catch(async (e) => {
-        await getPurchasedProducts(pool, userAddress, (e) =>
+        await getPurchasedProducts(pool, address, (e) =>
           alert.error(e.message)
         ).then((res) => (positions = res));
       });
@@ -113,13 +109,11 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
       );
     } else setPoolsByNetwork(appStore.poolsByNetwork);
   }, [sortedValue, poolsByNetwork]);
-
   const closePopup = () => {
     setPopupIsOpened(false);
     setPositionProductTitle("");
     setPositions([]);
   };
-
   const showMaintenance = async (pool: PoolType) => {
     if (!pool.oracle || pool.isSuspended) {
       alert.error("This pool is unmaintainable");
@@ -152,19 +146,8 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
         className="positions-list-popup"
         popupIsOpen={popupIsOpened}
         closePopup={closePopup}
-        component={<PositionsList positions={positions} />}
+        component={<PositionsList currentPositions={positions} fromPopup/>}
       />
-
-      <Popup
-        theme={ETheme.DARK}
-        titleSize="lg"
-        title="Wrapping"
-        className="positions-list-popup"
-        popupIsOpen={appStore.wrappingPopupIsOpened}
-        closePopup={() => appStore.setWrappingPopupIsOpened(false)}
-        component={<Wrapping />}
-      />
-
       <Popup
         theme={ETheme.DARK}
         titleSize="lg"
@@ -173,6 +156,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
         popupIsOpen={maintenanceIsOpened}
         closePopup={closeMaintenance}
         component={<Maintenance pool={poolToMaintain} />}
+        
       />
       <Filters
         poolsFilterHandler={poolsFilterHandler}
@@ -193,7 +177,6 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
           No pools found according to chosen filters
         </div>
       )}
-      {/* <Wrapping /> */}
     </div>
   );
 };
