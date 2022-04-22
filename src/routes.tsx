@@ -69,7 +69,12 @@ export const AppRouts = observer(() => {
               </Route>
               <Route
                 path="positions"
-                element={<PositionsList positions={testPos} />}
+                element={
+                  <PositionsList
+                    nestedPath={currentNetworkShortName}
+                    testPos={testPos}
+                  />
+                }
               />
               <Route path="wOpium" element={<Wrapping />} />
               <Route

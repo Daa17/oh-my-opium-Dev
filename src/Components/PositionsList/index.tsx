@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { useAlert } from "react-alert";
+import { useNavigate } from "react-router-dom";
 import { Button, OpiumLink, ETheme } from "@opiumteam/react-opium-components";
 import authStore from "../../Services/Stores/AuthStore";
 import appStore from "../../Services/Stores/AppStore";
@@ -15,12 +16,16 @@ import { PositionType } from "../../Services/Utils/types";
 
 import "./styles.scss";
 
-const PositionsList: FC<any> = ({ currentPositions, fromPopup }) => {
+const PositionsList: FC<any> = ({
+  currentPositions,
+  fromPopup,
+  currentNetwork,
+  testPos,
+}) => {
   const { address } = authStore.blockchainStore;
   const [positions, setPositions] = useState<PositionType[]>([]);
-
+  const navigate = useNavigate();
   const alert = useAlert();
-
   const getAllPurchasedProducts = async () => {
     let positions: PositionType[] | undefined = [];
     const pools = appStore.poolsByNetwork.filter((pool) => !pool.isSuspended);
@@ -53,7 +58,6 @@ const PositionsList: FC<any> = ({ currentPositions, fromPopup }) => {
     } else getAllPurchasedProducts();
   }, []);
 
-  console.log("positions", positions);
   const makeWithdrawal = async (position: PositionType) => {
     withdrawPosition(
       position,
@@ -63,12 +67,13 @@ const PositionsList: FC<any> = ({ currentPositions, fromPopup }) => {
     );
   };
   const goToPool = () => {
-    console.log("go to pool");
+    navigate(`/${currentNetwork}/pools/all-pools`);
+    appStore.setCurrentPoolId("0x2300091326DF68309BDB7eE885de561C2C89fea9");
   };
   return (
     <div className="positions-wrapper">
-      {positions.length ? (
-        positions.map((position, i) => {
+      {!positions.length ? (
+        testPos.map((position: any, i: any) => {
           const isExpired = Date.now() / 1000 > position.endTime;
           const date = convertDateFromTimestamp(position.endTime, "DD-MMM-YY");
           return (
