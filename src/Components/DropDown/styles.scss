@@ -1,5 +1,10 @@
 .dropdown-wrapper {
     padding: 0;
+    .Mui-disabled {
+        color: #fff;
+        -webkit-text-fill-color: #fff !important;
+        cursor: not-allowed !important;
+    }
     .dropDown-default-styles {
         min-width: 100%;
         margin: 0;
@@ -114,13 +119,14 @@
     color: #F6029C;
     z-index: 1;
 }
+
 .MuiButtonBase-root {
     .MuiCheckbox-root {
         &::before {
             content: "";
             width: 0.7rem;
             height: 0.75rem;
-            border: 1.5px solid  #fff ;
+            border: 1.5px solid #fff;
             border-radius: 5%;
         }
         &.Mui-checked {

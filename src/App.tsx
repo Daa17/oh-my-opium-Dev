@@ -22,10 +22,6 @@ function App() {
     /* tslint:disable-next-line */
     <AlertProvider template={AlertTemplate} {...options}>
       <div className="App">
-        {/* <MobileView >
-          <div className='mobile-text'>Oh My Opium does not support mobile devices yet. 
-          <br/> <br/> Please use desktop version.</div>
-        </MobileView> */}
         <AppRouts />
       </div>
     </AlertProvider>
