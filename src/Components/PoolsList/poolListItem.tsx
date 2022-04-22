@@ -105,6 +105,7 @@ const PoolsList: FC<Props> = (props: Props) => {
         behavior: "smooth",
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appStore.currentPoolId, poolItemRef]);
 
   const alert: any = useAlert();

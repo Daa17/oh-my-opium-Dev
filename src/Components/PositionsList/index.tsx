@@ -56,6 +56,7 @@ const PositionsList: FC<any> = ({
         ? setPositions(currentPositions)
         : setPositions([]);
     } else getAllPurchasedProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const makeWithdrawal = async (position: PositionType) => {
