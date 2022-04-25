@@ -85,7 +85,6 @@ const Layout: React.FC<ILayout> = () => {
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="basic tabs example"
           classes={{
             flexContainer: "flexContainer",
             indicator: "indicator",
@@ -110,11 +109,17 @@ const Layout: React.FC<ILayout> = () => {
               minHeight: "25px",
             }}
           />
+          <Tab
+            label="wOPIUM"
+            value={WOPIUM}
+            style={{
+              display: "none",
+            }}
+          />
         </Tabs>
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="basic tabs example"
           classes={{
             flexContainer: "flexContainer",
             indicator: "indicator",
@@ -125,10 +130,25 @@ const Layout: React.FC<ILayout> = () => {
           TabIndicatorProps={{ children: <span /> }}
         >
           <Tab
+            label="pools"
+            value={ALL_POOLS}
+            style={{
+              display: "none",
+            }}
+          />
+          <Tab
+            label="positions"
+            value={POSITIONS}
+            style={{
+              display: "none",
+            }}
+          />
+          <Tab
             label="wOPIUM"
             value={WOPIUM}
             style={{
-              minHeight: "25px",
+              minHeight: "22px",
+              pointerEvents: "none",
             }}
           />
         </Tabs>
