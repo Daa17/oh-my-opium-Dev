@@ -45,7 +45,6 @@ const Wrapping: FC<any> = () => {
 
   const wrap = async () => {
     const { poolAddress, marginAddress, decimals } = wrapperProducts.opium;
-    console.log(poolAddress, marginAddress, decimals);
     const tokenAllowed = await checkWrapperAllowance(
       opiumValue,
       poolAddress,
@@ -53,7 +52,6 @@ const Wrapping: FC<any> = () => {
       marginAddress,
       decimals
     );
-    console.log("tokenAllowed", tokenAllowed);
     if (!tokenAllowed) {
       makeApprove(
         poolAddress,

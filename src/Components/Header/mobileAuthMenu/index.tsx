@@ -21,7 +21,7 @@ import DiamondIcon from "../../../images/diamond-purple.svg";
 import "../../../styles/main.scss";
 import "./style.scss";
 
-export const MobileAuthMenu = ({ networkhandler, isWalletConnect }: any) => {
+const MobileAuthMenu = ({ networkhandler, isWalletConnect }: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [activeNetwork, setActiveNetwork] = useState<string | number>();
   const [activeWallet, setActiveWallet] = useState<string>("MetaMask");
@@ -421,3 +421,5 @@ export const MobileAuthMenu = ({ networkhandler, isWalletConnect }: any) => {
     </div>
   );
 };
+
+export default MobileAuthMenu;
