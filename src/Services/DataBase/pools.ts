@@ -10,7 +10,7 @@ import { positions as turboETH } from "./positions/bsc/turboETH";
 // Polygon positions
 import { positions as ETHDumpProtection } from "./positions/polygon/ETHDumpProtection";
 // import { positions as realt10700Whittier } from "./positions/polygon/realt10700Whittier";
-// import { positions as realt402Kostner } from "./positions/polygon/realt402Kostner";
+import { positions as realt402Kostner } from "./positions/polygon/realt402Kostner";
 import { positions as turboAAVE } from "./positions/polygon/turboAAVE";
 import { positions as turboBTC } from "./positions/polygon/turboBTC";
 import { positions as turboDailyETH } from "./positions/polygon/turboDailyETH";
@@ -201,18 +201,24 @@ export const polygonPools = [
   //     type: OracleTypeEnum.OPTIMISTIC,
   //   },
   // },
-  // {
-  //   title: "RealT 402 S Kostner Rent insurance",
-  //   poolAddress: "0x37baa047B4C062A2CB93fC6550011f72E36a3894",
-  //   nominal: 1,
-  //   isSuspended: false,
-  //   marginTitle: "USDC",
-  //   positions: realt402Kostner,
-  //   oracle: {
-  //     address: "0x335d0bc9311d6c4b5dce51dbff1eb2bbf04ce8da",
-  //     type: OracleTypeEnum.OPTIMISTIC,
-  //   },
-  // },
+  {
+    title: "RealT 402 S Kostner Rent insurance",
+    poolAddress: "0xaf2d53cd17eE9B6475f2da63423c178Af43b65C0",
+    nominal: 1,
+    isSuspended: false,
+    marginTitle: "USDC",
+    positions: realt402Kostner,
+    icon: EthDumpProtection,
+    yieldToDataAnnualized: "2",
+    poolSize: "782",
+    currentEpochTimeStamp: "6546",
+    readMoreLink:
+      "https://opium.finance/blog/eth-dump-protection/ETHDumpProtection/",
+    oracle: {
+      address: "0x335d0bc9311d6c4b5dce51dbff1eb2bbf04ce8da",
+      type: OracleTypeEnum.OPTIMISTIC,
+    },
+  },
   {
     title: "ETH Dump Protection",
     poolAddress: "0x74eF359BD736236bDd6b82D594134f36612C41c0",
@@ -287,7 +293,7 @@ export const polygonPools = [
   },
   {
     title: "Turbo AAVE",
-    poolAddress: "0x2300091326DF68309BDB7eE885de561C2C89fea9",
+    poolAddress: "0x450B8Aef66F59C446505E7Fe267A961F26270824",
     nominal: 0.001,
     isSuspended: false,
     marginTitle: "amAAVE",
@@ -305,7 +311,7 @@ export const polygonPools = [
   },
   {
     title: "Daily Turbo ETH",
-    poolAddress: "0xf5D690c9D61092112660FEAf62e542a670Fa886D",
+    poolAddress: "0x4BFE09731Cb258CB5DFECF8219b3d1D27aa942a9",
     nominal: 0.001,
     isSuspended: false,
     marginTitle: "WETH",
