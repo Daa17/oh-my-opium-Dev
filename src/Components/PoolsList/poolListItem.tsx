@@ -117,25 +117,25 @@ const PoolsList: FC<Props> = (props: Props) => {
       pool.poolAddress,
       phaseInfo.currentPhaseText
     );
-    // if (!isStaking && !isStakingOnly) {
-    //   alert.error("Stakings is available only during rebalancing phase");
-    //   return;
-    // }
+    if (!isStaking && !isStakingOnly) {
+      alert.error("Stakings is available only during rebalancing phase");
+      return;
+    }
 
-    // if (stakeValue === 0) {
-    //   alert.error("Please enter the amount");
-    //   return;
-    // }
+    if (stakeValue === 0) {
+      alert.error("Please enter the amount");
+      return;
+    }
 
-    // const insufficientBalance = await checkTokenBalance(
-    //   pool.poolAddress,
-    //   userAddress,
-    //   stakeValue
-    // );
-    // if (insufficientBalance) {
-    //   alert.error("Insufficient balance");
-    //   return;
-    // }
+    const insufficientBalance = await checkTokenBalance(
+      pool.poolAddress,
+      userAddress,
+      stakeValue
+    );
+    if (insufficientBalance) {
+      alert.error("Insufficient balance");
+      return;
+    }
 
     const tokenAllowed = await checkAllowance(
       stakeValue,
