@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { ETheme, Popup } from "@opiumteam/react-opium-components";
 import appStore from "../../Services/Stores/AppStore";
 import authStore from "../../Services/Stores/AuthStore";
+import PoolListItem from "./poolListItem";
 import {
   getPurchasedProducts,
   isPoolMaintainable,
@@ -13,9 +14,8 @@ import {
 import { PoolType, PositionType } from "../../Services/Utils/types";
 import "./styles.scss";
 
-const PoolListItem = lazy(() => import("./poolListItem"));
+// const PoolListItem = lazy(() => import("./poolListItem"));
 const PositionsList = lazy(() => import("../PositionsList"));
-
 const Maintenance = lazy(() => import("../Maintenance"));
 const Filters = lazy(() => import("../Filters"));
 
@@ -45,7 +45,6 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
   const alert = useAlert();
   const { address } = authStore.blockchainStore;
   const isPoolsPage = pathname.includes("all-pools");
-
   const showPurchasedProducts = async (pool: PoolType) => {
     let positions: PositionType[] | undefined = [];
 
@@ -109,6 +108,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
       );
     } else setPoolsByNetwork(appStore.poolsByNetwork);
   }, [sortedValue, poolsByNetwork]);
+
   const closePopup = () => {
     setPopupIsOpened(false);
     setPositionProductTitle("");
@@ -146,7 +146,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
         className="positions-list-popup"
         popupIsOpen={popupIsOpened}
         closePopup={closePopup}
-        component={<PositionsList currentPositions={positions} fromPopup/>}
+        component={<PositionsList currentPositions={positions} fromPopup />}
       />
       <Popup
         theme={ETheme.DARK}
@@ -156,7 +156,6 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
         popupIsOpen={maintenanceIsOpened}
         closePopup={closeMaintenance}
         component={<Maintenance pool={poolToMaintain} />}
-        
       />
       <Filters
         poolsFilterHandler={poolsFilterHandler}
