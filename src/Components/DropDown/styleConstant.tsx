@@ -53,9 +53,11 @@ export const filterSelectStyle = {
     vertical: -20,
     horizontal: 130,
   },
+  // disablePortal: true,
 };
 
 export const networkSelectStyle = {
+  disablePortal: true,
   PaperProps: {
     sx: {
       bgcolor: "#222234",
@@ -63,6 +65,7 @@ export const networkSelectStyle = {
       borderTopLeftRadius: "10px",
       borderBottomLeftRadius: "10px",
       borderBottomRightRadius: "10px",
+
       "& .MuiList-root": {
         padding: 0,
       },
@@ -106,10 +109,10 @@ export const networkSelectStyle = {
       },
     },
   },
-//   anchorOrigin: {
-//     vertical: "bottom",
-//     horizontal: "right",
-//   },
+  //   anchorOrigin: {
+  //     vertical: "bottom",
+  //     horizontal: "right",
+  //   },
   transformOrigin: {
     vertical: -7,
     horizontal: 200,

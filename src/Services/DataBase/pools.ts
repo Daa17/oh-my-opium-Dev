@@ -287,7 +287,7 @@ export const polygonPools = [
   },
   {
     title: "Turbo AAVE",
-    poolAddress: "0x2300091326DF68309BDB7eE885de561C2C89fea9",
+    poolAddress: "0x450B8Aef66F59C446505E7Fe267A961F26270824",
     nominal: 0.001,
     isSuspended: false,
     marginTitle: "amAAVE",

@@ -52,6 +52,7 @@ export default function MuiDropDown(props: any) {
   React.useEffect(() => {
     props.data?.length && setActiveNetwork(props.data[0]?.title);
   }, [props.data]);
+
   return (
     <FormControl
       className="dropDown-default-styles"
@@ -74,15 +75,13 @@ export default function MuiDropDown(props: any) {
           className="dropDown-label"
           id="demo-multiple-checkbox-label"
           shrink={false}
-          style={{
-            transform: "none",
-          }}
         >
           {props.isRadio ? sortedValue : props.title}
         </InputLabel>
       )}
       {props.isCheckbox || props.isRadio || props.mobile ? (
         <Select
+          className="default-select"
           variant="standard"
           id="demo-multiple-checkbox"
           placeholder={props.title}
@@ -107,12 +106,6 @@ export default function MuiDropDown(props: any) {
                 value={value}
                 // onChange={() => handleChange}
                 className="menu_item"
-                style={{
-                  height: "auto",
-                  minHeight: "auto",
-                  paddingBottom: 0,
-                  marginBottom: "6px",
-                }}
                 sx={{
                   "&:not(:last-of-type)": {
                     borderBottom: "0.5px solid rgba(255, 255, 255, 0.5)",
@@ -196,18 +189,10 @@ export default function MuiDropDown(props: any) {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={activeNetwork}
+          className="network-select"
           onChange={(e: any) => handleChange(e.target.value, e.target.type)}
           renderValue={(selected: any) => selected}
           disabled={props.disabled}
-          style={{
-            minHeight: "auto",
-            color: "#fff",
-            fontFamily: "Montserrat, sans-serif",
-            fontSize: "1.14rem",
-            fontStyle: "normal",
-            fontWeight: 500,
-            lineHeight: "1.25rem",
-          }}
           MenuProps={networkSelectStyle}
         >
           <h5>{props.header}</h5>
