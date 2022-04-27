@@ -427,6 +427,7 @@ export const getStakedBalance = async (
 ): Promise<string> => {
   try {
     const contract = createReadOnlyStakingContractInstance(poolAddress);
+    // console.log("stakingContract", contract);
     const tokenAddress = await contract?.methods
       .underlying()
       .call({ from: userAddress });

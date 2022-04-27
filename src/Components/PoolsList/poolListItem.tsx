@@ -24,6 +24,7 @@ import {
   getStakedBalance,
   checkPhase,
   getInsurancePrice,
+  isPoolMaintainable,
 } from "../../Services/Utils/methods";
 import { PoolType } from "../../Services/Utils/types";
 import { getScanLink } from "../../Services/Utils/transaction";
@@ -44,7 +45,7 @@ type Props = {
 };
 
 const PoolsList: FC<Props> = (props: Props) => {
-  const { pool, showPurchasedProducts } = props;
+  const { pool, showPurchasedProducts, showMaintenance } = props;
   const [stakeValue, setStakeValue] = useState(0);
   const [protectValue, setProtectValue] = useState(0);
   const [insPrice, setInsPrice] = useState(0);
@@ -63,6 +64,7 @@ const PoolsList: FC<Props> = (props: Props) => {
     notInitialized: "",
     stakingOnly: "",
   });
+  const [isMaintainable, setIsMaintainable] = useState(false);
   const [phaseInfoIsLoading, setPhaseInfoIsLoading] = useState(false);
   const [positionsLoading, setPositionsLoading] = useState(false);
   const [collapseIsOpened, setCollapseIsOpened] = useState(false);
@@ -75,7 +77,7 @@ const PoolsList: FC<Props> = (props: Props) => {
   const stepperScrollHandler = (scrollOffset: any) => {
     ref.current.scrollLeft += scrollOffset;
   };
-
+  console.log("pool", pool);
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
@@ -84,6 +86,8 @@ const PoolsList: FC<Props> = (props: Props) => {
     if (status && !appStore.requestsAreNotAllowed) {
       loadBalance();
       loadPhase();
+      const maintainable = await isPoolMaintainable(pool.poolAddress);
+      setIsMaintainable(maintainable);
     }
     setCollapseIsOpened(status);
   };
@@ -463,6 +467,15 @@ const PoolsList: FC<Props> = (props: Props) => {
                     : balance}
                 </span>
               </div>
+              {!pool.isSuspended && isMaintainable && (
+                <Button
+                  variant="secondary"
+                  className="blue"
+                  label="open maintenance"
+                  onClick={showMaintenance}
+                  disabled={appStore.requestsAreNotAllowed}
+                />
+              )}
               <Button
                 variant="secondary"
                 label={
