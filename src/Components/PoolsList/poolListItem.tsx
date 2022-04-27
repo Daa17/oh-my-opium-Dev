@@ -142,6 +142,7 @@ const PoolsList: FC<Props> = (props: Props) => {
       pool.poolAddress,
       userAddress
     );
+    console.log("tokenAllowed", tokenAllowed);
     if (!tokenAllowed) {
       makeApprove(
         pool.poolAddress,
@@ -199,6 +200,8 @@ const PoolsList: FC<Props> = (props: Props) => {
       pool.poolAddress,
       userAddress
     );
+    console.log("buy tokenAllowed", tokenAllowed);
+
     if (!tokenAllowed) {
       makeApprove(
         pool.poolAddress,
