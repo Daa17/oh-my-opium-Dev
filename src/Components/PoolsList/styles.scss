@@ -571,6 +571,9 @@
             .mobile-step {
                 width: 1000px;
                 overflow: hidden;
+                min-height: 80px;
+                display: flex;
+                align-items: center;
             }
             .phase_name {
                 font-size: 1.1rem;

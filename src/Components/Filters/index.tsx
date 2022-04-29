@@ -1,6 +1,6 @@
 import { FC, useState, SyntheticEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { MobileView, BrowserView } from "react-device-detect";
+// import { MobileView, BrowserView } from "react-device-detect";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import MuiDropDown from "../DropDown";
@@ -96,58 +96,57 @@ const Filters: FC<IFilter> = ({
           />
         </Tabs>
       </div>
-      <BrowserView
-        style={{ display: "flex", alignItems: "center", flex: " 1 1" }}
-      >
-        <div className="dropdowns_container">
-          <div className="dropdown-wrapper programs">
-            <MuiDropDown
-              isCheckbox
-              checkboxHeader="Programs"
-              title="Programs"
-              checkboxData={programsDropdownItems}
-              applyFilter={applyFilter}
-            />
-          </div>
-          <div className="sort_dropdown">
-            <span>Sort by:</span>
-            <div className="dropdown-wrapper sorting">
-              <MuiDropDown
-                isRadio
-                radioHeader="Sort By"
-                title={sortTitle[0]}
-                radioData={sortDropdownItems}
-                applySort={applaySort}
-              />
-            </div>
-          </div>
+      {/* <BrowserView
+        className={BrowserView-filtering}
+      > */}
+      <div className="dropdowns_container">
+        <div className="dropdown-wrapper programs">
+          <MuiDropDown
+            isCheckbox
+            checkboxHeader="Programs"
+            title="Programs"
+            checkboxData={programsDropdownItems}
+            applyFilter={applyFilter}
+          />
         </div>
-      </BrowserView>
-
-      <MobileView>
-        <div className="mobile_dropdowns">
-          <div className="dropdown-wrapper">
-            <img
-              width="24"
-              height="24"
-              src={FilterIcon}
-              alt="filter_icon"
-              className="filter_icon"
-            />
+        <div className="sort_dropdown">
+          <span>Sort by:</span>
+          <div className="dropdown-wrapper sorting">
             <MuiDropDown
-              title=" "
+              isRadio
               radioHeader="Sort By"
-              checkboxHeader="Programs"
-              checkboxData={programsDropdownItems}
+              title={sortTitle[0]}
               radioData={sortDropdownItems}
-              className="filter_dropdown"
-              mobile
-              applyFilter={applyFilter}
               applySort={applaySort}
             />
           </div>
         </div>
-      </MobileView>
+      </div>
+      {/* </BrowserView> */}
+      {/* <MobileView> */}
+      <div className="mobile_dropdowns">
+        <div className="dropdown-wrapper">
+          <img
+            width="24"
+            height="24"
+            src={FilterIcon}
+            alt="filter_icon"
+            className="filter_icon"
+          />
+          <MuiDropDown
+            title=" "
+            radioHeader="Sort By"
+            checkboxHeader="Programs"
+            checkboxData={programsDropdownItems}
+            radioData={sortDropdownItems}
+            className="filter_dropdown"
+            mobile
+            applyFilter={applyFilter}
+            applySort={applaySort}
+          />
+        </div>
+      </div>
+      {/* </MobileView> */}
     </div>
   );
 };

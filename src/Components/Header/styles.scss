@@ -6,6 +6,9 @@
             align-items: center;
             justify-content: space-between;
             background-color: #0A0A1E;
+            .BrowserView-wrapper {
+                display: block;
+            }
             .header-title {
                 font-family: "Montserrat", sans-serif;
                 font-size: 1.42rem;
@@ -99,6 +102,9 @@
                 padding: 1.14rem;
                 .header-buttons-wrapper {
                     flex-direction: column;
+                    display: none;
+                }
+                .BrowserView-wrapper {
                     display: none;
                 }
             }
