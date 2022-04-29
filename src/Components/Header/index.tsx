@@ -1,7 +1,7 @@
 import { FC, useState, lazy, Suspense } from "react";
 import { observer } from "mobx-react";
 import { AuthType } from "@opiumteam/mobx-web3";
-import { MobileView, BrowserView } from "react-device-detect";
+// import { MobileView, BrowserView } from "react-device-detect";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -60,16 +60,18 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
   return (
     <div className="header-wrapper">
       <div className="header-title">Oh my Opium</div>
-      <MobileView>
-        <Suspense fallback={"...Loading"}>
-          <MobileAuthMenu
-            networkhandler={networkhandler}
-            shortAddress={shortAddress}
-            isWalletConnect={isWalletConnect}
-          />
-        </Suspense>
-      </MobileView>
-      <BrowserView>
+      {/* <MobileView> */}
+      <Suspense fallback={""}>
+        <MobileAuthMenu
+          networkhandler={networkhandler}
+          shortAddress={shortAddress}
+          isWalletConnect={isWalletConnect}
+        />
+      </Suspense>
+      {/* </MobileView>         */}
+      <div className="BrowserView-wrapper">
+        {/* <BrowserView > */}
+
         <div className="header-buttons-wrapper">
           <div className="dropdown-wrapper">
             <MuiDropDown
@@ -238,7 +240,8 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
             </Menu>
           </>
         </div>
-      </BrowserView>
+        {/* </BrowserView> */}
+      </div>
     </div>
   );
 };

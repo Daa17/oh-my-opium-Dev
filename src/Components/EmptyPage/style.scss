@@ -1,0 +1,19 @@
+.emptyPage-wrapper {
+    display: inline-block;
+    width: 100%;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    text-align: center;
+    color: #fff;
+    margin: 5rem auto;
+}
+
+@media only screen and (max-width: 600px) {
+    .emptyPage-wrapper {
+        font-size: 1rem;
+        font-size: 1.6rem;
+    }
+}
