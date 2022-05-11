@@ -34,6 +34,9 @@
             font-style: normal;
             font-weight: 800;
             line-height: 1.42rem;
+            a {
+                color: #FFFFFF;
+            }
             img {
                 width: 4.85rem;
                 height: 4.85rem;
@@ -201,6 +204,23 @@
             font-weight: 500;
             font-size: 1.1rem;
             line-height: 1.43rem;
+        }
+    }
+    .overWaitingPhase {
+        .MuiStepper-root {
+            .MuiStep-root {
+                &:last-of-type {
+                    &::before {
+                        content: '';
+                        width: 100%;
+                        height: 0.5px;
+                        position: absolute;
+                        top: 7px;
+                        right: 0;
+                        background: #187CD8;
+                    }
+                }
+            }
         }
     }
     button {
@@ -627,7 +647,6 @@
         .pools-list-item-phase-wrapper {
             margin-top: 0;
             width: 1000px;
-            overflow: hidden;
             .MuiStepLabel-label {
                 line-height: 0;
             }
