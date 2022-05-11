@@ -42,6 +42,7 @@ type Props = {
   pool: PoolType;
   showPurchasedProducts: Function;
   showMaintenance: Function;
+  setStakedPoolIds: Function;
 };
 
 const PoolsList: FC<Props> = (props: Props) => {
@@ -71,13 +72,11 @@ const PoolsList: FC<Props> = (props: Props) => {
   const [activeTab, setActiveTab] = React.useState("Stake");
   const ref = useRef<any>(null);
   const poolItemRef = useRef<any>(null);
-  const currentYear = moment().year();
   const { poolAddress } = pool;
 
   const stepperScrollHandler = (scrollOffset: any) => {
     ref.current.scrollLeft += scrollOffset;
   };
-  console.log("pool", pool);
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setActiveTab(newValue);
   };
@@ -146,7 +145,6 @@ const PoolsList: FC<Props> = (props: Props) => {
       pool.poolAddress,
       userAddress
     );
-    console.log("tokenAllowed", tokenAllowed);
     if (!tokenAllowed) {
       makeApprove(
         pool.poolAddress,
@@ -204,7 +202,6 @@ const PoolsList: FC<Props> = (props: Props) => {
       pool.poolAddress,
       userAddress
     );
-    console.log("buy tokenAllowed", tokenAllowed);
 
     if (!tokenAllowed) {
       makeApprove(
@@ -268,6 +265,9 @@ const PoolsList: FC<Props> = (props: Props) => {
   const loadBalance = async () => {
     setBalanceIsLoading(true);
     const balance = await getStakedBalance(pool.poolAddress, userAddress);
+    if (parseFloat(balance) > 0) {
+      props?.setStakedPoolIds((prev: any) => prev?.concat(pool));
+    }
     setBalance(balance);
     setBalanceIsLoading(false);
   };
@@ -291,7 +291,9 @@ const PoolsList: FC<Props> = (props: Props) => {
         <div className="pools-list-item-header-info">
           <div className="pools-list-item-header-title">
             <img width="17" height="14" src={pool?.icon} alt="icon" />
-            <span>{pool.title}</span>
+            <a href={pool?.readMoreLink} target="_blank" rel="noreferrer">
+              {pool.title}
+            </a>
           </div>
           <div className="pools-list-item-header-address web-mobile">
             <OpiumLink
@@ -317,8 +319,21 @@ const PoolsList: FC<Props> = (props: Props) => {
     );
   };
 
+  let options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+
+  let date: any = new Date();
+  const currentDate: any = date.toLocaleString("en-us", options);
+
+  const isInWaitingPhase: any =
+    date > new Date(phaseInfo.notInitialized.split("-")[1]);
+
   let currentPhaseNumber = 0;
   let currentPhaseTodo = "";
+
   switch (phaseInfo.currentPhaseText) {
     case "REBALANCING":
       currentPhaseNumber = 1;
@@ -336,18 +351,17 @@ const PoolsList: FC<Props> = (props: Props) => {
         "During the staking only phase you can only stake into pool";
       break;
     case "WAITING":
-      currentPhaseNumber = 4;
+      currentPhaseNumber = 5;
       currentPhaseTodo = "Now you need to wait untill pool is reinitalized";
+
       break;
   }
-
-  let options = {
-    month: "short",
-    day: "numeric",
-  };
-  let date: any = new Date();
-  const currentDate: any = date.toLocaleString("en-us", options);
-
+  if (isInWaitingPhase) {
+    currentPhaseNumber = 4;
+    currentPhaseTodo = "";
+  }
+  console.log("authStore", authStore.networkId);
+  console.log("appStore.requestsAreNotAllowed", appStore.requestsAreNotAllowed);
   const renderBody = () => {
     if (collapseIsOpened) {
       return (
@@ -360,21 +374,28 @@ const PoolsList: FC<Props> = (props: Props) => {
                 "Loading..."
               ) : (
                 <h4 className="current-phase-text">
-                  {phaseInfo.currentPhaseText}
+                  {!isInWaitingPhase
+                    ? phaseInfo.currentPhaseText
+                    : "Not Initialized"}
                 </h4>
               )}
             </div>
-            <span>{currentPhaseTodo}</span>
+            {!appStore.requestsAreNotAllowed && <span>{currentPhaseTodo}</span>}
           </div>
-          <div className="pools-list-subttitle">{`${phaseInfo.tradingPhase}`}</div>
+          <div className="pools-list-subttitle">{phaseInfo.tradingPhase}</div>
           <div className="mobile_stepper_wrapper">
             <Button
               className="stepper_btn prev-btn"
               label=""
-              onClick={() => stepperScrollHandler(-30)}
+              onClick={() => stepperScrollHandler(-200)}
               style={{ backgroundColor: "transparent" }}
             />
-            <div ref={ref} className="pools-list-item-phase-wrapper">
+            <div
+              ref={ref}
+              className={`pools-list-item-phase-wrapper ${
+                currentPhaseNumber > 3 ? "overWaitingPhase" : ""
+              }`}
+            >
               <Stepper
                 className="mobile-step"
                 activeStep={currentPhaseNumber}
@@ -382,42 +403,56 @@ const PoolsList: FC<Props> = (props: Props) => {
               >
                 <Step key={"phaseInfo.stakingPhase"}>
                   <span className="phase_name">Rebalansing phase</span>
-                  <StepLabel>{`${phaseInfo.stakingPhase?.substring(0, 6)}
-                  ${currentYear}`}</StepLabel>
+                  <StepLabel>
+                    {phaseInfo.stakingPhase
+                      ? moment(phaseInfo.stakingPhase?.substring(0, 6)).format(
+                          "DD MMM yyyy"
+                        )
+                      : ""}
+                  </StepLabel>
                 </Step>
                 {currentPhaseNumber === 1 && (
                   <Step key={"phaseInfo.stakingPhase1"}>
                     <StepLabel>{`${currentDate}
-                  ${currentYear}`}</StepLabel>
+                  `}</StepLabel>
                   </Step>
                 )}
                 <Step key={"phaseInfo.tradingPhase"}>
                   <span className="phase_name">Trading phase</span>
-                  <StepLabel>{`${phaseInfo.tradingPhase?.substring(0, 6)}
-                  ${currentYear}`}</StepLabel>
+                  <StepLabel>
+                    {phaseInfo.stakingPhase
+                      ? moment(phaseInfo.tradingPhase?.substring(0, 6)).format(
+                          "DD MMM yyyy"
+                        )
+                      : ""}
+                  </StepLabel>
                 </Step>
                 {currentPhaseNumber === 2 && (
                   <Step key={"phaseInfo.stakingPhase1"}>
                     <StepLabel>{`${currentDate}
-                  ${currentYear}`}</StepLabel>
+                  `}</StepLabel>
                   </Step>
                 )}
-                <Step key={"phaseInfo.stakingOnly"}>
-                  <span className="phase_name">Staking only</span>
-                  <StepLabel>{`${phaseInfo.stakingOnly?.substring(0, 6)}
-                  ${currentYear}`}</StepLabel>
-                </Step>
+                {phaseInfo.stakingOnly && (
+                  <Step key={"phaseInfo.stakingOnly"}>
+                    <span className="phase_name">Staking only</span>
+                    <StepLabel>{moment().format("DD MMM yyyy")}</StepLabel>
+                  </Step>
+                )}
                 {currentPhaseNumber === 3 && (
                   <Step key={"phaseInfo.stakingPhase1"}>
                     <StepLabel>{`${currentDate}
-                  ${currentYear}`}</StepLabel>
+                  `}</StepLabel>
                   </Step>
                 )}
-                <Step key={"phaseInfo.notInitialized"}>
+                <Step key={"phaseInfo.waiting"}>
                   <span className="phase_name">Waiting phase</span>
                   <StepLabel>
-                    {`${phaseInfo.notInitialized?.substring(0, 6)}
-                  ${currentYear}`}
+                    {phaseInfo.stakingPhase
+                      ? moment(
+                          phaseInfo.notInitialized?.substring(0, 6)
+                        ).format("DD MMM yyyy")
+                      : ""}
                   </StepLabel>
                 </Step>
               </Stepper>
@@ -426,7 +461,7 @@ const PoolsList: FC<Props> = (props: Props) => {
             <Button
               className="stepper_btn next-btn"
               label=""
-              onClick={() => stepperScrollHandler(30)}
+              onClick={() => stepperScrollHandler(200)}
               style={{ backgroundColor: "transparent" }}
             />
           </div>
@@ -467,7 +502,7 @@ const PoolsList: FC<Props> = (props: Props) => {
                     : balance}
                 </span>
               </div>
-              {!pool.isSuspended && isMaintainable && (
+              {!pool.isSuspended && isMaintainable && isInWaitingPhase && (
                 <Button
                   variant="secondary"
                   className="blue"
@@ -489,9 +524,6 @@ const PoolsList: FC<Props> = (props: Props) => {
               <div className="pools-list-item-stake">
                 <div className="pools-item-title-wrapper">
                   <span>Stake</span>
-                  <a href={pool?.readMoreLink} target="_blank" rel="noreferrer">
-                    read more
-                  </a>
                 </div>
                 <div className="pools-list-item-input">
                   Amount to stake ({pool.marginTitle}):
@@ -523,7 +555,6 @@ const PoolsList: FC<Props> = (props: Props) => {
               <div className="pools-list-item-buy">
                 <div className="pools-item-title-wrapper">
                   <span>Buy product</span>
-                  <a href="/">read more</a>
                 </div>
                 <div className="pools-list-item-input">
                   Amount to protect: ({pool.marginTitle}):

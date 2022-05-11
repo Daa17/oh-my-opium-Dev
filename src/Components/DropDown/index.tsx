@@ -53,6 +53,22 @@ export default function MuiDropDown(props: any) {
     props.data?.length && setActiveNetwork(props.data[0]?.title);
   }, [props.data]);
 
+  let dropDownMsg = "";
+  if (
+    activeNetwork !== "Network" &&
+    props.header === "Network" &&
+    props.isAlowed &&
+    props.isloggedIn
+  ) {
+    dropDownMsg = "change network in wallet";
+  } else if (
+    activeNetwork !== "Network" &&
+    props.header === "Network" &&
+    !props.isloggedIn
+  ) {
+    dropDownMsg = "Please connect your wallet";
+  } else dropDownMsg = "";
+
   return (
     <FormControl
       className="dropDown-default-styles"
@@ -221,9 +237,8 @@ export default function MuiDropDown(props: any) {
             ))}
         </Select>
       )}
-      {activeNetwork !== "Network" && props.header === "Network" && (
-        <div className="red-network">change network in wallet</div>
-      )}
+
+      <div className="red-network">{dropDownMsg}</div>
     </FormControl>
   );
 }

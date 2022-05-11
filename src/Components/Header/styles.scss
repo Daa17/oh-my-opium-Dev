@@ -20,6 +20,9 @@
                 align-items: center;
                 .dropdown-wrapper {
                     margin-right: 2.3rem;
+                    .MuiPaper-root {
+                        width: fit-content;
+                    }
                     .dropdown {
                         button {
                             position: relative;

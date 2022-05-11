@@ -27,12 +27,18 @@ const testPos = [
 export const AppRouts = observer(() => {
   const [currentNetworkShortName, setCurrentNetworkShortName] = useState("eth");
   let currentNetworkId = authStore.networkId;
-  const isLoggedIn = authStore.loggedIn && authStore.blockchainStore.address
+  const isLoggedIn = authStore.loggedIn && authStore.blockchainStore.address;
   let navigateToWopium =
     currentNetworkShortName === "eth" && isLoggedIn ? (
       <Wrapping />
     ) : (
-      <EmptyPage description={isLoggedIn ? 'Please change the network to Ethereum for watching the WOpium page.' : 'Please log in for watching the WOpium page'} />
+      <EmptyPage
+        description={
+          isLoggedIn
+            ? "Please change the network to Ethereum for watching the wOPIUM page."
+            : "Please log in for watching the wOPIUM page"
+        }
+      />
     );
   useEffect(() => {
     if (currentNetworkId === 1) {

@@ -115,6 +115,6 @@ export const networkSelectStyle = {
   //   },
   transformOrigin: {
     vertical: -7,
-    horizontal: 200,
+    horizontal: 130,
   },
 };
