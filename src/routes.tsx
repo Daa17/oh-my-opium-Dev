@@ -1,10 +1,11 @@
 import { useState, useEffect, Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { observer } from "mobx-react";
-import AuthStore from "./Services/Stores/AuthStore";
+import authStore from "./Services/Stores/AuthStore";
 import Layout from "./Components/Layout/Layout";
-
-const PoolsList = lazy(() => import("./Components/PoolsList/index"));
+import PoolsList from "./Components/PoolsList/index";
+import EmptyPage from "./Components/EmptyPage";
+// const PoolsList = lazy(() => import("./Components/PoolsList/index"));
 const PositionsList = lazy(() => import("./Components/PositionsList/index"));
 const Wrapping = lazy(() => import("./Components/Wrapping/index"));
 
@@ -25,8 +26,20 @@ const testPos = [
 
 export const AppRouts = observer(() => {
   const [currentNetworkShortName, setCurrentNetworkShortName] = useState("eth");
-  let currentNetworkId = AuthStore.networkId;
-
+  let currentNetworkId = authStore.networkId;
+  const isLoggedIn = authStore.loggedIn && authStore.blockchainStore.address;
+  let navigateToWopium =
+    currentNetworkShortName === "eth" && isLoggedIn ? (
+      <Wrapping />
+    ) : (
+      <EmptyPage
+        description={
+          isLoggedIn
+            ? "Please change the network to Ethereum for watching the wOPIUM page."
+            : "Please log in for watching the wOPIUM page"
+        }
+      />
+    );
   useEffect(() => {
     if (currentNetworkId === 1) {
       setCurrentNetworkShortName("eth");
@@ -76,7 +89,7 @@ export const AppRouts = observer(() => {
                   />
                 }
               />
-              <Route path="wOpium" element={<Wrapping />} />
+              <Route path="wOpium" element={navigateToWopium} />
               <Route
                 path="*"
                 element={

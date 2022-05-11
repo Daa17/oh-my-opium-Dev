@@ -10,6 +10,7 @@ import {
   getPurchasedProducts,
   isPoolMaintainable,
   getPurchasedProductsTheGraph,
+  getStakedBalance,
 } from "../../Services/Utils/methods";
 import { PoolType, PositionType } from "../../Services/Utils/types";
 import "./styles.scss";
@@ -35,6 +36,7 @@ interface IPoolList {
 
 const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
   let { pathname } = useLocation();
+  const alert = useAlert();
   const [popupIsOpened, setPopupIsOpened] = useState(false);
   const [positions, setPositions] = useState<PositionType[]>([]);
   const [sortedValue, setSortedValue] = useState<string>("expiration date");
@@ -42,9 +44,12 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
   const [poolsByNetwork, setPoolsByNetwork] = useState(appStore.poolsByNetwork);
   const [maintenanceIsOpened, setMaintenanceIsOpened] = useState(false);
   const [poolToMaintain, setPoolToMaintain] = useState<PoolType | null>(null);
-  const alert = useAlert();
+  const [stakedPoolIds, setStakedPoolIds] = useState<PoolType[]>([]);
   const { address } = authStore.blockchainStore;
   const isPoolsPage = pathname.includes("all-pools");
+
+  console.log("stakedPoolIds", stakedPoolIds);
+
   const showPurchasedProducts = async (pool: PoolType) => {
     let positions: PositionType[] | undefined = [];
 
@@ -114,6 +119,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
     setPositionProductTitle("");
     setPositions([]);
   };
+
   const showMaintenance = async (pool: PoolType) => {
     if (!pool.oracle || pool.isSuspended) {
       alert.error("This pool is unmaintainable");
@@ -135,6 +141,18 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
     setPoolToMaintain(null);
     setMaintenanceIsOpened(false);
   };
+  // const [balanceIds, setBalanceIds] = useState<any>([]);
+
+  const getStakedPools = () => {
+    poolsByNetwork.map(async (pool) => {
+      const balance = await getStakedBalance(pool.poolAddress, address);
+      if (balance) {
+        console.log("balance", balance);
+        // setBalanceIds(balanceIds.push(pool.poolAddress));
+      }
+    });
+  };
+  getStakedPools();
 
   return (
     <div className="pools-list-wrapper">
@@ -168,6 +186,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
             pool={pool}
             showPurchasedProducts={() => showPurchasedProducts(pool)}
             showMaintenance={() => showMaintenance(pool)}
+            setStakedPoolIds={setStakedPoolIds}
             key={pool.poolAddress}
           />
         ))

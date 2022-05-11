@@ -148,7 +148,6 @@ const Layout: React.FC<ILayout> = () => {
             value={WOPIUM}
             style={{
               minHeight: "22px",
-              pointerEvents: "none",
             }}
           />
         </Tabs>

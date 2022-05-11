@@ -39,3 +39,14 @@
     pointer-events: none;
     cursor: not-allowed;
 }
+
+@media only screen and (min-width: 768px) {
+    .btn-wrapper {
+        flex-direction: column;
+        display: none;
+    }
+}
+
+.MuiPaper-root {
+    width: fit-content;
+}

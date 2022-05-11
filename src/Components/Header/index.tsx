@@ -1,7 +1,8 @@
 import { FC, useState, lazy, Suspense } from "react";
 import { observer } from "mobx-react";
 import { AuthType } from "@opiumteam/mobx-web3";
-import { MobileView, BrowserView } from "react-device-detect";
+import AppStore from "../../Services/Stores/AppStore";
+// import { MobileView, BrowserView } from "react-device-detect";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -10,7 +11,7 @@ import { Button, OpiumLink, ETheme } from "@opiumteam/react-opium-components";
 import authStore from "../../Services/Stores/AuthStore";
 import { getScanLink } from "../../Services/Utils/transaction";
 import { shortenAddress } from "../../Services/Utils/helpers";
-import MuiDropDown from "../DropDown";
+// import MuiDropDown from "../DropDown";
 import { dropdownItems } from "./constants";
 import MetamaskIcon from "../../images/metamask_icon.svg";
 import WalletConnect from "../../images/walletConnectLogo.png";
@@ -19,6 +20,7 @@ import "../../styles/main.scss";
 import "./styles.scss";
 
 const MobileAuthMenu = lazy(() => import("./mobileAuthMenu"));
+const MuiDropDown = lazy(() => import("../DropDown"));
 
 interface IHeader {
   networkhandler: (network: string) => void;
@@ -29,10 +31,9 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
   const open = Boolean(anchorEl);
   const { address } = authStore.blockchainStore;
   const shortAddress = shortenAddress(address);
+  const isloggedIn = authStore.loggedIn && address;
   const isWalletConnect = Boolean(
-    authStore.blockchain.providerName === "WalletConnect" &&
-      authStore.loggedIn &&
-      address
+    authStore.blockchain.providerName === "WalletConnect" && isloggedIn
   );
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -60,27 +61,32 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
   return (
     <div className="header-wrapper">
       <div className="header-title">Oh my Opium</div>
-      <MobileView>
-        <Suspense fallback={"...Loading"}>
-          <MobileAuthMenu
-            networkhandler={networkhandler}
-            shortAddress={shortAddress}
-            isWalletConnect={isWalletConnect}
-          />
-        </Suspense>
-      </MobileView>
-      <BrowserView>
+      {/* <MobileView> */}
+      <Suspense fallback={""}>
+        <MobileAuthMenu
+          networkhandler={networkhandler}
+          shortAddress={shortAddress}
+          isWalletConnect={isWalletConnect}
+        />
+      </Suspense>
+      {/* </MobileView>         */}
+      <div className="BrowserView-wrapper">
+        {/* <BrowserView > */}
         <div className="header-buttons-wrapper">
           <div className="dropdown-wrapper">
-            <MuiDropDown
-              data={dropdownItems}
-              header="Network"
-              handleNetworkList={handleChangeNetworkList}
-              disabled={isWalletConnect}
-            />
+            <Suspense fallback={"Loading ..."}>
+              <MuiDropDown
+                data={dropdownItems}
+                header="Network"
+                handleNetworkList={handleChangeNetworkList}
+                disabled={isWalletConnect}
+                isAlowed={AppStore.requestsAreNotAllowed}
+                isloggedIn={isloggedIn}
+              />
+            </Suspense>
           </div>
           <div className="opium-link-wrapper">
-            {authStore.loggedIn && authStore.blockchainStore.address && (
+            {isloggedIn && (
               <OpiumLink
                 theme={ETheme.DARK}
                 newTab={true}
@@ -90,7 +96,7 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
             )}
           </div>
           <>
-            {!(authStore.loggedIn && address) ? (
+            {!isloggedIn ? (
               <Button
                 variant="primary"
                 className="login-btn"
@@ -238,7 +244,8 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
             </Menu>
           </>
         </div>
-      </BrowserView>
+        {/* </BrowserView> */}
+      </div>
     </div>
   );
 };
