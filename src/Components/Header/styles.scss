@@ -21,7 +21,8 @@
                 .dropdown-wrapper {
                     margin-right: 2.3rem;
                     .MuiPaper-root {
-                        width: fit-content;
+                        width: 100%;
+                        max-width: 200px;
                     }
                     .dropdown {
                         button {

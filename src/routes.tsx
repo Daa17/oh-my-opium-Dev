@@ -2,6 +2,8 @@ import { useState, useEffect, Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { observer } from "mobx-react";
 import authStore from "./Services/Stores/AuthStore";
+import appStore from "./Services/Stores/AppStore";
+import { AuthType } from "@opiumteam/mobx-web3";
 import Layout from "./Components/Layout/Layout";
 import PoolsList from "./Components/PoolsList/index";
 import EmptyPage from "./Components/EmptyPage";
@@ -24,7 +26,7 @@ const testPos = [
   },
 ];
 
-export const AppRouts = observer(() => {
+const AppRouts = observer(() => {
   const [currentNetworkShortName, setCurrentNetworkShortName] = useState("eth");
   let currentNetworkId = authStore.networkId;
   const isLoggedIn = authStore.loggedIn && authStore.blockchainStore.address;
@@ -52,7 +54,7 @@ export const AppRouts = observer(() => {
 
   return (
     <>
-      <Layout />
+      <Layout authStore={authStore} appStore={appStore} AuthType={AuthType} />
       <Suspense
         fallback={
           <div
@@ -73,11 +75,23 @@ export const AppRouts = observer(() => {
               <Route path="pools">
                 <Route
                   path="all-pools"
-                  element={<PoolsList nestedPath={currentNetworkShortName} />}
+                  element={
+                    <PoolsList
+                      authStore={authStore}
+                      appStore={appStore}
+                      nestedPath={currentNetworkShortName}
+                    />
+                  }
                 />
                 <Route
                   path="my-stake"
-                  element={<PoolsList nestedPath={currentNetworkShortName} />}
+                  element={
+                    <PoolsList
+                      authStore={authStore}
+                      appStore={appStore}
+                      nestedPath={currentNetworkShortName}
+                    />
+                  }
                 />
               </Route>
               <Route
@@ -106,3 +120,5 @@ export const AppRouts = observer(() => {
     </>
   );
 });
+
+export default AppRouts;

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { AuthType } from "@opiumteam/mobx-web3";
 import Menu from "@mui/material/Menu";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
@@ -11,7 +10,6 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import { Button, OpiumLink, ETheme } from "@opiumteam/react-opium-components";
-import authStore from "../../../Services/Stores/AuthStore";
 import { getScanLink } from "../../../Services/Utils/transaction";
 import { shortenAddress } from "../../../Services/Utils/helpers";
 import { dropdownItems, walletConnect } from "../constants";
@@ -21,7 +19,12 @@ import DiamondIcon from "../../../images/diamond-purple.svg";
 import "../../../styles/main.scss";
 import "./style.scss";
 
-const MobileAuthMenu = ({ networkhandler, isWalletConnect }: any) => {
+const MobileAuthMenu = ({
+  networkhandler,
+  isWalletConnect,
+  authStore,
+  AuthType,
+}: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [activeNetwork, setActiveNetwork] = useState<string | number>();
   const [activeWallet, setActiveWallet] = useState<string>("MetaMask");

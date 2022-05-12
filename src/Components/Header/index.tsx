@@ -1,17 +1,12 @@
 import { FC, useState, lazy, Suspense } from "react";
 import { observer } from "mobx-react";
-import { AuthType } from "@opiumteam/mobx-web3";
-import AppStore from "../../Services/Stores/AppStore";
-// import { MobileView, BrowserView } from "react-device-detect";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import { Button, OpiumLink, ETheme } from "@opiumteam/react-opium-components";
-import authStore from "../../Services/Stores/AuthStore";
 import { getScanLink } from "../../Services/Utils/transaction";
 import { shortenAddress } from "../../Services/Utils/helpers";
-// import MuiDropDown from "../DropDown";
 import { dropdownItems } from "./constants";
 import MetamaskIcon from "../../images/metamask_icon.svg";
 import WalletConnect from "../../images/walletConnectLogo.png";
@@ -24,9 +19,17 @@ const MuiDropDown = lazy(() => import("../DropDown"));
 
 interface IHeader {
   networkhandler: (network: string) => void;
+  authStore?: any;
+  appStore?: any;
+  AuthType?: any;
 }
 
-const Header: FC<IHeader> = ({ networkhandler }) => {
+const Header: FC<IHeader> = ({
+  networkhandler,
+  authStore,
+  appStore,
+  AuthType,
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { address } = authStore.blockchainStore;
@@ -61,17 +64,17 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
   return (
     <div className="header-wrapper">
       <div className="header-title">Oh my Opium</div>
-      {/* <MobileView> */}
       <Suspense fallback={""}>
         <MobileAuthMenu
           networkhandler={networkhandler}
           shortAddress={shortAddress}
           isWalletConnect={isWalletConnect}
+          authStore={authStore}
+          appStore={appStore}
+          AuthType={AuthType}
         />
       </Suspense>
-      {/* </MobileView>         */}
       <div className="BrowserView-wrapper">
-        {/* <BrowserView > */}
         <div className="header-buttons-wrapper">
           <div className="dropdown-wrapper">
             <Suspense fallback={"Loading ..."}>
@@ -80,7 +83,7 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
                 header="Network"
                 handleNetworkList={handleChangeNetworkList}
                 disabled={isWalletConnect}
-                isAlowed={AppStore.requestsAreNotAllowed}
+                isAlowed={appStore.requestsAreNotAllowed}
                 isloggedIn={isloggedIn}
               />
             </Suspense>
@@ -244,7 +247,6 @@ const Header: FC<IHeader> = ({ networkhandler }) => {
             </Menu>
           </>
         </div>
-        {/* </BrowserView> */}
       </div>
     </div>
   );
