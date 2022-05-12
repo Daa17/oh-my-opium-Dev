@@ -580,7 +580,7 @@
             font-weight: 400;
             font-size: 0.85rem;
             line-height: 15px;
-            margin-top: 2.1rem;
+            margin: 1rem 0;
         }
         .pools-list-item-phase-wrapper {
             width: 100%;
@@ -653,6 +653,7 @@
         }
         .pools-list-item-info {
             flex-direction: column;
+            padding: 0;
             .pools-list-item-input {
                 padding: 2rem 0 1rem;
             }
