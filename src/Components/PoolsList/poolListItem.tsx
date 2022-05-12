@@ -10,8 +10,7 @@ import {
   ETheme,
   CollapseContainer,
 } from "@opiumteam/react-opium-components";
-import appStore from "../../Services/Stores/AppStore";
-import authStore from "../../Services/Stores/AuthStore";
+
 import {
   stakeIntoPool,
   checkAllowance,
@@ -43,6 +42,8 @@ type Props = {
   showPurchasedProducts: Function;
   showMaintenance: Function;
   setStakedPoolIds: Function;
+  authStore?: any;
+  appStore?: any;
 };
 
 const PoolsList: FC<Props> = (props: Props) => {
@@ -82,7 +83,7 @@ const PoolsList: FC<Props> = (props: Props) => {
   };
 
   const changeCollapseStatus = async (status: boolean) => {
-    if (status && !appStore.requestsAreNotAllowed) {
+    if (status && !props.appStore.requestsAreNotAllowed) {
       loadBalance();
       loadPhase();
       const maintainable = await isPoolMaintainable(pool.poolAddress);
@@ -92,28 +93,29 @@ const PoolsList: FC<Props> = (props: Props) => {
   };
 
   useEffect(() => {
-    if (protectValue === 0 || appStore.requestsAreNotAllowed) {
+    if (protectValue === 0 || props.appStore.requestsAreNotAllowed) {
       setInsPrice(0);
       return;
     }
     getInsurancePrice(protectValue, pool).then((price) => {
       setInsPrice(price);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [protectValue, pool]);
 
   useEffect(() => {
-    if (appStore.currentPoolId === poolAddress) {
+    if (props.appStore.currentPoolId === poolAddress) {
       changeCollapseStatus(true);
       poolItemRef.current.scrollIntoView({
         behavior: "smooth",
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appStore.currentPoolId, poolItemRef]);
+  }, [props.appStore.currentPoolId, poolItemRef]);
 
   const alert: any = useAlert();
 
-  const userAddress = authStore.blockchainStore.address;
+  const userAddress = props.authStore.blockchainStore.address;
 
   const makeStake = async () => {
     const { isStaking, isStakingOnly } = await checkPhase(
@@ -300,7 +302,7 @@ const PoolsList: FC<Props> = (props: Props) => {
               theme={ETheme.DARK}
               newTab={true}
               label={pool?.poolAddress}
-              href={getScanLink(pool.poolAddress, authStore.networkId)}
+              href={getScanLink(pool.poolAddress, props.authStore.networkId)}
             />
           </div>
           <div className="pools-list-item-header-address tablet">
@@ -308,7 +310,7 @@ const PoolsList: FC<Props> = (props: Props) => {
               theme={ETheme.DARK}
               newTab={true}
               label={shortenTabletAddress(pool?.poolAddress)}
-              href={getScanLink(pool.poolAddress, authStore.networkId)}
+              href={getScanLink(pool.poolAddress, props.authStore.networkId)}
             />
           </div>
         </div>
@@ -360,15 +362,14 @@ const PoolsList: FC<Props> = (props: Props) => {
     currentPhaseNumber = 4;
     currentPhaseTodo = "";
   }
-  console.log("authStore", authStore.networkId);
-  console.log("appStore.requestsAreNotAllowed", appStore.requestsAreNotAllowed);
+
   const renderBody = () => {
     if (collapseIsOpened) {
       return (
         <div className="pools-list-item-body-wrapper">
           <div className="pools-item-title">
             <div className="pools-list-item-phase-current">
-              {appStore.requestsAreNotAllowed ? (
+              {props.appStore.requestsAreNotAllowed ? (
                 "Please check your network"
               ) : phaseInfoIsLoading ? (
                 "Loading..."
@@ -380,7 +381,9 @@ const PoolsList: FC<Props> = (props: Props) => {
                 </h4>
               )}
             </div>
-            {!appStore.requestsAreNotAllowed && <span>{currentPhaseTodo}</span>}
+            {!props.appStore.requestsAreNotAllowed && (
+              <span>{currentPhaseTodo}</span>
+            )}
           </div>
           <div className="pools-list-subttitle">{phaseInfo.tradingPhase}</div>
           <div className="mobile_stepper_wrapper">
@@ -466,7 +469,7 @@ const PoolsList: FC<Props> = (props: Props) => {
             />
           </div>
           <div className="mobile_hint">
-            During the trading phase you can do this and this
+            {!isInWaitingPhase ? phaseInfo.currentPhaseText : "Not Initialized"}{" "}
           </div>
           <div className="pools-list-item-info">
             <div className="pools-list-info">
@@ -495,7 +498,7 @@ const PoolsList: FC<Props> = (props: Props) => {
               <div className="pools-list-info-row">
                 <span className="pools-list-info-title">Staked balance:</span>
                 <span className="pools-list-info-amount blue">
-                  {appStore.requestsAreNotAllowed
+                  {props.appStore.requestsAreNotAllowed
                     ? "Please check your network"
                     : balanceIsLoading
                     ? "Loading..."
@@ -508,7 +511,7 @@ const PoolsList: FC<Props> = (props: Props) => {
                   className="blue"
                   label="open maintenance"
                   onClick={showMaintenance}
-                  disabled={appStore.requestsAreNotAllowed}
+                  disabled={props.appStore.requestsAreNotAllowed}
                 />
               )}
               <Button
@@ -517,7 +520,9 @@ const PoolsList: FC<Props> = (props: Props) => {
                   positionsLoading ? "loading ..." : "see positions in the pool"
                 }
                 onClick={checkProducts}
-                disabled={appStore.requestsAreNotAllowed || positionsLoading}
+                disabled={
+                  props.appStore.requestsAreNotAllowed || positionsLoading
+                }
               />
             </div>
             <div className="buy_stake_wrapper">
@@ -538,7 +543,7 @@ const PoolsList: FC<Props> = (props: Props) => {
                     label="stake"
                     onClick={makeStake}
                     disabled={
-                      appStore.requestsAreNotAllowed || pool.isSuspended
+                      props.appStore.requestsAreNotAllowed || pool.isSuspended
                     }
                   />
                   <Button
@@ -546,7 +551,7 @@ const PoolsList: FC<Props> = (props: Props) => {
                     label="unstake"
                     onClick={makeUnstake}
                     disabled={
-                      appStore.requestsAreNotAllowed || pool.isSuspended
+                      props.appStore.requestsAreNotAllowed || pool.isSuspended
                     }
                   />
                 </div>
@@ -580,7 +585,7 @@ const PoolsList: FC<Props> = (props: Props) => {
                     label="buy"
                     onClick={makeHedging}
                     disabled={
-                      appStore.requestsAreNotAllowed || pool.isSuspended
+                      props.appStore.requestsAreNotAllowed || pool.isSuspended
                     }
                   />
                 </div>
@@ -629,7 +634,8 @@ const PoolsList: FC<Props> = (props: Props) => {
                         label="stake"
                         onClick={makeStake}
                         disabled={
-                          appStore.requestsAreNotAllowed || pool.isSuspended
+                          props.appStore.requestsAreNotAllowed ||
+                          pool.isSuspended
                         }
                       />
                       <Button
@@ -637,7 +643,8 @@ const PoolsList: FC<Props> = (props: Props) => {
                         label="unstake"
                         onClick={makeUnstake}
                         disabled={
-                          appStore.requestsAreNotAllowed || pool.isSuspended
+                          props.appStore.requestsAreNotAllowed ||
+                          pool.isSuspended
                         }
                       />
                     </div>
@@ -668,7 +675,8 @@ const PoolsList: FC<Props> = (props: Props) => {
                         label="buy"
                         onClick={makeHedging}
                         disabled={
-                          appStore.requestsAreNotAllowed || pool.isSuspended
+                          props.appStore.requestsAreNotAllowed ||
+                          pool.isSuspended
                         }
                       />
                     </div>

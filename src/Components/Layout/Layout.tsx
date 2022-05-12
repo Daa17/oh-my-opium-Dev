@@ -9,9 +9,12 @@ import { MY_STAKE, ALL_POOLS, POSITIONS, WOPIUM, POOLS } from "../../constants";
 import "./Layout.scss";
 interface ILayout {
   path?: string;
+  authStore?: any;
+  appStore?: any;
+  AuthType?: any;
 }
 
-const Layout: React.FC<ILayout> = () => {
+const Layout: React.FC<ILayout> = ({ authStore, appStore, AuthType }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
@@ -80,7 +83,12 @@ const Layout: React.FC<ILayout> = () => {
 
   return (
     <div>
-      <Header networkhandler={networkhandler} />
+      <Header
+        authStore={authStore}
+        appStore={appStore}
+        AuthType={AuthType}
+        networkhandler={networkhandler}
+      />
       <div className="Layout-tabs-area">
         <Tabs
           value={value}
