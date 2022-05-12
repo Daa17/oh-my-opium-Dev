@@ -3,14 +3,12 @@ import { observer } from "mobx-react";
 import { useAlert } from "react-alert";
 import { useLocation } from "react-router-dom";
 import { ETheme, Popup } from "@opiumteam/react-opium-components";
-import appStore from "../../Services/Stores/AppStore";
-import authStore from "../../Services/Stores/AuthStore";
 import PoolListItem from "./poolListItem";
 import {
   getPurchasedProducts,
   isPoolMaintainable,
   getPurchasedProductsTheGraph,
-  getStakedBalance,
+  // getStakedBalance,
 } from "../../Services/Utils/methods";
 import { PoolType, PositionType } from "../../Services/Utils/types";
 import "./styles.scss";
@@ -32,20 +30,23 @@ const isTurbo = [
 const isOpium = "$OPIUM Option Call";
 interface IPoolList {
   nestedPath?: string;
+  authStore?: any;
+  appStore?: any;
 }
 
-const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
+const PoolsList: FC<IPoolList> = ({ nestedPath, authStore, appStore }) => {
   let { pathname } = useLocation();
   const alert = useAlert();
   const [popupIsOpened, setPopupIsOpened] = useState(false);
   const [positions, setPositions] = useState<PositionType[]>([]);
   const [sortedValue, setSortedValue] = useState<string>("expiration date");
   const [positionProductTitle, setPositionProductTitle] = useState<string>("");
-  const [poolsByNetwork, setPoolsByNetwork] = useState(appStore.poolsByNetwork);
+  const [poolsByNetwork, setPoolsByNetwork] = useState(
+    appStore?.poolsByNetwork
+  );
   const [maintenanceIsOpened, setMaintenanceIsOpened] = useState(false);
   const [poolToMaintain, setPoolToMaintain] = useState<PoolType | null>(null);
   const [stakedPoolIds, setStakedPoolIds] = useState<PoolType[]>([]);
-  const { address } = authStore.blockchainStore;
   const isPoolsPage = pathname.includes("all-pools");
 
   console.log("stakedPoolIds", stakedPoolIds);
@@ -53,11 +54,13 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
   const showPurchasedProducts = async (pool: PoolType) => {
     let positions: PositionType[] | undefined = [];
 
-    await getPurchasedProductsTheGraph(pool, address)
+    await getPurchasedProductsTheGraph(pool, authStore?.blockchainStore.address)
       .then((res) => (positions = res))
       .catch(async (e) => {
-        await getPurchasedProducts(pool, address, (e) =>
-          alert.error(e.message)
+        await getPurchasedProducts(
+          pool,
+          authStore?.blockchainStore.address,
+          (e) => alert.error(e.message)
         ).then((res) => (positions = res));
       });
     setPositions(positions);
@@ -74,14 +77,16 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
     let filteredDataArr: any = [];
 
     const turbo = checkedValue.includes("turbo")
-      ? appStore.poolsByNetwork.filter((item) => isTurbo.includes(item.title))
+      ? appStore.poolsByNetwork.filter((item: any) =>
+          isTurbo.includes(item.title)
+        )
       : [];
     const opium = checkedValue.includes("$OPIUM products")
-      ? appStore.poolsByNetwork.filter((item) => item.title === isOpium)
+      ? appStore.poolsByNetwork.filter((item: any) => item.title === isOpium)
       : [];
     const insurance = checkedValue.includes("inshurance")
       ? appStore.poolsByNetwork.filter(
-          (item) => item.title !== isOpium && !isTurbo.includes(item.title)
+          (item: any) => item.title !== isOpium && !isTurbo.includes(item.title)
         )
       : [];
     let filteredData = filteredDataArr.concat(turbo, opium, insurance);
@@ -92,26 +97,27 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
 
   useEffect(() => {
     if (sortedValue[0] === "name") {
-      setPoolsByNetwork((prev) =>
+      setPoolsByNetwork((prev: string[]) =>
         prev.sort((a: any, b: any) => (a.title > b.title ? 1 : -1))
       );
     } else if (sortedValue[0] === "APR") {
-      setPoolsByNetwork((prev) =>
+      setPoolsByNetwork((prev: string[]) =>
         prev.sort((a: any, b: any) =>
           a.yieldToDataAnnualized > b.yieldToDataAnnualized ? 1 : -1
         )
       );
     } else if (sortedValue[0] === "liquidity") {
-      setPoolsByNetwork((prev) =>
+      setPoolsByNetwork((prev: string[]) =>
         prev.sort((a: any, b: any) => (a.poolSize > b.poolSize ? 1 : -1))
       );
     } else if (sortedValue.includes("expiration date")) {
-      setPoolsByNetwork((prev) =>
+      setPoolsByNetwork((prev: string[]) =>
         prev.sort((a: any, b: any) =>
           a.currentEpochTimeStamp > b.currentEpochTimeStamp ? 1 : -1
         )
       );
     } else setPoolsByNetwork(appStore.poolsByNetwork);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortedValue, poolsByNetwork]);
 
   const closePopup = () => {
@@ -143,16 +149,19 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
   };
   // const [balanceIds, setBalanceIds] = useState<any>([]);
 
-  const getStakedPools = () => {
-    poolsByNetwork.map(async (pool) => {
-      const balance = await getStakedBalance(pool.poolAddress, address);
-      if (balance) {
-        console.log("balance", balance);
-        // setBalanceIds(balanceIds.push(pool.poolAddress));
-      }
-    });
-  };
-  getStakedPools();
+  // const getStakedPools = () => {
+  //   poolsByNetwork.map(async (pool: any) => {
+  //     const balance = await getStakedBalance(
+  //       pool.poolAddress,
+  //       authStore?.blockchainStore.address
+  //     );
+  //     if (balance) {
+  //       console.log("balance", balance);
+  //       // setBalanceIds(balanceIds.push(pool.poolAddress));
+  //     }
+  //   });
+  // };
+  // getStakedPools();
 
   return (
     <div className="pools-list-wrapper">
@@ -181,9 +190,11 @@ const PoolsList: FC<IPoolList> = ({ nestedPath }) => {
         nestedPath={nestedPath}
       />
       {isPoolsPage && poolsByNetwork.length ? (
-        poolsByNetwork.map((pool) => (
+        poolsByNetwork.map((pool: any) => (
           <PoolListItem
             pool={pool}
+            authStore={authStore}
+            appStore={appStore}
             showPurchasedProducts={() => showPurchasedProducts(pool)}
             showMaintenance={() => showMaintenance(pool)}
             setStakedPoolIds={setStakedPoolIds}
