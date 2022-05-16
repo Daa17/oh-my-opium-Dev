@@ -4,13 +4,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormGroup from "@mui/material/FormGroup";
-
+import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import { Button } from "@opiumteam/react-opium-components";
-import { filterSelectStyle, networkSelectStyle } from "./styleConstant";
 
 import "../../styles/main.scss";
 import "./styles.scss";
@@ -108,7 +107,63 @@ export default function MuiDropDown(props: any) {
           onOpen={() => toogleOpen(true)}
           onClose={() => toogleOpen(false)}
           renderValue={() => null}
-          MenuProps={filterSelectStyle}
+          MenuProps={{
+            PaperProps: {
+              sx: {
+                width: "195px",
+                bgcolor: "#222234",
+                overflow: "initial",
+                borderTopLeftRadius: "10px",
+                borderBottomLeftRadius: "10px",
+                borderBottomRightRadius: "10px",
+                "& .MuiList-root": {
+                  padding: 0,
+                },
+                "& .MuiMenuItem-root": {
+                  "&.Mui-selected": {
+                    backgroundColor: "transparent",
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                    },
+                  },
+                },
+                "& .Mui-selected": {
+                  backgroundColor: "transparent",
+                },
+                "&:before": {
+                  content: `" "`,
+                  width: 0,
+                  height: 0,
+                  top: 0,
+                  right: 0,
+                  transform: "translate(0, -85%)",
+                  position: "absolute",
+                  borderLeft: "10px solid transparent",
+                  borderRight: "10px solid transparent",
+                  borderBottom: "18px solid #222234",
+                  zIndex: 2,
+                },
+                "&:after": {
+                  content: `" "`,
+                  width: 0,
+                  height: 0,
+                  top: 0,
+                  right: 0,
+                  transform: "translate(0, -100%)",
+                  position: "absolute",
+                  borderLeft: "10px solid transparent",
+                  borderRight: "10px solid transparent",
+                  borderBottom: "18px solid #fff",
+                  zIndex: 1,
+                },
+              },
+            },
+            transformOrigin: {
+              vertical: -20,
+              horizontal: 130,
+            },
+            // disablePortal: true,
+          }}
         >
           {props.checkboxData && <h4>{props.checkboxHeader}</h4>}
           <FormGroup
@@ -201,41 +256,108 @@ export default function MuiDropDown(props: any) {
           </MenuItem>
         </Select>
       ) : (
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={activeNetwork}
-          className="network-select"
-          onChange={(e: any) => handleChange(e.target.value, e.target.type)}
-          renderValue={(selected: any) => selected}
-          disabled={props.disabled}
-          MenuProps={networkSelectStyle}
+        <Tooltip
+          title={`${
+            props.disabled ? "You need to log out to change the network." : ""
+          }`}
         >
-          <h5>{props.header}</h5>
-          {props?.data &&
-            props.data?.map(({ title, iconUrl }: any) => (
-              <MenuItem
-                value={title}
-                key={title}
-                style={{
-                  width: "11.8rem",
-                  padding: "0.4rem 0",
-                  justifyContent: "space-between",
-                }}
-                sx={{
-                  "&.Mui-selected": {
-                    backgroundColor: "transparent",
-                    "&:hover": {
-                      backgroundColor: "transparent",
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={activeNetwork}
+            className="network-select"
+            onChange={(e: any) => handleChange(e.target.value, e.target.type)}
+            renderValue={(selected: any) => selected}
+            disabled={props.disabled}
+            MenuProps={{
+              disablePortal: true,
+              PaperProps: {
+                sx: {
+                  bgcolor: "#222234",
+                  overflow: "initial",
+                  borderTopLeftRadius: "10px",
+                  borderBottomLeftRadius: "10px",
+                  borderBottomRightRadius: "10px",
+
+                  "& .MuiList-root": {
+                    padding: 0,
+                  },
+                  "& .MuiMenuItem-root": {
+                    // "& .Mui-selected": {
+                    //   backgroundColor: "transparent !important",
+                    // },
+                    "&:not(:last-of-type)": {
+                      borderBottom: "0.5px solid rgba(255, 255, 255, 0.5)",
+                      marginBottom: "0.3rem",
                     },
                   },
-                }}
-              >
-                <p>{title}</p>
-                <img width="17" height="14" src={iconUrl} alt="icon" />
-              </MenuItem>
-            ))}
-        </Select>
+                  "& .Mui-selected": {
+                    backgroundColor: "transparent",
+                  },
+                  "&:before": {
+                    content: `" "`,
+                    width: 0,
+                    height: 0,
+                    top: 0,
+                    right: 0,
+                    transform: "translate(0, -90%)",
+                    position: "absolute",
+                    borderLeft: "10px solid transparent",
+                    borderRight: "10px solid transparent",
+                    borderBottom: "18px solid #222234",
+                    zIndex: 2,
+                  },
+                  "&:after": {
+                    content: `" "`,
+                    width: 0,
+                    height: 0,
+                    top: 0,
+                    right: 0,
+                    transform: "translate(0, -100%)",
+                    position: "absolute",
+                    borderLeft: "10px solid transparent",
+                    borderRight: "10px solid transparent",
+                    borderBottom: "18px solid #fff",
+                    zIndex: 1,
+                  },
+                },
+              },
+              //   anchorOrigin: {
+              //     vertical: "bottom",
+              //     horizontal: "right",
+              //   },
+              transformOrigin: {
+                vertical: -7,
+                horizontal: 130,
+              },
+            }}
+          >
+            <h5>{props.header}</h5>
+            {props?.data &&
+              props.data?.map(({ title, iconUrl }: any) => (
+                <MenuItem
+                  value={title}
+                  key={title}
+                  style={{
+                    width: "11.8rem",
+                    padding: "0.4rem 0",
+                    justifyContent: "space-between",
+                  }}
+                  sx={{
+                    "&.Mui-selected": {
+                      backgroundColor: "transparent",
+                      "&:hover": {
+                        backgroundColor: "transparent",
+                      },
+                    },
+                  }}
+                >
+                  <p>{title}</p>
+                  <img width="17" height="14" src={iconUrl} alt="icon" />
+                </MenuItem>
+              ))}
+          </Select>
+        </Tooltip>
       )}
 
       <div className="red-network">{dropDownMsg}</div>

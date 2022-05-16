@@ -84,7 +84,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath, authStore, appStore }) => {
     const opium = checkedValue.includes("$OPIUM products")
       ? appStore.poolsByNetwork.filter((item: any) => item.title === isOpium)
       : [];
-    const insurance = checkedValue.includes("inshurance")
+    const insurance = checkedValue.includes("insurance")
       ? appStore.poolsByNetwork.filter(
           (item: any) => item.title !== isOpium && !isTurbo.includes(item.title)
         )

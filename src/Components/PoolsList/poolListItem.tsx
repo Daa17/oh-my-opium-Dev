@@ -469,7 +469,7 @@ const PoolsList: FC<Props> = (props: Props) => {
             />
           </div>
           <div className="mobile_hint">
-            {!isInWaitingPhase ? phaseInfo.currentPhaseText : "Not Initialized"}{" "}
+            {!isInWaitingPhase ? phaseInfo.currentPhaseText : "Not Initialized"}
           </div>
           <div className="pools-list-item-info">
             <div className="pools-list-info">
