@@ -448,8 +448,8 @@ export const getStakedBalance = async (
                   .symbol()
                   .call()
                   .then((symbol: string) => {
-                    return `${Number(convertFromBN(shares, +decimals)).toFixed(
-                      3
+                    return `${Number(
+                      convertFromBN(shares, +decimals)
                     )} ${symbol}`;
                   });
               });

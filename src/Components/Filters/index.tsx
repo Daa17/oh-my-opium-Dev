@@ -13,7 +13,7 @@ import "./styles.scss";
 
 const programsDropdownItems = [
   { title: "turbo", value: "turbo" },
-  { title: "inshurance", value: "inshurance" },
+  { title: "insurance", value: "insurance" },
   { title: "$OPIUM products", value: "$OPIUM products" },
 ];
 
@@ -75,14 +75,12 @@ const Filters: FC<IFilter> = ({
             flexContainer: "flexContainer",
             indicator: "indicator",
           }}
-          style={{
-            minHeight: "25px",
-          }}
           TabIndicatorProps={{ children: <span /> }}
         >
           <Tab
             label="All Pools"
             value="all-pools"
+            className="pools_btn"
             style={{
               minHeight: "25px",
             }}

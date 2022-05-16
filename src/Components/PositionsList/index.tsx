@@ -69,7 +69,7 @@ const PositionsList: FC<any> = ({
   };
   const goToPool = () => {
     navigate(`/${currentNetwork}/pools/all-pools`);
-    appStore.setCurrentPoolId("0x2300091326DF68309BDB7eE885de561C2C89fea9");
+    appStore.setCurrentPoolId("0x527bc50b075a65b7e17ae8606a1adeb08bceb971");
   };
   return (
     <div className="positions-wrapper">

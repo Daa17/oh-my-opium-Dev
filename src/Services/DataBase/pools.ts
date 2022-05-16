@@ -153,6 +153,24 @@ export const bscPools = [
       type: OracleTypeEnum.WITH_TIMESTAMP,
     },
   },
+  {
+    title: "Weekly Turbo ETH",
+    poolAddress: "0x75252ad806E8d6191272d9099684607CAB13b25F",
+    nominal: 0.01,
+    isSuspended: false,
+    marginTitle: "WETH",
+    positions: turboWeeklyETH,
+    icon: turboEth,
+    yieldToDataAnnualized: "8321654.215",
+    poolSize: "3554.649",
+    currentEpochTimeStamp: "4145646546546",
+    readMoreLink:
+      "https://medium.com/opium-network/introducing-opium-turbos-581a647654d",
+    oracle: {
+      address: "0x0D876632F321fdcAbC540eEA5867c4799A627ed8",
+      type: OracleTypeEnum.WITH_TIMESTAMP,
+    },
+  },
 ];
 
 export const polygonPools = [
@@ -237,24 +255,7 @@ export const polygonPools = [
       type: OracleTypeEnum.WITH_TIMESTAMP,
     },
   },
-  {
-    title: "Weekly Turbo ETH",
-    poolAddress: "0x75252ad806E8d6191272d9099684607CAB13b25F",
-    nominal: 0.01,
-    isSuspended: false,
-    marginTitle: "WETH",
-    positions: turboWeeklyETH,
-    icon: turboEth,
-    yieldToDataAnnualized: "8321654.215",
-    poolSize: "3554.649",
-    currentEpochTimeStamp: "4145646546546",
-    readMoreLink:
-      "https://medium.com/opium-network/introducing-opium-turbos-581a647654d",
-    oracle: {
-      address: "0x0D876632F321fdcAbC540eEA5867c4799A627ed8",
-      type: OracleTypeEnum.WITH_TIMESTAMP,
-    },
-  },
+
   {
     title: "Turbo BTC",
     poolAddress: "0x5C1E6bc8E52cE1a262014c743508f74923a5B0d2",

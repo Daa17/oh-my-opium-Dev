@@ -225,6 +225,10 @@ const MobileAuthMenu = ({
           >
             <Typography>Network</Typography>
           </AccordionSummary>
+          <p style={{ fontSize: "10px", color: "#F6029C" }}>
+            You need to log out to change the network
+          </p>
+
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
             defaultValue={dropdownItems[0].value}

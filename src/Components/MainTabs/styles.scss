@@ -1,19 +1,20 @@
 .main_tabs {
-   & > nav {
-    padding: 0 4.5rem;
-    background: #222234;
-    .nav-link {
-        font-size: 1.14rem !important;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 20px;
-        padding: 0.85rem 0;
+    &>nav {
+        padding: 0 4.5rem;
+        background: #222234;
+        .nav-link {
+            font-size: 1.14rem !important;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 20px;
+            padding: 0.85rem 0;
+        }
     }
-   }
     #main-tabs-tab-wOpium {
         margin-left: auto;
     }
 }
+
 .nav-tabs {
     top: 0;
     .nav-item {
@@ -25,11 +26,11 @@
         }
     }
 }
+
 @media only screen and (max-width: 768px) {
     .main_tabs {
-        nav  {
+        nav {
             padding: 0 1.14rem;
         }
-      
     }
 }

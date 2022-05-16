@@ -8,6 +8,9 @@
         font-style: normal;
         font-weight: 500;
         line-height: 1.25rem;
+        .Mui-selected {
+            background: transparent !important
+        }
         .menu_item {
             height: auto;
             min-height: auto;
@@ -166,4 +169,12 @@
             }
         }
     }
+}
+
+.MuiTooltip-tooltip {
+    border: 1px solid #fff;
+    background: #222234;
+    font-size: 12px;
+    top: -10px;
+    bottom: -20px;
 }
