@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { AuthType } from "@opiumteam/mobx-web3";
 import Menu from "@mui/material/Menu";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
@@ -11,7 +10,6 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import { Button, OpiumLink, ETheme } from "@opiumteam/react-opium-components";
-import authStore from "../../../Services/Stores/AuthStore";
 import { getScanLink } from "../../../Services/Utils/transaction";
 import { shortenAddress } from "../../../Services/Utils/helpers";
 import { dropdownItems, walletConnect } from "../constants";
@@ -21,32 +19,51 @@ import DiamondIcon from "../../../images/diamond-purple.svg";
 import "../../../styles/main.scss";
 import "./style.scss";
 
-export const MobileAuthMenu = ({ shortAddress }: any) => {
+const MobileAuthMenu = ({
+  networkhandler,
+  isWalletConnect,
+  authStore,
+  AuthType,
+}: any) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [activeNetwork, setActiveNetwork] = useState<string>();
-  const [activeWallet, setActiveWallet] = useState<string>();
+  const [activeNetwork, setActiveNetwork] = useState<string | number>();
+  const [activeWallet, setActiveWallet] = useState<string>("MetaMask");
   const open = Boolean(anchorEl);
   const { address } = authStore.blockchainStore;
-
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
-    console.log(activeWallet);
-    console.log(shortAddress);
   };
   const changeNetworkTitle = (
     event: SelectChangeEvent<typeof activeNetwork>,
     title: string
   ) => {
+    let networkName = "";
+    let networkValue = Number(event.target.value);
     if (title === "Wallet") {
       setActiveWallet(event.target.value as string);
-    } else setActiveNetwork(event.target.value as string);
+    } else {
+      setActiveNetwork(event.target.value);
+      if (networkValue === 1) {
+        networkhandler("eth");
+        networkName = "mainnet";
+      } else if (networkValue === 56) {
+        networkhandler("bcs");
+        networkName = "binance";
+      } else if (networkValue === 137) {
+        networkName = "matic";
+        networkhandler("polygon");
+      }
+      authStore.changeNetwork(networkName, networkValue);
+    }
   };
 
   const logInHandler = () => {
-    authStore.blockchainStore.login(AuthType.INJECTED);
+    if (activeWallet === "MetaMask") {
+      authStore.blockchainStore.login(AuthType.INJECTED);
+    } else authStore.blockchainStore.login(AuthType.WALLET_CONNECT);
   };
 
   return (
@@ -60,7 +77,7 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
           left: "0.93rem",
         }}
       >
-        <img src={DiamondIcon} alt="icon" />
+        <img width="17" height="14" src={DiamondIcon} alt="icon" />
       </ListItemIcon>
       <Button
         variant="primary"
@@ -207,14 +224,21 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
           >
             <Typography>Network</Typography>
           </AccordionSummary>
+          {activeWallet === "Wallet connect" && (
+            <p style={{ fontSize: "10px", color: "#F6029C" }}>
+              You need to log out to change the network
+            </p>
+          )}
+
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue={dropdownItems[0].value}
+            defaultValue={activeNetwork || dropdownItems[0].value}
             name="radio-buttons-group"
             onChange={(e) => changeNetworkTitle(e, "Network")}
           >
             {dropdownItems?.map((item) => (
               <FormControlLabel
+                className={`${isWalletConnect ? "disabled" : ""}`}
                 key={item.title}
                 value={item.value}
                 control={
@@ -232,6 +256,8 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
                     {item.title}
                     <ListItemIcon style={{ minWidth: "1.2rem" }}>
                       <img
+                        width="17"
+                        height="14"
                         style={{ maxWidth: "15px" }}
                         src={item.iconUrl}
                         alt="icon"
@@ -250,6 +276,7 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
               style={{
                 borderTop: "0.5px solid rgba(255, 255, 255, 0.5)",
                 margin: "0",
+                opacity: isWalletConnect ? "0.3" : "1",
               }}
             />
           </RadioGroup>
@@ -335,7 +362,9 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
                         {item.title}
                         <ListItemIcon style={{ minWidth: "1.2rem" }}>
                           <img
-                            style={{ maxWidth: "15px" }}
+                            width="17"
+                            height="14"
+                            // style={{ maxWidth: "15px" }}
                             src={item.iconUrl}
                             alt="icon"
                           />
@@ -400,3 +429,5 @@ export const MobileAuthMenu = ({ shortAddress }: any) => {
     </div>
   );
 };
+
+export default MobileAuthMenu;

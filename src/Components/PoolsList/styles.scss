@@ -34,6 +34,9 @@
             font-style: normal;
             font-weight: 800;
             line-height: 1.42rem;
+            a {
+                color: #FFFFFF;
+            }
             img {
                 width: 4.85rem;
                 height: 4.85rem;
@@ -54,6 +57,9 @@
                     display: none;
                 }
             }
+            &.tablet {
+                display: none;
+            }
         }
     }
 }
@@ -61,18 +67,26 @@
 //********** OPEN PHASE ***********//
 .pools-list-item-body-wrapper {
     padding: 0 2.4vw;
+    .prev-btn,
+    .next-btn {
+        display: none;
+    }
+    .pools-item-title-container {
+        min-height: 3.2rem;
+    }
     .pools-item-title-wrapper {
         display: flex;
+        align-items: center;
         justify-content: space-between;
         span {
-            font-size: 1rem;
+            font-size: 1.57rem;
             font-style: normal;
             font-weight: 500;
             line-height: 1.25rem;
             color: #FFFFFF;
         }
         a {
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-style: normal;
             font-weight: 400;
             line-height: 0.894rem;
@@ -80,7 +94,134 @@
             text-decoration: underline;
             cursor: pointer;
         }
-  
+    }
+    .pools-item-title {
+        display: flex;
+        align-items: center;
+        font-family: "Montserrat", sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 0.85rem;
+        line-height: 1.43rem;
+        h4 {
+            font-size: 1.43rem;
+            margin-right: 2.8rem;
+            margin-bottom: 0.35rem;
+        }
+    }
+    .pools-list-subttitle {
+        font-family: "Montserrat", sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 0.85rem;
+        line-height: 1.43em;
+    }
+    .pools-list-item-phase-wrapper {
+        margin-top: 4.28rem;
+        .MuiStepConnector-root {
+            top: 7px;
+            left: -100%;
+            right: 100%;
+            &.Mui-active {
+                .MuiStepConnector-line {
+                    border-color: #187CD8;
+                }
+            }
+            &.Mui-completed {
+                .MuiStepConnector-line {
+                    border-color: #187CD8;
+                }
+            }
+        }
+        .MuiStep-root {
+            padding: 0;
+        }
+        .MuiStepLabel-root {
+            align-items: flex-start;
+        }
+        .MuiStepConnector-line {
+            border-color: #84848E;
+        }
+        .MuiStepLabel-label {
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 0.85rem;
+            line-height: 1.43rem;
+            color: #fff;
+            &.MuiStepLabel-alternativeLabel {
+                text-align: left;
+            }
+        }
+        .MuiStepIcon-root {
+            width: 1rem;
+            height: 1rem;
+            color: #84848E;
+            &.Mui-completed {
+                color: #187CD8;
+            }
+            &.Mui-active {
+                width: 0.57rem;
+                height: 1rem;
+                color: #187CD8;
+                z-index: 2;
+            }
+        }
+        .MuiStepIcon-text {
+            display: none;
+        }
+        .MuiStep-root {
+            &.Mui-completed {
+                .MuiStepLabel-iconContainer {
+                    width: 1rem;
+                    height: 1rem;
+                    border-radius: 50%;
+                    background-color: #187CD8;
+                    .MuiSvgIcon-root {
+                        display: none;
+                    }
+                }
+            }
+            &:last-of-type {
+                &::before {
+                    content: '';
+                    width: 100%;
+                    height: 1px;
+                    position: absolute;
+                    top: 7px;
+                    right: 0;
+                    background: #84848E;
+                }
+            }
+        }
+        .phase_name {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(0, -30px);
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 1.1rem;
+            line-height: 1.43rem;
+        }
+    }
+    .overWaitingPhase {
+        .MuiStepper-root {
+            .MuiStep-root {
+                &:last-of-type {
+                    &::before {
+                        content: '';
+                        width: 100%;
+                        height: 0.5px;
+                        position: absolute;
+                        top: 7px;
+                        right: 0;
+                        background: #187CD8;
+                    }
+                }
+            }
+        }
     }
     button {
         font-style: normal;
@@ -88,49 +229,53 @@
         font-size: 0.8rem;
         line-height: 0.93rem;
     }
+    .mobile_hint {
+        display: none;
+    }
     .pools-list-item-info {
         width: 100%;
         display: flex;
         flex-direction: row;
         align-items: flex-start;
         justify-content: space-between;
+        font-family: "Montserrat", sans-serif;
         padding: 2.8rem 0 2.18rem;
         .pools-list-info {
-           min-width: 26.495vw;
-           margin-right: 10.014vw;
-           .pools-list-info-row {
-               width: 100%;
-               display: flex;
-               align-items: center;
-               justify-content: space-between;
-               border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
-               padding: 0.5rem 0;
-               &:first-of-type {
-                   padding-top: 0;
-               }
-               &:last-of-type {
-                   padding-bottom: 0;
-                   border-bottom: 0;
-               }
-               .pools-list-info-title {
+            min-width: 26.495vw;
+            margin-right: 10.014vw;
+            .pools-list-info-row {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
+                padding: 0.5rem 0;
+                &:first-of-type {
+                    padding-top: 0;
+                }
+                &:last-of-type {
+                    padding-bottom: 0;
+                    border-bottom: 0;
+                }
+                .pools-list-info-title {
                     font-style: normal;
                     font-weight: 400;
-                    font-size: 0.8rem;
+                    font-size: 0.85rem;
                     line-height: 0.93rem;
-               }
-               .pools-list-info-amount {
+                }
+                .pools-list-info-amount {
                     font-style: normal;
                     font-weight: 800;
-                    font-size: 1rem;
-                    line-height: 1.25rem; 
+                    font-size: 1.1rem;
+                    line-height: 1.25rem;
                     &.blue {
                         color: #187CD8;
                     }
                 }
-           }
-           button {
+            }
+            button {
                 width: 100%;
-                margin-top: 1.5rem;
+                margin-top: 1.7rem;
             }
         }
         .buy_stake_wrapper {
@@ -138,50 +283,49 @@
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
-        .pools-list-item-stake {
-            min-width: 20.862vw;
-            .pools-item-title-wrapper {
-                width: 100%;
-            }
-            .buttons-wrapper {
-                button {
-                    min-width: 8.345vw;
-                    &:first-of-type {
-                        margin-right: 1.25rem;
+            .pools-list-item-stake {
+                min-width: 20.862vw;
+                .pools-item-title-wrapper {
+                    width: 100%;
+                }
+                .buttons-wrapper {
+                    button {
+                        min-width: 8.345vw;
+                        &:first-of-type {
+                            margin-right: 1.25rem;
+                        }
                     }
                 }
             }
-        }
-        .pools-list-item-buy {
-            min-width: 20.862vw;
-            .pools-item-title-wrapper {
-                width: 100%;
-            }
-            .buy-buttons-wrapper {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                .pools-list-item-insurance-price {
-                    font-size: 1rem;
-                    line-height: 1.25rem;
-                    span {
-                        display: inline-block;
-                        font-size: 0.75rem;
+            .pools-list-item-buy {
+                min-width: 20.862vw;
+                .pools-item-title-wrapper {
+                    width: 100%;
+                }
+                .buy-buttons-wrapper {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    .pools-list-item-insurance-price {
+                        font-size: 1rem;
                         line-height: 1.25rem;
-                        margin-right: 1.11vw;
+                        span {
+                            display: inline-block;
+                            font-size: 0.75rem;
+                            line-height: 1.25rem;
+                            margin-right: 1.11vw;
+                        }
+                    }
+                    button {
+                        min-width: 8.345vw;
                     }
                 }
-                button {
-                    min-width: 8.345vw;
-                }
+            }
+            .mobile-tabs {
+                display: none;
             }
         }
-        .mobile-tabs {
-            display: none;
-        }
-    
-    }
         .pools-list-item-input {
             display: flex;
             flex-direction: column;
@@ -189,7 +333,7 @@
             font-weight: 400;
             font-size: 0.75rem;
             line-height: 0.93rem;
-            padding: 0.93rem 0;
+            padding: 1.4rem 0 1.1rem;
             input {
                 background: transparent;
                 border-radius: 0;
@@ -233,6 +377,18 @@
     align-items: center;
     font-size: 0.81rem;
     background-color: #0A0A1E;
+    .pools-loading {
+        display: inline-block;
+        width: 100%;
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 1rem;
+        line-height: 1.6rem;
+        text-align: center;
+        color: #fff;
+        margin: 5rem auto;
+    }
 }
 
 .arrow-button {
@@ -249,6 +405,10 @@
             transform: rotate(180deg);
         }
     }
+}
+
+.MuiSlider-markLabel {
+    color: #fff;
 }
 
 @media only screen and (min-width: 1440px) {
@@ -275,31 +435,45 @@
                     font-size: 1rem;
                 }
             }
+            .web {
+                display: block;
+            }
         }
     }
     .pools-list-item-body-wrapper {
         .pools-list-item-info {
             .pools-list-info {
-                margin-right: 6vw;
+                margin-right: 4vw;
             }
         }
     }
 }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1024px) {
+    .CollapseContainer {
+        padding: 0 2.7rem;
+    }
     .pools-list-item-header-wrapper {
-        flex-direction: column;
         .pools-list-item-header-info {
-            width: 100%;
-            justify-content: flex-start;
-            flex-wrap: wrap;
             .pools-list-item-header-address {
-                width: 100%;
+                width: 35%;
                 margin: 2.15rem 0 1.85rem;
+                &.tablet {
+                    display: block;
+                }
+                &.web-mobile {
+                    display: none;
+                }
             }
         }
     }
     .pools-list-item-body-wrapper {
+        padding: 0 3.7vw;
+        .pools-item-title {
+            h4 {
+                margin-right: 7rem;
+            }
+        }
         .pools-list-item-info {
             .pools-list-info {
                 min-width: auto;
@@ -311,19 +485,31 @@
                     min-width: 100%;
                     margin-bottom: 1.875rem;
                     .buttons-wrapper {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                         button {
-                            min-width: 15vw;
-                        } 
+                            min-width: auto;
+                            flex: 1;
+                            &:first-of-type {
+                                margin-right: 2rem;
+                            }
+                        }
                     }
                 }
                 .pools-list-item-buy {
                     min-width: 100%;
-                    .buy-buttons-wrapper  {
+                    .buy-buttons-wrapper {
                         button {
-                            min-width: 15vw;
-                        } 
+                            min-width: 19vw;
+                        }
                     }
                 }
+            }
+        }
+        .pools-list-item-phase-wrapper {
+            .phase_name {
+                font-size: 0.82rem;
             }
         }
     }
@@ -343,7 +529,7 @@
                 margin-right: 3rem;
             }
             .pools-list-item-header-title {
-                width: auto;
+                flex: 1;
                 img {
                     width: 4.06rem;
                     height: 4.06rem;
@@ -362,42 +548,155 @@
     }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 600px) {
     .pools-list-item-header-wrapper {
+        align-items: flex-start;
         .pools-list-item-header-info {
+            width: 100%;
+            flex-direction: column;
+            align-items: flex-start;
             .pools-list-item-header-title {
+                width: auto;
                 font-size: 1.14rem;
             }
             .pools-list-item-header-address {
+                width: 100%;
                 a {
                     font-size: 0.85rem;
+                }
+                &.tablet {
+                    display: none;
+                }
+                &.web-mobile {
+                    display: block;
                 }
             }
         }
     }
+    .MuiStepper-root {
+        width: 62.8rem;
+    }
     .pools-list-item-body-wrapper {
+        padding: 0 1rem;
+        overflow: hidden;
+        .pools-item-title {
+            display: none;
+        }
+        .pools-list-subttitle {
+            display: none;
+        }
+        .mobile_hint {
+            display: block;
+            font-family: "Montserrat", sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 0.85rem;
+            line-height: 15px;
+            margin-top: 2.1rem;
+        }
+        .pools-list-item-phase-wrapper {
+            width: 100%;
+            overflow-x: scroll;
+            .pools-list-item-phase-wrapper::-webkit-scrollbar {
+                display: none;
+            }
+            .mobile-step {
+                width: 1000px;
+                overflow: hidden;
+                min-height: 80px;
+                display: flex;
+                align-items: center;
+            }
+            .phase_name {
+                font-size: 1.1rem;
+            }
+        }
+        .mobile_stepper_wrapper {
+            display: flex;
+            align-items: center;
+            margin-top: 0;
+            overflow: hidden;
+        }
+        .stepper_btn {
+            width: 1.75rem;
+            height: 1.75rem;
+            min-width: 1.75rem;
+            min-height: 1.75rem;
+            position: relative;
+            display: block;
+            padding: 0;
+            &.next-btn {
+                margin-left: 1.5rem;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 33%;
+                    left: 50%;
+                    border: solid #fff;
+                    border-width: 0 1px 1px 0;
+                    display: inline-block;
+                    padding: 3px;
+                    transform: rotate(-45deg) translate(-50%, -50%);
+                    -webkit-transform: rotate(-45deg) translate(-50%, -50%);
+                }
+            }
+            &.prev-btn {
+                margin-right: 1.5rem;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 33%;
+                    right: 50%;
+                    border: solid #fff;
+                    border-width: 0 1px 1px 0;
+                    display: inline-block;
+                    padding: 3px;
+                    transform: rotate(135deg) translate(-50%, -50%);
+                    -webkit-transform: rotate(135deg) translate(-50%, -50%);
+                }
+            }
+        }
+        .pools-list-item-phase-wrapper {
+            margin-top: 0;
+            width: 1000px;
+            .MuiStepLabel-label {
+                line-height: 0;
+            }
+        }
         .pools-list-item-info {
             flex-direction: column;
+            .pools-list-item-input {
+                padding: 2rem 0 1rem;
+            }
             .pools-list-info {
                 min-width: 100%;
+                margin-right: 0;
+                button {
+                    margin-top: 1.5rem;
+                }
             }
             .buy_stake_wrapper {
                 min-width: 100%;
                 .pools-list-item-stake {
+                    margin-bottom: 0;
                     &.mobile {
                         .buttons-wrapper {
+                            width: 100%;
                             display: flex;
                             align-items: center;
                             justify-content: space-between;
                             button {
                                 flex: 1;
+                                &:first-of-type {
+                                    margin-right: 1rem;
+                                }
                             }
                         }
                     }
                     &:not(.mobile) {
                         display: none;
                     }
-                } 
+                }
                 .pools-list-item-buy {
                     &.mobile {
                         .buy-buttons-wrapper {
@@ -413,24 +712,26 @@
                 .mobile-tabs {
                     width: 100%;
                     display: block;
-                    margin-top: 1.875rem;
-                    nav {
-                        padding: 0;
-                        .nav-link {
+                    margin-top: 1.3rem;
+                    .MuiTabs-flexContainer {
+                        .MuiButtonBase-root {
                             flex: 1;
-                            white-space: nowrap;
-                            font-size: 1rem;
-                            line-height: 1.25rem;
-                            padding: 0.43rem 0;
-                        }
-                    }
-                    .nav-tabs {
-                        .nav-item:not(:last-child) {
-                            margin-right: 1.25rem;
+                            padding: 0.55rem 0;
+                            &:first-of-type {
+                                margin-right: 1rem;
+                            }
                         }
                     }
                 }
             }
         }
+        .MuiStepLabel-label {
+            &.MuiStepLabel-alternativeLabel {
+                margin-top: 0.9rem;
+            }
+        }
+    }
+    .arrow-button {
+        margin-top: 1rem;
     }
 }

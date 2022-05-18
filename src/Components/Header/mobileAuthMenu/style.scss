@@ -8,23 +8,46 @@
         letter-spacing: 0;
     }
 }
+
 .MuiTypography-root {
     flex: 1;
     margin-left: 0.45rem;
 }
+
 .title_wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+
 .MuiListItemIcon-root {
     img {
         margin: 0 auto;
     }
 }
+
 .btn-wrapper {
     position: relative;
 }
+
 .MuiFormGroup-root {
     width: 100%;
+}
+
+.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+@media only screen and (min-width: 768px) {
+    .btn-wrapper {
+        flex-direction: column;
+        display: none;
+    }
+}
+
+.MuiPaper-root {
+    width: 100%;
+    max-width: 200px;
 }

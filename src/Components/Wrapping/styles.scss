@@ -1,59 +1,151 @@
-.wrapping-wrapper {
-  min-height: 17rem;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-
-  .wrapping-item-wrapper {
-    height: 17rem;
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 2rem;
-    align-items: flex-start;
-    background-color: rgba(78, 62, 122, 0.2);
-    border-radius: 10px;
-
-    input {
-      height: 16px;
-      background: transparent;
-      border-radius: 0;
-      font-family: "Montserrat", sans-serif !important;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 16px;
-      padding: 0;
-      outline: none;
-      box-shadow: none;
-      border: none;
-
-      transition: border-color .25s ease;
-
-      &:focus {
-          background-color: transparent;
-      }
-
-      &:disabled {
-          background-color: transparent !important;
-          border: 0;
-      }
-      color: white;
-      border-bottom: 1px solid rgba(white, .3) !important;
-
-
-      &::-webkit-outer-spin-button,
-      &::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-      }
-
-      /* Firefox */
-      &[type=number] {
-        -moz-appearance: textfield;
-      }
+.wopium_wrapper {
+    padding: 4.5rem;
+    .wopium_row {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        .wopium_item {
+            font-family: "Montserrat", sans-serif;
+            color: #fff;
+            border: 0.5px solid rgba(255, 255, 255, 0.5);
+            box-sizing: border-box;
+            border-radius: 10px;
+            padding: 2.2rem;
+            &:first-of-type {
+                margin-right: 2.23rem;
+            }
+            .wopium_item_title {
+                img {
+                    width: 1.7rem;
+                    height: 1.7rem;
+                    margin-right: 1.16rem;
+                }
+                span {
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 1.1rem;
+                    line-height: 1.25rem;
+                }
+            }
+            .balance_info {
+                display: flex;
+                flex-direction: column;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 0.85rem;
+                line-height: 1rem;
+                margin: 0.85rem auto 1.8rem;
+                .amount {
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 1.1rem;
+                    line-height: 0.25rem;
+                    margin-top: 1rem;
+                }
+            }
+            .input_wrapper {
+                display: flex;
+                flex-direction: column;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 0.87rem;
+                line-height: 1rem;
+                input {
+                    min-width: 17.15rem;
+                    font-family: "Montserrat", sans-serif;
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 0.75rem;
+                    line-height: 1rem;
+                    padding: 0;
+                    outline: none;
+                    box-shadow: none;
+                    border: none;
+                    background: transparent;
+                    border-radius: 0;
+                    transition: border-color .25s ease;
+                    margin-top: 1.1rem;
+                    &:focus {
+                        background-color: transparent;
+                    }
+                    &:disabled {
+                        background-color: transparent !important;
+                        border: 0;
+                    }
+                    color: white;
+                    border-bottom: 1px solid rgba(white, .3) !important;
+                    &::-webkit-outer-spin-button,
+                    &::-webkit-inner-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                    }
+                    /* Firefox */
+                    &[type=number] {
+                        -moz-appearance: textfield;
+                    }
+                }
+            }
+            button {
+                min-width: 8.5rem;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 0.8rem;
+                line-height: 1.2rem;
+                margin-top: 1.1rem;
+                margin-bottom: 0.9rem;
+            }
+        }
     }
-  }
+}
+
+@media only screen and (max-width: 1024px) {
+    .wopium_wrapper {
+        padding: 1.6rem 2.7rem;
+        .wopium_row {
+            .wopium_item {
+                flex: 1;
+                &:first-of-type {
+                    margin-right: 1.3rem;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .wopium_wrapper {
+        padding: 1.1rem 1.4rem;
+        .wopium_row {
+            .wopium_item {
+                .input_wrapper {
+                    input {
+                        min-width: auto;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .wopium_wrapper {
+        padding: 1.1rem 1rem;
+        .wopium_row {
+            flex-direction: column;
+            align-items: flex-start;
+            .wopium_item {
+                width: 100%;
+                padding: 1.7rem 1.5rem 1.2rem;
+                &:first-of-type {
+                    margin-right: 0;
+                    margin-bottom: 1.6rem;
+                }
+                button {
+                    min-width: 10rem;
+                    line-height: 1rem;
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
 }

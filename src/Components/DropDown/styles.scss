@@ -1,8 +1,40 @@
 .dropdown-wrapper {
     padding: 0;
+    .network-select {
+        min-height: auto;
+        color: #fff;
+        font-family: Montserrat, sans-serif;
+        font-size: 1.14rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.25rem;
+        .Mui-selected {
+            background: transparent !important
+        }
+        .menu_item {
+            height: auto;
+            min-height: auto;
+            padding-bottom: 0;
+            margin-bottom: 6px;
+        }
+    }
+    .Mui-disabled {
+        color: #fff;
+        -webkit-text-fill-color: #fff !important;
+        cursor: not-allowed !important;
+    }
     .dropDown-default-styles {
         min-width: 100%;
         margin: 0;
+        width: max-content;
+        position: relative;
+        .MuiSvgIcon-root {
+            width: 1.2rem;
+            color: #fff,
+        }
+        .MuiOutlinedInput-notchedOutline {
+            display: none,
+        }
         .dropDown-label {
             font-family: "Montserrat", sans-serif;
             font-size: 1.14rem;
@@ -11,6 +43,7 @@
             line-height: 20px;
             color: #fff;
             margin-bottom: 0;
+            transform: none;
         }
         .MuiInput-root {
             margin-top: 0;
@@ -35,6 +68,7 @@
         width: fit-content;
         max-width: fit-content;
         position: relative;
+        font-family: "Montserrat", sans-serif;
         font-weight: 800;
         font-size: 1.1rem;
         line-height: 20px;
@@ -54,6 +88,7 @@
         }
     }
     h5 {
+        font-family: "Montserrat", sans-serif;
         font-weight: 800;
         font-size: 1.1rem;
         line-height: 20px;
@@ -93,21 +128,53 @@
     .MuiTypography-root {
         font-family: "Montserrat", sans-serif;
         font-weight: 800;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         line-height: 0.93rem;
-        margin-left: 0.45rem;
+        margin-left: 0.65rem;
     }
 }
 
 .red-network {
     position: absolute;
-    right: 0.62rem;
-    bottom: 0;
-    white-space: nowrap;
+    right: 15px;
+    bottom: -7px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.85rem;
     font-style: normal;
     font-weight: 500;
-    font-size: 0.75rem;
     line-height: 1.25rem;
+    white-space: nowrap;
     color: #F6029C;
     z-index: 1;
+}
+
+.MuiButtonBase-root {
+    .MuiCheckbox-root {
+        &::before {
+            content: "";
+            width: 0.7rem;
+            height: 0.75rem;
+            border: 1.5px solid #fff;
+            border-radius: 5%;
+        }
+        &.Mui-checked {
+            &::after {
+                content: "\2713";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                font-size: 10px;
+                color: #fff;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+}
+
+.MuiTooltip-tooltip {
+    border: 1px solid #fff;
+    background: #222234;
+    font-size: 12px;
+    top: -10px;
+    bottom: -20px;
 }

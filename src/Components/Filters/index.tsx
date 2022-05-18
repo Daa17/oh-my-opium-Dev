@@ -1,18 +1,19 @@
-import { FC, useState, SyntheticEvent } from "react";
-import { Button } from "@opiumteam/react-opium-components";
+import { FC, useState, SyntheticEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+// import { MobileView, BrowserView } from "react-device-detect";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import MuiDropDown from "../DropDown";
-
+import { useLocation } from "react-router";
 import FilterIcon from "../../images/filter_icon.svg";
+import { ALL_POOLS, POOLS } from "../../constants";
 
 import "../../styles/main.scss";
 import "./styles.scss";
 
 const programsDropdownItems = [
   { title: "turbo", value: "turbo" },
-  { title: "inshurance", value: "inshurance" },
+  { title: "insurance", value: "insurance" },
   { title: "$OPIUM products", value: "$OPIUM products" },
 ];
 
@@ -25,18 +26,43 @@ const sortDropdownItems = [
 
 interface IFilter {
   nestedPath?: string;
+  poolsFilterHandler: any;
+  poolsSortedValue: any;
 }
 
-const applyFilter = () => {};
-const Filters: FC<IFilter> = ({ nestedPath }) => {
+const Filters: FC<IFilter> = ({
+  nestedPath,
+  poolsFilterHandler,
+  poolsSortedValue,
+}) => {
   let navigate = useNavigate();
+  let location = useLocation();
 
-  const [value, setValue] = useState<string>("all-pools");
+  const [value, setValue] = useState<string>(ALL_POOLS);
+  const [sortTitle, setSortTitle] = useState(["expiration date"]);
 
+  const currentPath = location.pathname;
+  let currentValue = currentPath.substring(
+    currentPath.lastIndexOf("/") + 1,
+    currentPath.length
+  );
+
+  const applyFilter = (checkedValue: any) => {
+    poolsFilterHandler(checkedValue);
+  };
+
+  const applySort = (sortedValue: any) => {
+    setSortTitle(sortedValue);
+    poolsSortedValue(sortedValue);
+  };
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue);
-    navigate(`/${nestedPath}/pools/${newValue}`);
+    navigate(`/${nestedPath}/${POOLS}/${newValue}`);
   };
+
+  useEffect(() => {
+    setValue(currentValue);
+  }, [currentPath, currentValue]);
 
   return (
     <div className="filters_wrapper">
@@ -45,12 +71,32 @@ const Filters: FC<IFilter> = ({ nestedPath }) => {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
-          className="filter-tabs"
+          classes={{
+            flexContainer: "flexContainer",
+            indicator: "indicator",
+          }}
+          TabIndicatorProps={{ children: <span /> }}
         >
-          <Tab label="All Pools" value="all-pools" />
-          <Tab label="My Stake" value="my-stake" />
+          <Tab
+            label="All Pools"
+            value="all-pools"
+            className="pools_btn"
+            style={{
+              minHeight: "25px",
+            }}
+          />
+          <Tab
+            label="My Stake"
+            value="my-stake"
+            style={{
+              minHeight: "25px",
+            }}
+          />
         </Tabs>
       </div>
+      {/* <BrowserView
+        className={BrowserView-filtering}
+      > */}
       <div className="dropdowns_container">
         <div className="dropdown-wrapper programs">
           <MuiDropDown
@@ -58,6 +104,7 @@ const Filters: FC<IFilter> = ({ nestedPath }) => {
             checkboxHeader="Programs"
             title="Programs"
             checkboxData={programsDropdownItems}
+            applyFilter={applyFilter}
           />
         </div>
         <div className="sort_dropdown">
@@ -66,16 +113,24 @@ const Filters: FC<IFilter> = ({ nestedPath }) => {
             <MuiDropDown
               isRadio
               radioHeader="Sort By"
-              title="expiration date"
+              title={sortTitle[0]}
               radioData={sortDropdownItems}
+              applySort={applySort}
             />
           </div>
         </div>
       </div>
-
+      {/* </BrowserView> */}
+      {/* <MobileView> */}
       <div className="mobile_dropdowns">
         <div className="dropdown-wrapper">
-          <img src={FilterIcon} alt="filter_icon" className="filter_icon" />
+          <img
+            width="24"
+            height="24"
+            src={FilterIcon}
+            alt="filter_icon"
+            className="filter_icon"
+          />
           <MuiDropDown
             title=" "
             radioHeader="Sort By"
@@ -84,20 +139,12 @@ const Filters: FC<IFilter> = ({ nestedPath }) => {
             radioData={sortDropdownItems}
             className="filter_dropdown"
             mobile
-          >
-            <Button
-              variant="secondary"
-              className="apply_filter"
-              style={{
-                backgroundColor: "transparent",
-                color: "#fff",
-              }}
-              label="apply"
-              onClick={applyFilter}
-            />
-          </MuiDropDown>
+            applyFilter={applyFilter}
+            applySort={applySort}
+          />
         </div>
       </div>
+      {/* </MobileView> */}
     </div>
   );
 };

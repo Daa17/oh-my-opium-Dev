@@ -6,6 +6,10 @@ export type PoolType = {
   marginTitle: string;
   positions?: DBPositionsType[];
   icon?: string;
+  yieldToDataAnnualized: number;
+  poolSize: number;
+  currentEpochTimeStamp: number;
+  readMoreLink: string;
   oracle?: {
     address: string;
     type: OracleTypeEnum;

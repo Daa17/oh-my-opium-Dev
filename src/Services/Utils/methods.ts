@@ -427,6 +427,7 @@ export const getStakedBalance = async (
 ): Promise<string> => {
   try {
     const contract = createReadOnlyStakingContractInstance(poolAddress);
+    // console.log("stakingContract", contract);
     const tokenAddress = await contract?.methods
       .underlying()
       .call({ from: userAddress });
@@ -447,8 +448,8 @@ export const getStakedBalance = async (
                   .symbol()
                   .call()
                   .then((symbol: string) => {
-                    return `${Number(convertFromBN(shares, +decimals)).toFixed(
-                      3
+                    return `${Number(
+                      convertFromBN(shares, +decimals)
                     )} ${symbol}`;
                   });
               });
