@@ -30,7 +30,6 @@ const MobileAuthMenu = ({
   const [activeWallet, setActiveWallet] = useState<string>("MetaMask");
   const open = Boolean(anchorEl);
   const { address } = authStore.blockchainStore;
-
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -225,13 +224,15 @@ const MobileAuthMenu = ({
           >
             <Typography>Network</Typography>
           </AccordionSummary>
-          <p style={{ fontSize: "10px", color: "#F6029C" }}>
-            You need to log out to change the network
-          </p>
+          {activeWallet === "Wallet connect" && (
+            <p style={{ fontSize: "10px", color: "#F6029C" }}>
+              You need to log out to change the network
+            </p>
+          )}
 
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue={dropdownItems[0].value}
+            defaultValue={activeNetwork || dropdownItems[0].value}
             name="radio-buttons-group"
             onChange={(e) => changeNetworkTitle(e, "Network")}
           >

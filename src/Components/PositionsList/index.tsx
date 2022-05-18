@@ -28,6 +28,7 @@ const PositionsList: FC<any> = ({
   const alert = useAlert();
   const getAllPurchasedProducts = async () => {
     let positions: PositionType[] | undefined = [];
+
     const pools = appStore.poolsByNetwork.filter((pool) => !pool.isSuspended);
     await Promise.all(
       pools.map(async (pool) => {
@@ -67,10 +68,12 @@ const PositionsList: FC<any> = ({
       (e) => alert.error(e.message)
     );
   };
+
   const goToPool = () => {
     navigate(`/${currentNetwork}/pools/all-pools`);
     appStore.setCurrentPoolId("0x527bc50b075a65b7e17ae8606a1adeb08bceb971");
   };
+
   return (
     <div className="positions-wrapper">
       {!positions.length ? (
@@ -101,7 +104,7 @@ const PositionsList: FC<any> = ({
                     </div>
                   ) : (
                     <div className="expire_date">
-                      <span>Will expire at</span>{" "}
+                      <span>Will expire at</span>
                       <span className="date">{date}</span>
                     </div>
                   )}

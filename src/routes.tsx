@@ -5,9 +5,9 @@ import authStore from "./Services/Stores/AuthStore";
 import appStore from "./Services/Stores/AppStore";
 import { AuthType } from "@opiumteam/mobx-web3";
 import Layout from "./Components/Layout/Layout";
-import PoolsList from "./Components/PoolsList/index";
+// import PoolsList from "./Components/PoolsList/index";
 import EmptyPage from "./Components/EmptyPage";
-// const PoolsList = lazy(() => import("./Components/PoolsList/index"));
+const PoolsList = lazy(() => import("./Components/PoolsList/index"));
 const PositionsList = lazy(() => import("./Components/PositionsList/index"));
 const Wrapping = lazy(() => import("./Components/Wrapping/index"));
 

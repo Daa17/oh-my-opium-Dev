@@ -35,9 +35,9 @@ export const ethPools = [
     marginTitle: "USDC",
     positions: usdtProtection,
     icon: usdtInsuranceFarming,
-    yieldToDataAnnualized: "1321654.215",
-    poolSize: "2554.649",
-    currentEpochTimeStamp: "2145646546546",
+    yieldToDataAnnualized: 1321654.215,
+    poolSize: 2554.649,
+    currentEpochTimeStamp: 2145646546546,
     readMoreLink:
       "https://medium.com/opium-network/decentralized-insurance-upgrade-continuous-staking-and-unstaking-c329ce27ad4b",
     oracle: {
@@ -52,9 +52,9 @@ export const ethPools = [
     icon: spaceXInsurance,
     isSuspended: true,
     marginTitle: "USDC",
-    yieldToDataAnnualized: "2321654.215",
-    poolSize: "5554.649",
-    currentEpochTimeStamp: "6145646546546",
+    yieldToDataAnnualized: 2321654.215,
+    poolSize: 5554.649,
+    currentEpochTimeStamp: 6145646546546,
     readMoreLink:
       "https://opium.finance/blog/spacex-protection/LaunchSpaceXProtection/",
   },
@@ -66,9 +66,9 @@ export const ethPools = [
     marginTitle: "OPIUM",
     positions: opiumOptionCall,
     icon: opiumOption,
-    yieldToDataAnnualized: "21321654.215",
-    poolSize: "62554454.649",
-    currentEpochTimeStamp: "86548646546546",
+    yieldToDataAnnualized: 21321654.215,
+    poolSize: 62554454.649,
+    currentEpochTimeStamp: 86548646546546,
     readMoreLink:
       "https://medium.com/opium-network/call-options-on-opium-an-alternative-to-liquidity-mining-32febcbda4a2",
     oracle: {
@@ -84,9 +84,9 @@ export const ethPools = [
     icon: EthDumpProtection,
     isSuspended: true,
     marginTitle: "USDC",
-    yieldToDataAnnualized: "651321654.215",
-    poolSize: "32554.649",
-    currentEpochTimeStamp: "82145646546546",
+    yieldToDataAnnualized: 651321654.215,
+    poolSize: 32554.649,
+    currentEpochTimeStamp: 82145646546546,
     readMoreLink:
       "https://opium.finance/blog/eth-dump-protection/ETHDumpProtection/",
   },
@@ -143,9 +143,9 @@ export const bscPools = [
     marginTitle: "ETH",
     positions: turboETH,
     icon: turboEth,
-    yieldToDataAnnualized: "1321654.215",
-    poolSize: "2554.649",
-    currentEpochTimeStamp: "2145646546546",
+    yieldToDataAnnualized: 1321654.215,
+    poolSize: 2554.649,
+    currentEpochTimeStamp: 2145646546546,
     readMoreLink:
       "https://medium.com/opium-network/introducing-opium-turbos-581a647654d7",
     oracle: {
@@ -161,9 +161,9 @@ export const bscPools = [
     marginTitle: "WETH",
     positions: turboWeeklyETH,
     icon: turboEth,
-    yieldToDataAnnualized: "8321654.215",
-    poolSize: "3554.649",
-    currentEpochTimeStamp: "4145646546546",
+    yieldToDataAnnualized: 8321654.215,
+    poolSize: 3554.649,
+    currentEpochTimeStamp: 4145646546546,
     readMoreLink:
       "https://medium.com/opium-network/introducing-opium-turbos-581a647654d",
     oracle: {
@@ -227,9 +227,9 @@ export const polygonPools = [
     marginTitle: "USDC",
     positions: realt402Kostner,
     icon: EthDumpProtection,
-    yieldToDataAnnualized: "2",
-    poolSize: "782",
-    currentEpochTimeStamp: "6546",
+    yieldToDataAnnualized: 2,
+    poolSize: 782,
+    currentEpochTimeStamp: 6546,
     readMoreLink:
       "https://opium.finance/blog/eth-dump-protection/ETHDumpProtection/",
     oracle: {
@@ -245,9 +245,9 @@ export const polygonPools = [
     marginTitle: "USDC",
     positions: ETHDumpProtection,
     icon: EthDumpProtection,
-    yieldToDataAnnualized: "1355421654.215",
-    poolSize: "782554.649",
-    currentEpochTimeStamp: "61565559595",
+    yieldToDataAnnualized: 1355421654.215,
+    poolSize: 782554.649,
+    currentEpochTimeStamp: 61565559595,
     readMoreLink:
       "https://opium.finance/blog/eth-dump-protection/ETHDumpProtection/",
     oracle: {
@@ -264,9 +264,9 @@ export const polygonPools = [
     marginTitle: "WBTC",
     icon: turboBtc,
     positions: turboBTC,
-    yieldToDataAnnualized: "4321654.215",
-    poolSize: "9554.649",
-    currentEpochTimeStamp: "8145646546546",
+    yieldToDataAnnualized: 4321654.215,
+    poolSize: 9554.649,
+    currentEpochTimeStamp: 8145646546546,
     readMoreLink:
       "https://medium.com/opium-network/opium-turbo-aave-b69a23ab1048",
     oracle: {
@@ -282,9 +282,9 @@ export const polygonPools = [
     marginTitle: "WMATIC",
     positions: turboMATIC,
     icon: turboMatic,
-    yieldToDataAnnualized: "8321654.215",
-    poolSize: "72554.649",
-    currentEpochTimeStamp: "5145646546546",
+    yieldToDataAnnualized: 8321654.215,
+    poolSize: 72554.649,
+    currentEpochTimeStamp: 5145646546546,
     readMoreLink:
       "https://medium.com/opium-network/opium-turbo-aave-b69a23ab1048",
     oracle: {
@@ -300,9 +300,9 @@ export const polygonPools = [
     marginTitle: "amAAVE",
     positions: turboAAVE,
     icon: turboAave,
-    yieldToDataAnnualized: "3321654.215",
-    poolSize: "4554.649",
-    currentEpochTimeStamp: "6145646546546",
+    yieldToDataAnnualized: 3321654.215,
+    poolSize: 4554.649,
+    currentEpochTimeStamp: 6145646546546,
     readMoreLink:
       "https://medium.com/opium-network/opium-turbo-aave-b69a23ab1048",
     oracle: {
@@ -318,9 +318,9 @@ export const polygonPools = [
     marginTitle: "WETH",
     positions: turboDailyETH,
     icon: turboEth,
-    yieldToDataAnnualized: "3321654.215",
-    poolSize: "4554.649",
-    currentEpochTimeStamp: "6145646546546",
+    yieldToDataAnnualized: 3321654.215,
+    poolSize: 4554.649,
+    currentEpochTimeStamp: 6145646546546,
     readMoreLink:
       "https://medium.com/opium-network/opium-turbo-aave-b69a23ab1048",
     oracle: {

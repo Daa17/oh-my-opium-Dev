@@ -8,7 +8,7 @@ import {
   getPurchasedProducts,
   isPoolMaintainable,
   getPurchasedProductsTheGraph,
-  // getStakedBalance,
+  getStakedBalance,
 } from "../../Services/Utils/methods";
 import { PoolType, PositionType } from "../../Services/Utils/types";
 import "./styles.scss";
@@ -39,17 +39,18 @@ const PoolsList: FC<IPoolList> = ({ nestedPath, authStore, appStore }) => {
   const alert = useAlert();
   const [popupIsOpened, setPopupIsOpened] = useState(false);
   const [positions, setPositions] = useState<PositionType[]>([]);
-  const [sortedValue, setSortedValue] = useState<string>("expiration date");
+  const [sortedValue, setSortedValue] = useState<string[]>([]);
   const [positionProductTitle, setPositionProductTitle] = useState<string>("");
   const [poolsByNetwork, setPoolsByNetwork] = useState(
     appStore?.poolsByNetwork
   );
+  const [stakedPoolsByNetwork, setstakedPoolsByNetwork] = useState([]);
   const [maintenanceIsOpened, setMaintenanceIsOpened] = useState(false);
   const [poolToMaintain, setPoolToMaintain] = useState<PoolType | null>(null);
-  const [stakedPoolIds, setStakedPoolIds] = useState<PoolType[]>([]);
-  const isPoolsPage = pathname.includes("all-pools");
-
-  console.log("stakedPoolIds", stakedPoolIds);
+  const [loading, setLoading] = useState(false);
+  const [isPoolFiltered, setPoolIsfiltered] = useState(false);
+  const isMyStakePage = pathname.includes("my-stake");
+  let currentSortedValue = sortedValue[0];
 
   const showPurchasedProducts = async (pool: PoolType) => {
     let positions: PositionType[] | undefined = [];
@@ -75,50 +76,52 @@ const PoolsList: FC<IPoolList> = ({ nestedPath, authStore, appStore }) => {
   };
   const poolsFilterHandler = (checkedValue: any) => {
     let filteredDataArr: any = [];
-
+    let currentPools = isMyStakePage ? stakedPoolsByNetwork : poolsByNetwork;
     const turbo = checkedValue.includes("turbo")
-      ? appStore.poolsByNetwork.filter((item: any) =>
-          isTurbo.includes(item.title)
-        )
+      ? currentPools.filter((item: any) => isTurbo.includes(item.title))
       : [];
     const opium = checkedValue.includes("$OPIUM products")
-      ? appStore.poolsByNetwork.filter((item: any) => item.title === isOpium)
+      ? currentPools.filter((item: any) => item.title === isOpium)
       : [];
     const insurance = checkedValue.includes("insurance")
-      ? appStore.poolsByNetwork.filter(
+      ? currentPools.filter(
           (item: any) => item.title !== isOpium && !isTurbo.includes(item.title)
         )
       : [];
     let filteredData = filteredDataArr.concat(turbo, opium, insurance);
-    !checkedValue.length && (filteredData = appStore.poolsByNetwork);
+    if (!checkedValue.length && isMyStakePage) {
+      filteredData = stakedPoolsByNetwork;
+    } else if (!checkedValue.length) {
+      filteredData = appStore.poolsByNetwork;
+    }
 
-    setPoolsByNetwork(filteredData);
+    setPoolsByNetwork([...filteredData]);
+    setPoolIsfiltered((prev) => !prev);
   };
 
   useEffect(() => {
+    let arr: any = [];
     if (sortedValue[0] === "name") {
-      setPoolsByNetwork((prev: string[]) =>
-        prev.sort((a: any, b: any) => (a.title > b.title ? 1 : -1))
+      arr = poolsByNetwork.sort((a: any, b: any) =>
+        a.title > b.title ? 1 : -1
       );
     } else if (sortedValue[0] === "APR") {
-      setPoolsByNetwork((prev: string[]) =>
-        prev.sort((a: any, b: any) =>
-          a.yieldToDataAnnualized > b.yieldToDataAnnualized ? 1 : -1
-        )
+      arr = poolsByNetwork.sort((a: any, b: any) =>
+        a.yieldToDataAnnualized > b.yieldToDataAnnualized ? 1 : -1
       );
     } else if (sortedValue[0] === "liquidity") {
-      setPoolsByNetwork((prev: string[]) =>
-        prev.sort((a: any, b: any) => (a.poolSize > b.poolSize ? 1 : -1))
+      arr = poolsByNetwork.sort((a: any, b: any) =>
+        a.poolSize > b.poolSize ? 1 : -1
       );
     } else if (sortedValue.includes("expiration date")) {
-      setPoolsByNetwork((prev: string[]) =>
-        prev.sort((a: any, b: any) =>
-          a.currentEpochTimeStamp > b.currentEpochTimeStamp ? 1 : -1
-        )
+      arr = poolsByNetwork.sort((a: any, b: any) =>
+        a.currentEpochTimeStamp > b.currentEpochTimeStamp ? 1 : -1
       );
-    } else setPoolsByNetwork(appStore.poolsByNetwork);
+    } else setPoolsByNetwork([...appStore.poolsByNetwork]);
+
+    arr.length && setPoolsByNetwork([...arr]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortedValue, poolsByNetwork]);
+  }, [sortedValue, isPoolFiltered]);
 
   const closePopup = () => {
     setPopupIsOpened(false);
@@ -147,22 +150,49 @@ const PoolsList: FC<IPoolList> = ({ nestedPath, authStore, appStore }) => {
     setPoolToMaintain(null);
     setMaintenanceIsOpened(false);
   };
-  // const [balanceIds, setBalanceIds] = useState<any>([]);
 
-  // const getStakedPools = () => {
-  //   poolsByNetwork.map(async (pool: any) => {
-  //     const balance = await getStakedBalance(
-  //       pool.poolAddress,
-  //       authStore?.blockchainStore.address
-  //     );
-  //     if (balance) {
-  //       console.log("balance", balance);
-  //       // setBalanceIds(balanceIds.push(pool.poolAddress));
-  //     }
-  //   });
-  // };
-  // getStakedPools();
+  const getStakedPools = () => {
+    let balanceIds: string[] = [];
+    setLoading(true);
+    return poolsByNetwork.map(async (pool: any) => {
+      await getStakedBalance(
+        pool.poolAddress,
+        authStore?.blockchainStore.address
+      )
+        .then((value: any) => {
+          if (parseFloat(value) > 0) return balanceIds.push(pool.poolAddress);
+        })
+        .then(() => {
+          const arr: any = [];
+          poolsByNetwork.forEach((obj: any) => {
+            if (balanceIds.indexOf(obj.poolAddress) !== -1) {
+              arr.push(obj);
+            }
+          });
+          return arr;
+        })
+        .then((res) => {
+          setPoolsByNetwork(res);
+          setstakedPoolsByNetwork(res);
+        })
+        .finally(() => setLoading(false));
+    });
+  };
+  useEffect(() => {
+    if (isMyStakePage) {
+      getStakedPools();
+    } else setPoolsByNetwork(appStore.poolsByNetwork);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMyStakePage]);
+  useEffect(() => {
+    if (!sortedValue.length) setSortedValue(["expiration date"]);
+    else setSortedValue((prev) => [...prev]);
+  }, [currentSortedValue, nestedPath, sortedValue.length]);
 
+  let textInsideEmptyPool = "No pools found according to chosen filters";
+  if (loading) {
+    textInsideEmptyPool = "Loading...";
+  }
   return (
     <div className="pools-list-wrapper">
       <Popup
@@ -189,7 +219,7 @@ const PoolsList: FC<IPoolList> = ({ nestedPath, authStore, appStore }) => {
         poolsSortedValue={setSortedValue}
         nestedPath={nestedPath}
       />
-      {isPoolsPage && poolsByNetwork.length ? (
+      {poolsByNetwork.length && !loading ? (
         poolsByNetwork.map((pool: any) => (
           <PoolListItem
             pool={pool}
@@ -197,13 +227,12 @@ const PoolsList: FC<IPoolList> = ({ nestedPath, authStore, appStore }) => {
             appStore={appStore}
             showPurchasedProducts={() => showPurchasedProducts(pool)}
             showMaintenance={() => showMaintenance(pool)}
-            setStakedPoolIds={setStakedPoolIds}
             key={pool.poolAddress}
           />
         ))
       ) : (
-        <div className="no_pools">
-          No pools found according to chosen filters
+        <div className={!loading ? "no_pools" : "pools-loading"}>
+          {textInsideEmptyPool}
         </div>
       )}
     </div>
