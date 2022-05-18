@@ -377,6 +377,18 @@
     align-items: center;
     font-size: 0.81rem;
     background-color: #0A0A1E;
+    .pools-loading {
+        display: inline-block;
+        width: 100%;
+        font-family: 'Montserrat';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 1rem;
+        line-height: 1.6rem;
+        text-align: center;
+        color: #fff;
+        margin: 5rem auto;
+    }
 }
 
 .arrow-button {

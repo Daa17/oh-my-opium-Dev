@@ -41,12 +41,14 @@ type Props = {
   pool: PoolType;
   showPurchasedProducts: Function;
   showMaintenance: Function;
-  setStakedPoolIds: Function;
   authStore?: any;
   appStore?: any;
 };
 
 const PoolsList: FC<Props> = (props: Props) => {
+  const alert: any = useAlert();
+  const userAddress = props.authStore.blockchainStore.address;
+  const isloggedIn = props.authStore.loggedIn && userAddress;
   const { pool, showPurchasedProducts, showMaintenance } = props;
   const [stakeValue, setStakeValue] = useState(0);
   const [protectValue, setProtectValue] = useState(0);
@@ -108,14 +110,17 @@ const PoolsList: FC<Props> = (props: Props) => {
       changeCollapseStatus(true);
       poolItemRef.current.scrollIntoView({
         behavior: "smooth",
+        // block: "center",
+        inline: "end",
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.appStore.currentPoolId, poolItemRef]);
 
-  const alert: any = useAlert();
-
-  const userAddress = props.authStore.blockchainStore.address;
+  useEffect(() => {
+    return () => props.appStore.setCurrentPoolId("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.appStore.currentPoolId]);
 
   const makeStake = async () => {
     const { isStaking, isStakingOnly } = await checkPhase(
@@ -267,9 +272,6 @@ const PoolsList: FC<Props> = (props: Props) => {
   const loadBalance = async () => {
     setBalanceIsLoading(true);
     const balance = await getStakedBalance(pool.poolAddress, userAddress);
-    if (parseFloat(balance) > 0) {
-      props?.setStakedPoolIds((prev: any) => prev?.concat(pool));
-    }
     setBalance(balance);
     setBalanceIsLoading(false);
   };
@@ -370,7 +372,11 @@ const PoolsList: FC<Props> = (props: Props) => {
           <div className="pools-item-title">
             <div className="pools-list-item-phase-current">
               {props.appStore.requestsAreNotAllowed ? (
-                "Please check your network"
+                isloggedIn ? (
+                  "Please check your network"
+                ) : (
+                  "Please connect your wallet"
+                )
               ) : phaseInfoIsLoading ? (
                 "Loading..."
               ) : (
@@ -499,7 +505,9 @@ const PoolsList: FC<Props> = (props: Props) => {
                 <span className="pools-list-info-title">Staked balance:</span>
                 <span className="pools-list-info-amount blue">
                   {props.appStore.requestsAreNotAllowed
-                    ? "Please check your network"
+                    ? isloggedIn
+                      ? "Please check your network"
+                      : "Please connect your wallet"
                     : balanceIsLoading
                     ? "Loading..."
                     : balance}

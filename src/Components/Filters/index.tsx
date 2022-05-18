@@ -51,7 +51,7 @@ const Filters: FC<IFilter> = ({
     poolsFilterHandler(checkedValue);
   };
 
-  const applaySort = (sortedValue: any) => {
+  const applySort = (sortedValue: any) => {
     setSortTitle(sortedValue);
     poolsSortedValue(sortedValue);
   };
@@ -115,7 +115,7 @@ const Filters: FC<IFilter> = ({
               radioHeader="Sort By"
               title={sortTitle[0]}
               radioData={sortDropdownItems}
-              applySort={applaySort}
+              applySort={applySort}
             />
           </div>
         </div>
@@ -140,7 +140,7 @@ const Filters: FC<IFilter> = ({
             className="filter_dropdown"
             mobile
             applyFilter={applyFilter}
-            applySort={applaySort}
+            applySort={applySort}
           />
         </div>
       </div>
